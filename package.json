@@ -1,6 +1,6 @@
 {
   "name": "site",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "release": "standard-version",
-    "prerelease": "release -- --prerelease alpha"
+    "prerelease": "standard-version -- --prerelease alpha"
   },
   "private": true,
   "dependencies": {
