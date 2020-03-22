@@ -9,10 +9,44 @@
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
+$jaune-tuc: #FFEA13;
+$gris-tuc: #7D847C;
+$tuc-jaune: (
+  50: #FFFBD4,
+  100: #FFF9BE,
+  200: #FFF593,
+  300: #FFF168,
+  400: #FFED3D,
+  500: #FFEA13,
+  600: #A3950D,
+  700: #764B09,
+  800: #464006,
+  900: #181602,
+  A100: #FFF9BE,
+  A200: #FFF7A9,
+  A400: #FFED3D,
+  A700: #764B09,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $dark-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $light-primary-text,
+  )
+);
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$site-primary: mat-palette($mat-indigo);
+$site-primary: mat-palette($tuc-jaune);
 $site-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
