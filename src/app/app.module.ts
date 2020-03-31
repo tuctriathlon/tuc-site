@@ -14,13 +14,21 @@ import {HomeComponent} from './pages/home/home.component';
 import {AppRoutingModule} from './app-rooting.module';
 import {EventComponent} from './components/event/event.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {Home2Component} from './pages/home2/home2.component';
+import {EventCardComponent} from './components/event-card/event-card.component';
+import {MatCardModule} from '@angular/material/card';
+import {EventPageComponent} from './pages/event-page/event-page.component';
+import {A11yModule} from '@angular/cdk/a11y';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    EventComponent
+    Home2Component,
+    EventPageComponent,
+    EventComponent,
+    EventCardComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +41,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     FontAwesomeModule,
     MatButtonModule,
     AppRoutingModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule,
+    A11yModule
   ],
   providers: [],
   bootstrap: [AppComponent]

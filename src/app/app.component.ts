@@ -11,10 +11,17 @@ const PAGE_SIZE = 10;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  fillerNav = Array.from({length: 8}, (_, i) => `Nav Item ${i + 1}`);
+  fillerNav = Array.from({length: 8}, (_, i) => {
+    return {
+      name: `Nav Item ${i + 1}`,
+      link: ''
+    };
+  });
 
   events: EventModel[];
   constructor(public eventService: EventService) {
+    this.fillerNav.unshift({name: 'Home2', link: '/home2'});
+    this.fillerNav.unshift({name: 'Home', link: '/home'});
     this.events = eventService.getAll(0, PAGE_SIZE);
   }
 

@@ -1,1 +1,7 @@
-<p>home works!</p>
+<app-event *ngFor="let event of events" [event]="event"></app-event>
+<mat-paginator [length]="eventService.getCount()"
+               [pageSize]="10"
+               hidePageSize
+               showFirstLastButtons
+               (page)="changePage($event)">
+</mat-paginator>

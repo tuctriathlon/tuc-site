@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "release": "standard-version",
     "prerelease": "standard-version --prerelease alpha",
-    "deploy":  "ng build && scp -r -p ./dist/site/** tuctri@ssh.cluster003.hosting.ovh.net:/homez.912/tuctri/demo"
+    "deploy": "ng build && scp -r -p ./dist/site/** tuctri@ssh.cluster003.hosting.ovh.net:/homez.912/tuctri/demo"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +29,8 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.1",
     "@fortawesome/free-regular-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "bootstrap": "^4.4.1",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

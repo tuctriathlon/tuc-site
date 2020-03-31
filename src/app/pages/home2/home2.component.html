@@ -1,0 +1,9 @@
+<div class="container-fluid pt-4 card-group">
+  <app-event-card *ngFor="let event of events" [event]="event" class="col-lg-4 col-md-6 col-sm-12"></app-event-card>
+</div>
+<mat-paginator [length]="eventService.getCount()"
+               [pageSize]="12"
+               hidePageSize
+               showFirstLastButtons
+               (page)="changePage($event)">
+</mat-paginator>

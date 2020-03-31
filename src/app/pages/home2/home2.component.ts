@@ -3,14 +3,14 @@ import {EventModel} from '../../models/event.model';
 import {EventService} from '../../services/event.service';
 import {PageEvent} from '@angular/material/paginator';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 12;
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-home2',
+  templateUrl: './home2.component.html',
+  styleUrls: ['./home2.component.css']
 })
-export class HomeComponent implements OnInit {
+export class Home2Component implements OnInit {
 
   events: EventModel[];
   constructor(public eventService: EventService) {

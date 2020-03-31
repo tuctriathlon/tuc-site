@@ -15,7 +15,7 @@
       </div>
 
     </div>
-    <button *ngIf="event.isTrunked" mat-raised-button color="primary">Lire tout</button>
+    <button *ngIf="event.isTrunked" mat-raised-button color="primary" [routerLink]="['/event', event.id]">Lire tout</button>
   </div>
   <img *ngIf="event.picture" [src]="event.picture" alt="photo article">
 </div>

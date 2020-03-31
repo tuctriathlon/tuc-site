@@ -20,6 +20,14 @@ export class EventService {
     return this.list.slice(start, end);
   }
 
+  /**
+   * return element by its id
+   * @param id
+   */
+  getById(id: number) {
+    return this.list.find(e => e.id === id);
+  }
+
   getCount(): number {
     return this.list.length;
   }
@@ -30,7 +38,10 @@ export class EventService {
   private generateMock() {
     this.list = Array.from({length: 50}, () =>
       EventModel.generateMock());
-    this.list.forEach((event, index) => event.date = event.date.subtract(index, 'days'));
+    this.list.forEach((event, index) => {
+      event.id = index;
+      event.date = event.date.subtract(index, 'days');
+    });
     this.list.sort((a, b) =>  {
         if (b.date.isBefore(a.date)) {
           return -1;

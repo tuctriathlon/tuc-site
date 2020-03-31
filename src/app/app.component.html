@@ -1,6 +1,6 @@
 <mat-toolbar class="header" color="primary">
   <button mat-icon-button (click)="menu.toggle()"><mat-icon>menu</mat-icon></button>
-  <img src="../assets/logo_tuc.jpg" height="50" alt="Logo TUC Triathlon"/>
+  <img src="../assets/logo_tuc.jpg" height="50" alt="Logo TUC Triathlon" [routerLink]="['/']"/>
 </mat-toolbar>
 <mat-sidenav-container class="side-menu">
   <mat-sidenav #menu mode="over" fixedInViewport>
@@ -9,21 +9,22 @@
       <img src="../assets/logo_tuc.jpg" height="50" alt="Logo TUC Triathlon"/>
     </mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item *ngFor="let nav of fillerNav">{{nav}}</a>
+      <a mat-list-item *ngFor="let nav of fillerNav" [routerLink]="nav.link" (click)="menu.toggle()">
+          <mat-icon class="mr-2">home</mat-icon>
+          <div class="align-items-center">{{nav.name}}</div>
+      </a>
+      <a class="align-items-center" mat-list-item href="http://www.triathlondetoulouse.com" target="_blank" (click)="menu.toggle()">
+        <img src="../assets/logo/logo_tdt.png" alt="TdT" width="24px" height="24px" class="mr-2">
+        Triathlon de Toulouse
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content class="background">
-    <div id="app-content">
-      <app-event *ngFor="let event of events" [event]="event"></app-event>
-      <mat-paginator [length]="eventService.getCount()"
-                     [pageSize]="10"
-                     hidePageSize
-                     showFirstLastButtons
-                     (page)="changePage($event)">
-      </mat-paginator>
+  <mat-sidenav-content class="background w-100 d-flex flex-column">
+    <div id="app-content" class="container flex-grow-1">
+      <router-outlet></router-outlet>
     </div>
     <mat-toolbar class="footer" color="primary">Footer</mat-toolbar>
   </mat-sidenav-content>
-</mat-sidenav-container>
 
+</mat-sidenav-container>
