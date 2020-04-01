@@ -19,6 +19,9 @@ import {EventCardComponent} from './components/event-card/event-card.component';
 import {MatCardModule} from '@angular/material/card';
 import {EventPageComponent} from './pages/event-page/event-page.component';
 import {A11yModule} from '@angular/cdk/a11y';
+import {TestPageComponent} from './pages/test-page/test-page.component';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import {A11yModule} from '@angular/cdk/a11y';
     HomeComponent,
     Home2Component,
     EventPageComponent,
+    TestPageComponent,
     EventComponent,
     EventCardComponent
   ],
@@ -43,7 +47,9 @@ import {A11yModule} from '@angular/cdk/a11y';
     AppRoutingModule,
     MatPaginatorModule,
     MatCardModule,
-    A11yModule
+    A11yModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

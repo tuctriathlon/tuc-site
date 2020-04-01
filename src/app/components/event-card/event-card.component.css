@@ -1,0 +1,49 @@
+.card{
+  rotation-point: center;
+  transition: transform 1s linear;
+  height: 400px;
+  transform: rotateY(0);
+  cursor: pointer;
+}
+.card:hover {
+  transition: transform 1s linear;
+  transform: rotateY(180deg);
+}
+
+.no-rotate {
+  transform: rotateY(0);
+  transition: transform 1s linear;
+}
+.card:hover .no-rotate{
+  transform: rotateY(180deg);
+  transition: transform 1s linear;
+}
+
+.front {
+  visibility: visible;
+  transition: visibility 0s linear 500ms;
+}
+.card:hover .front{
+  visibility: hidden;
+  transition: visibility 0s linear 500ms;
+}
+
+.back {
+  visibility: hidden;
+  transition: visibility 0s linear 500ms;
+}
+.card:hover .back{
+  visibility: visible;
+  transition: visibility 0s linear 500ms;
+}
+
+.card-subtitle {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+img {
+  max-height: 66%;
+  object-fit: cover;
+}
