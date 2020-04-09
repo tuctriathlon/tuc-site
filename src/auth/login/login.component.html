@@ -1,0 +1,34 @@
+<div class="dialog-title" mat-dialog-title >
+  <div>Connexion</div>
+  <button mat-icon-button mat-dialog-close>
+    <fa-icon icon="times" size="lg"></fa-icon>
+  </button>
+</div>
+<form [formGroup]="loginForm" mat-dialog-content>
+  <fieldset class="d-flex flex-column">
+    <mat-form-field class="form-field">
+      <mat-label>Email</mat-label>
+      <input matInput name="email" formControlName="email" placeholder="Ex. tucos@tuc-triathlon.com" cdkFocusInitial>
+      <mat-error *ngIf="loginForm.get('email').errors">
+        Adresse email invalide
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput name="password" formControlName="password"
+             type="password">
+    </mat-form-field>
+  </fieldset>
+</form>
+<div class="dialog-actions" mat-dialog-actions>
+  <button mat-flat-button
+          color="primary"
+          class="button button-primary"
+          (click)="login()"
+          [disabled]="!loginForm.valid">Connexion</button>
+  <button mat-flat-button
+          class="button"
+          (click)="resetPwd()">
+    Mot de passe oublié
+  </button>
+</div>

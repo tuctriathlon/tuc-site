@@ -1,20 +1,33 @@
 <mat-toolbar class="header" color="primary">
-  <button mat-icon-button (click)="menu.toggle()"><mat-icon>menu</mat-icon></button>
+  <button mat-icon-button (click)="menu.toggle()"><fa-icon icon="bars" size="lg"></fa-icon></button>
   <img src="../assets/logo_tuc.jpg" height="50" alt="Logo TUC Triathlon" [routerLink]="['/']"/>
+  <button *ngIf="!isLogged()" mat-icon-button (click)="openDialog('login')" class="header-right"><fa-icon icon="user" size="lg"></fa-icon></button>
+  <button *ngIf="isLogged()" mat-icon-button [matMenuTriggerFor]="userMenu" class="header-right"><fa-icon icon="user" size="lg"></fa-icon></button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <fa-icon icon="power-off" size="lg"></fa-icon>
+      <span>Déconnexion</span>
+    </button>
+  </mat-menu>
+
 </mat-toolbar>
 <mat-sidenav-container class="side-menu">
   <mat-sidenav #menu mode="over" fixedInViewport>
     <mat-toolbar color="primary">
-      <button mat-icon-button (click)="menu.toggle()"><mat-icon>close</mat-icon></button>
+      <button mat-icon-button (click)="menu.toggle()"><fa-icon icon="times" size="lg"></fa-icon></button>
       <img src="../assets/logo_tuc.jpg" height="50" alt="Logo TUC Triathlon"/>
     </mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item *ngFor="let nav of fillerNav" [routerLink]="nav.link" (click)="menu.toggle()">
-          <mat-icon class="mr-2">home</mat-icon>
+      <a mat-list-item
+         *ngFor="let nav of fillerNav"
+         [routerLinkActive]="'mat-menu-item-highlighted'"
+         [routerLink]="nav.link"
+         (click)="menu.toggle()">
+          <fa-icon [icon]="nav.icon" class="mr-2" size="lg"></fa-icon>
           <div class="align-items-center">{{nav.name}}</div>
       </a>
       <a class="align-items-center" mat-list-item href="http://www.triathlondetoulouse.com" target="_blank" (click)="menu.toggle()">
-        <img src="../assets/logo/logo_tdt.png" alt="TdT" width="24px" height="24px" class="mr-2">
+        <img src="../assets/logo/logo_tdt.png" alt="TdT" width="21px" height="21px" class="mr-2">
         Triathlon de Toulouse
       </a>
     </mat-nav-list>
@@ -24,6 +37,7 @@
     <div id="app-content" class="container flex-grow-1">
       <router-outlet></router-outlet>
     </div>
+<!--    <router-outlet name="popup"></router-outlet>-->
     <mat-toolbar class="footer" color="primary">Footer</mat-toolbar>
   </mat-sidenav-content>
 

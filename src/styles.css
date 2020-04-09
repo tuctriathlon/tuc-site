@@ -3,3 +3,13 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+button:focus, div:focus, img:focus {
+  outline: none;
+}
+
+.dialog-title, .dialog-actions {
+  display: inline-flex !important;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}

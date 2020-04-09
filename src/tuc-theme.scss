@@ -11,21 +11,21 @@
 
 $jaune-tuc: #FFEA13;
 $gris-tuc: #7D847C;
-$tuc-jaune: (
-  50: #FFFBD4,
-  100: #FFF9BE,
-  200: #FFF593,
-  300: #FFF168,
-  400: #FFED3D,
-  500: #FFEA13,
-  600: #A3950D,
-  700: #764B09,
-  800: #464006,
-  900: #181602,
-  A100: #FFF9BE,
-  A200: #FFF7A9,
-  A400: #FFED3D,
-  A700: #764B09,
+$tuc-jaune-palette: (
+  50: #fffde5,
+  100: #fff9c0,
+  200: #fff595,
+  300: #fff169,
+  400: #fcec42,
+  500: #ffeb13,
+  600: #fed809,
+  700: #febf00,
+  800: #fea600,
+  900: #fd7a00,
+  A100: #fff9c0,
+  A200: #fff595,
+  A400: #fcec42,
+  A700: #febf00,
   contrast: (
     50: $dark-primary-text,
     100: $dark-primary-text,
@@ -34,29 +34,72 @@ $tuc-jaune: (
     400: $dark-primary-text,
     500: $dark-primary-text,
     600: $dark-primary-text,
-    700: $light-primary-text,
-    800: $light-primary-text,
-    900: $light-primary-text,
+    700: $dark-primary-text,
+    800: $dark-primary-text,
+    900: $dark-primary-text,
     A100: $dark-primary-text,
     A200: $dark-primary-text,
     A400: $dark-primary-text,
-    A700: $light-primary-text,
+    A700: $dark-primary-text,
+  )
+);
+
+$tuc-dark-palette: (
+  50: #f5fbf5,
+  100: #f0f6f0,
+  200: #e8eee8,
+  300: #dadfda,
+  400: #b6bcb6,
+  500: #979d97,
+  600: #6f746f,
+  700: #5b605b,
+  800: #3c413c,
+  900: #1c201c,
+  A100: #fff9c0,
+  A200: #fff595,
+  A400: #fcec42,
+  A700: #febf00,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $jaune-tuc,
+    700: $jaune-tuc,
+    800: $jaune-tuc,
+    900: $jaune-tuc,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $jaune-tuc,
   )
 );
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$site-primary: mat-palette($tuc-jaune);
-$site-accent: mat-palette($mat-pink, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$site-warn: mat-palette($mat-red);
+$site-primary: mat-palette($tuc-jaune-palette);
+$site-accent: mat-palette($tuc-dark-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$site-theme: mat-light-theme($site-primary, $site-accent, $site-warn);
+$site-theme: mat-light-theme($site-primary, $site-accent);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($site-theme);
 
+
+// Define an alternate dark theme.
+$dark-primary: mat-palette($tuc-dark-palette);
+$dark-accent:  mat-palette($tuc-jaune-palette);
+$dark-warn:    mat-palette($mat-deep-orange);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// Include the alternative theme styles inside of a block with a CSS class. You can make this
+// CSS class whatever you want. In this example, any component inside of an element with
+// `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
+.tuc-dark-theme {
+  @include angular-material-theme($dark-theme);
+}
