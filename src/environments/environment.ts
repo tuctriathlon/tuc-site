@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   directusUrl: 'http://directus.tuc-triathlon.com',
-  directusProject: 'tuc-site'
+  directusProject: 'tuc-site',
+  googleCalendarTrainingId: '',
+  googleApiKey: ''
 };
 
 /*

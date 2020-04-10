@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
               public dialog: MatDialog) {
     this.fillerNav.push({name: 'Home', link: '/home', icon: 'home'});
     this.fillerNav.push({name: 'Home2', link: '/home2', icon: 'home'});
+    this.fillerNav.push({name: 'Training', link: '/training', icon: 'dumbbell'});
     this.fillerNav.push({name: 'Test', link: '/test', icon: 'vial'});
   }
 

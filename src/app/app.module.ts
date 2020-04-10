@@ -27,6 +27,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {ForgottenPasswordComponent} from '../auth/forgotten-password/forgotten-password.component';
 import {MatMenuModule} from '@angular/material/menu';
+import {TrainingModule} from '../training/training.module';
+import {SharedModule} from '../shared/shared.module';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,7 @@ import {MatMenuModule} from '@angular/material/menu';
     FormsModule,
     HttpClientModule,
     FontAwesomeModule,
+    FullCalendarModule,
     MatSliderModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -56,7 +60,10 @@ import {MatMenuModule} from '@angular/material/menu';
     MatMenuModule,
     MatCardModule,
     // tuc modules
+    SharedModule,
     AuthModule,
+    TrainingModule,
+    // appRouting module doit etre en dernier
     AppRoutingModule,
   ],
   entryComponents: [
