@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "release": "standard-version",
     "prerelease": "standard-version --prerelease alpha",
-    "deploy": "ng build --configuration=server && scp -r -p ./dist/site/** tuctri@ssh.cluster003.hosting.ovh.net:/homez.912/tuctri/demo"
+    "deploy": "ng build --prod && scp -r -p ./dist/site/** tuctri@ssh.cluster003.hosting.ovh.net:/homez.912/tuctri/demo"
   },
   "private": true,
   "dependencies": {
