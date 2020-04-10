@@ -1,25 +1,29 @@
-<h1 class="page-title">Training</h1>
+<h1 class="page-title">
+  <fa-icon icon="dumbbell" size="lg"></fa-icon> Training</h1>
 <div class="page-description"></div>
 <div class="link-bar">
   <button mat-icon-button routerLink="/faq"><fa-icon icon="question-circle" size="lg"></fa-icon></button>
 </div>
 <div>
-  calendrier des entrainements
+  <h2>Calendrier des entrainements</h2>
   <full-calendar
     #calendar
     defaultView="dayGridWeek"
+    locale="fr"
+    [firstDay]="1"
     [header]="{
-        left: 'prev,next, today',
+        left: 'prev,today,next',
         center: '',
         right: 'title'
       }"
+    [height]="200"
     [plugins]="calendarPlugins"
     [googleCalendarApiKey]="googleApiKey"
     [events]="events"
     (dateClick)="handleDateClick($event)"
   ></full-calendar>
 </div>
-<div class="container-fluid pt-4 card-group">
+<div class="container-fluid pt-4 card-group justify-content-center">
   <app-training-card *ngFor="let training of trainingList"
                      class="col-lg-4 col-md-6 col-sm-12"
                      [training]="training">

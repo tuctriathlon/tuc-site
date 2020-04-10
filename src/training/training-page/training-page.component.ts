@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import {TrainingModel} from '../training.model';
 import {TrainingService} from '../training.service';
 import * as moment from 'moment';
@@ -27,7 +27,7 @@ export class TrainingPageComponent implements OnInit {
 
 
   constructor(private trainingService: TrainingService) {
-    this.selectedDate = moment('2020-04-02');
+    this.selectedDate = moment();
   }
 
   ngOnInit(): void {
