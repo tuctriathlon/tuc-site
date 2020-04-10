@@ -63,8 +63,8 @@ export class AuthService {
       token: this.getJwtToken()
     }).pipe(
       pluck('data'),
-      tap((token) => {
-        this.setSession(token);
+      tap((data) => {
+        this.setSession(data.token);
       })
     );
   }

@@ -28,6 +28,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.authService.getJwtToken()) {
+      this.authService.refreshToken().subscribe(_ => {
+        console.log('connecté');
+      });
+    }
     this.modalService.openedModal.subscribe(modal => {
       if (modal) {
         this.openDialog(modal);
