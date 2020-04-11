@@ -30,6 +30,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {TrainingModule} from '../training/training.module';
 import {SharedModule} from '../shared/shared.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import {FaqModule} from '../faq/faq.module';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     SharedModule,
     AuthModule,
     TrainingModule,
+    FaqModule,
     // appRouting module doit etre en dernier
     AppRoutingModule,
   ],
@@ -78,4 +80,3 @@ export class AppModule {
     library.addIconPacks(fas);
   }
 }
-

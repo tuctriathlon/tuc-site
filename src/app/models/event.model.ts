@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import {TextUtils} from '../utils/text.utils';
+import {TextUtils} from '../../shared/text.utils';
 
 const SUMMARY_LENGTH = 400;
 

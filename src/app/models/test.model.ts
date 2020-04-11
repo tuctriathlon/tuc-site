@@ -5,4 +5,9 @@ export class TestModel extends DirectusItemModel {
   constructor() {
     super();
   }
+
+  updateFromData(data: any) {
+    super.updateFromData(data);
+    this.name = data.name;
+  }
 }
