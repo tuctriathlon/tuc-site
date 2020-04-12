@@ -8,15 +8,23 @@
   <fieldset class="d-flex flex-column">
     <mat-form-field class="form-field">
       <mat-label>Email</mat-label>
-      <input matInput name="email" formControlName="email" placeholder="Ex. tucos@tuc-triathlon.com" cdkFocusInitial>
+      <input
+        matInput name="email"
+        formControlName="email"
+        placeholder="Ex. tucos@tuc-triathlon.com"
+        (keydown.enter)="login()"
+        cdkFocusInitial>
       <mat-error *ngIf="loginForm.get('email').errors">
         Adresse email invalide
       </mat-error>
     </mat-form-field>
     <mat-form-field class="form-field">
       <mat-label>Mot de passe</mat-label>
-      <input matInput name="password" formControlName="password"
-             type="password">
+      <input matInput
+             name="password"
+             formControlName="password"
+             type="password"
+             (keydown.enter)="login()">
     </mat-form-field>
   </fieldset>
 </form>

@@ -30,8 +30,8 @@ export class LoginComponent implements OnInit {
 
   login() {
     const val = this.loginForm.value;
-
-    if (val.email && val.password) {
+    this.loginForm.updateValueAndValidity();
+    if (this.loginForm.valid) {
       this.authService.login({ email: val.email, password: val.password })
         .subscribe(
           () => {
