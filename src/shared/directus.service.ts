@@ -8,7 +8,7 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   protected resourceName: string;
   protected resourceList: T[];
   protected constructor(protected http: HttpClient,
-                        protected tctr: () => T,
+                        protected ctor: new(props: Partial<T>) => T,
                         resourceName: string) {
     this.resourceName = resourceName;
     this.resourceList = [];
@@ -30,7 +30,10 @@ export abstract class DirectusService<T extends DirectusItemModel> {
    * @param id the item Id
    */
   getById(id: number): Observable<T> {
-    return this.get(this.baseUrl + '/' + id);
+    return this.http.get(this.baseUrl + '/' + id).pipe(
+      pluck('data'),
+      map<any, T>(data => this.toSingleModel(data))
+    );
   }
 
   /**
@@ -60,7 +63,8 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   protected get(url: string, options = {}): Observable<T> {
     return this.http.get<T>(url, options).pipe(
       pluck('data'),
-      map<any, T>(this.toSingleModel)
+      map<any[], T[]>(data => this.toArrayModel(data)),
+      pluck('0')
     );
   }
 
@@ -75,8 +79,8 @@ export abstract class DirectusService<T extends DirectusItemModel> {
    * return a T instance from data
    * @param data any
    */
-  private toSingleModel(data: any): T {
-    const t = this.tctr();
+  private toSingleModel(data: Partial<T>): T {
+    const t = new this.ctor(data);
     t.updateFromData(data);
     return t;
   }

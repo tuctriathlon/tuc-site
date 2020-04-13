@@ -9,7 +9,7 @@ import {TestModel} from '../models/test.model';
 })
 export class TestService extends DirectusService<TestModel> {
   constructor(protected http: HttpClient) {
-    super(http, () => new TestModel(),  'test');
+    super(http, TestModel,  'test');
   }
 
 }

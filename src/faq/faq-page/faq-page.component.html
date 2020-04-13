@@ -1,35 +1,34 @@
-<h1>
-  <fa-icon icon="question"></fa-icon>
-  Foire aux questions
-</h1>
-<mat-form-field class="container-fluid w-100">
-  <input matInput type="search" placeholder="Rechercher" [(ngModel)]="searchText">
-  <button mat-icon-button matSuffix>
-    <fa-icon icon="search"></fa-icon>
-  </button>
-</mat-form-field>
-<mat-chip-list class="tag-list" selectable>
-  <mat-chip
-    [selected]="selectedTag === 0"
-    (click)="selectedTag = 0">
-    All
-  </mat-chip>
-  <mat-chip
-    *ngFor="let tag of tags | async | sortBy : ['name']"
-    [selected]="selectedTag === tag.id"
-    (click)="selectedTag = tag.id">
-    {{tag.name}}
-  </mat-chip>
-</mat-chip-list>
-<mat-accordion multi>
-  <mat-expansion-panel class="m-2" *ngFor="let faq of faqs | async | faqFilter: selectedTag | faqSearch: searchText">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{faq.question}}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <p>{{faq.reponse}}</p>
-  </mat-expansion-panel>
-</mat-accordion>
-<button class="no-result" mat-flat-button routerLink="/contact">Contactez nous si vous ne trouvez pas de réponse à votre question</button>
-
+<app-directus-page url="faq">
+  <div *appDirectusPageContent>
+    <mat-form-field  class="container-fluid w-100" >
+      <input matInput type="search" placeholder="Rechercher" [(ngModel)]="searchText">
+      <button mat-icon-button matSuffix>
+        <fa-icon icon="search"></fa-icon>
+      </button>
+    </mat-form-field>
+    <mat-chip-list class="tag-list" selectable>
+      <mat-chip
+        [selected]="selectedTag === 0"
+        (click)="selectedTag = 0">
+        All
+      </mat-chip>
+      <mat-chip
+        *ngFor="let tag of tags | async | sortBy : ['name']"
+        [selected]="selectedTag === tag.id"
+        (click)="selectedTag = tag.id">
+        {{tag.name}}
+      </mat-chip>
+    </mat-chip-list>
+    <mat-accordion multi>
+      <mat-expansion-panel class="m-2" *ngFor="let faq of faqs | async | faqFilter: selectedTag | faqSearch: searchText">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{faq.question}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{faq.reponse}}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <button class="no-result text-wrap" mat-flat-button routerLink="/contact">Contactez nous si vous ne trouvez pas de réponse à votre question</button>
+  </div>
+</app-directus-page>

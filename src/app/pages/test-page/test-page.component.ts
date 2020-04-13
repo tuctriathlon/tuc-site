@@ -9,34 +9,36 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./test-page.component.css']
 })
 export class TestPageComponent implements OnInit, OnDestroy {
-  substrions: Subscription[];
+  subscriptions: Subscription[];
   tests: TestModel[];
   selectedTest: TestModel;
+  counterValue = 3;
+  fancyCounterValue = 2;
   constructor(private testService: TestService) {
     this.tests = [];
-    this.substrions = [];
+    this.subscriptions = [];
   }
 
   ngOnInit(): void {
-    this.substrions.push(this.testService.getAll().subscribe(tests => this.tests = tests));
+    this.subscriptions.push(this.testService.getAll().subscribe(tests => this.tests = tests));
   }
 
   ngOnDestroy(): void {
-    this.substrions.forEach(s => s.unsubscribe());
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   deleteItem(id: number) {
-    this.substrions.push(this.testService.deleteItem(id).subscribe(_ => this.tests = this.tests.filter(i => i.id === id)));
+    this.subscriptions.push(this.testService.deleteItem(id).subscribe(_ => this.tests = this.tests.filter(i => i.id === id)));
   }
 
   saveItem(item: TestModel) {
     if (item.id) {
-      this.substrions.push(this.testService.updateItem(item).subscribe(savedItem => {
+      this.subscriptions.push(this.testService.updateItem(item).subscribe(savedItem => {
         const index = this.tests.findIndex(i => i.id === item.id);
         this.tests.splice(index, 1, savedItem);
       }));
     } else {
-      this.substrions.push(this.testService.addItem(item).subscribe(savedItem => this.tests.push(savedItem)));
+      this.subscriptions.push(this.testService.addItem(item).subscribe(savedItem => this.tests.push(savedItem)));
     }
   }
 

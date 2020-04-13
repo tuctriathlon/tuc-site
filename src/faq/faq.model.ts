@@ -19,7 +19,7 @@ export class FaqModel extends DirectusItemModel {
   }
 
   updateFromData(data) {
-    super.updateFromData(data);
+    this.id = data.id;
     this.question = data.question;
     this.reponse = data.reponse;
     this.tag = data.tag;

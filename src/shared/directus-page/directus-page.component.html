@@ -1,0 +1,13 @@
+<ng-container *ngIf="page$ | async as page">
+  <h1 class="page-title">
+    <fa-icon *ngIf="page.icon" [icon]="page.icon" class="mr-3"></fa-icon>
+    <span>{{page.title}}</span>
+  </h1>
+  <div class="page-image" *ngIf="page.image && pageImage$ | async as image">
+    <img [src]="image.location" alt="page-picture" class="img-fluid mx-auto d-block"/>
+  </div>
+  <div class="page-description mt-1" [innerHTML]="page.description | safeHtml">
+  </div>
+  <ng-container *ngTemplateOutlet="pageButtonBarTpl"></ng-container>
+  <ng-container *ngTemplateOutlet="pageContentTpl"></ng-container>
+</ng-container>

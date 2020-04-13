@@ -9,6 +9,6 @@ import {HttpClient} from '@angular/common/http';
 export class PoleService extends DirectusService<PoleModel> {
 
   constructor(private httpClient: HttpClient) {
-    super(httpClient, () => new PoleModel(), 'pole');
+    super(httpClient, PoleModel, 'pole');
   }
 }

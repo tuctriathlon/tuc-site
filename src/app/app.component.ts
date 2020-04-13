@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventModel} from './models/event.model';
 import {LoginComponent} from '../auth/login/login.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -7,41 +7,52 @@ import {ForgottenPasswordComponent} from '../auth/forgotten-password/forgotten-p
 import {ModalService} from './services/modal.service';
 import {ModalEnum} from './models/modal.enum';
 import {Router} from '@angular/router';
+import {PageService} from '../shared/page.service';
+import {Observable, Subscription} from 'rxjs';
+import {PageModel} from '../shared/page.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   fillerNav = [];
-
+  menuItems$: Observable<PageModel[]>;
   events: EventModel[];
+  subscriptions: Subscription[] = [];
   constructor(private authService: AuthService,
               private modalService: ModalService,
+              private pageService: PageService,
               private router: Router,
               public dialog: MatDialog) {
-    this.fillerNav.push({name: 'Home', link: '/home', icon: 'home'});
-    this.fillerNav.push({name: 'Home2', link: '/home2', icon: 'home'});
-    this.fillerNav.push({name: 'FAQ', link: '/faq', icon: 'question'});
     this.fillerNav.push({name: 'FAQ com', link: ['/', 'faq', {pole: 1}], icon: 'question'});
-    this.fillerNav.push({name: 'Training', link: '/training', icon: 'dumbbell'});
-    this.fillerNav.push({name: 'Test', link: '/test', icon: 'vial'});
   }
 
   ngOnInit(): void {
     if (this.authService.getJwtToken()) {
-      this.authService.refreshToken().subscribe(_ => {
+      this.subscriptions.push(this.authService.refreshToken().subscribe(_ => {
         console.log('connecté');
-      });
+      }));
     }
-    this.modalService.openedModal.subscribe(modal => {
+    this.subscriptions.push(this.authService.onLogin.subscribe(() => {
+      this.menuItems$ = this.pageService.getAll();
+    }));
+    this.subscriptions.push(this.modalService.openedModal.subscribe(modal => {
       if (modal) {
         this.openDialog(modal);
       } else {
         this.dialog.closeAll();
       }
-    });
+    }));
+    this.menuItems$ = this.pageService.getAll();
+  }
+
+  /**
+   * clear all subscriptions
+   */
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   isLogged() {

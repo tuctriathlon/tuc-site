@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../auth.service';
-import {Router} from '@angular/router';
 import {MatDialogRef} from '@angular/material/dialog';
 import {ModalService} from '../../app/services/modal.service';
 import {ModalEnum} from '../../app/models/modal.enum';

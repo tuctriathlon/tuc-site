@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {catchError, mapTo, pluck, shareReplay, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {environment} from '../environments/environment';
 import * as moment from 'moment';
 
@@ -15,6 +15,7 @@ export class AuthService {
   private readonly TOKEN_EXPIRATION_TIME = 20 * 60;
   // url to redirect after login
   redirectUrl: string;
+  onLogin: BehaviorSubject<boolean> =  new BehaviorSubject(false);
 
   get serviceUrl() {
     return [environment.directusUrl, environment.directusProject, 'auth'].join('/');
@@ -32,7 +33,10 @@ export class AuthService {
     return this.http.post<any>(`${this.serviceUrl}/authenticate`, user)
       .pipe(
         pluck('data'),
-        tap(({token}) => this.setSession(token)),
+        tap(({token}) => {
+          this.setSession(token);
+          this.onLogin.next(true);
+        }),
         mapTo(true),
         shareReplay(),
         catchError(error => {
@@ -46,6 +50,7 @@ export class AuthService {
    */
   logout() {
     this.removeTokens();
+    this.onLogin.next(false);
   }
 
   /**
@@ -64,7 +69,14 @@ export class AuthService {
     }).pipe(
       pluck('data'),
       tap((data) => {
+        this.onLogin.next(true);
         this.setSession(data.token);
+      }),
+    catchError(err => {
+        console.log(err);
+        this.onLogin.next(false);
+        this.logout();
+        return of(false);
       })
     );
   }

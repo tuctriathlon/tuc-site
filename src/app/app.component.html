@@ -19,12 +19,12 @@
     </mat-toolbar>
     <mat-nav-list>
       <a mat-list-item
-         *ngFor="let nav of fillerNav"
+         *ngFor="let item of menuItems$ | async | sortBy : ['order']"
          [routerLinkActive]="'mat-menu-item-highlighted'"
-         [routerLink]="nav.link"
+         [routerLink]="item.url"
          (click)="menu.toggle()">
-          <fa-icon [icon]="nav.icon" class="mr-2" size="lg"></fa-icon>
-          <div class="align-items-center">{{nav.name}}</div>
+          <fa-icon *ngIf="item.icon" [icon]="item.icon" class="mr-2" size="lg"></fa-icon>
+          <div class="align-items-center">{{item.title}}</div>
       </a>
       <a class="align-items-center" mat-list-item href="http://www.triathlondetoulouse.com" target="_blank" (click)="menu.toggle()">
         <img src="../assets/logo/logo_tdt.png" alt="TdT" width="21px" height="21px" class="mr-2">

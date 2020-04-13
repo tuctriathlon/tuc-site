@@ -16,10 +16,6 @@ export class EventCardComponent implements OnInit {
     this.mouseLeave();
   }
 
-  mouseEnter() {
-    this.hovered = true;
-  }
-
   mouseLeave() {
     this.hovered = !this.event.picture;
   }

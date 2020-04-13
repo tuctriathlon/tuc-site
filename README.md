@@ -5,12 +5,12 @@ Site du TUC triathlon
  * Cloner le repo git
  * installer [nodeJS LTS](https://nodejs.org/en/)
  * installer les librairies via la commande `npm i`
- * récuperer le fichier enviroment.ts sur le [drive TUC comm](https://drive.google.com/open?id=1SXX2JiZgMWAv8rK9FgHblliyBz4vXUm0) et le mettre dans src/environments
+ * télécharger le fichier environment.ts sur le [drive TUC comm](https://drive.google.com/open?id=1SXX2JiZgMWAv8rK9FgHblliyBz4vXUm0) et le mettre dans src/environments
  * lancer un serveur de dev `npm run start`
  
- L'application est accessibles sur le port [4200](http://localhost:4200)
+ L'application est accessible sur le port [4200](http://localhost:4200)
 
- NB: ne pas commit les fichiers enviromnent.*.ts avec les valeurs des clés de l'API
+ NB: ne pas commit les fichiers environment.*.ts avec les valeurs des clés de l'API
  
 ### Déploiement
 * completer le fichier "environment.prod.ts"

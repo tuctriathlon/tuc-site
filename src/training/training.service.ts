@@ -11,7 +11,7 @@ import * as moment from 'moment';
 export class TrainingService extends DirectusService<TrainingModel> {
 
   constructor(protected httpClient: HttpClient) {
-    super(httpClient, () => new TrainingModel(), 'training');
+    super(httpClient, TrainingModel, 'training');
   }
 
   getByDate(date: moment.Moment): Observable<TrainingModel[]> {

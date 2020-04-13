@@ -1,17 +1,35 @@
-<h1>Test Page</h1>
-<h3>Load the test resource</h3>
-<div class="w-100 d-inline-flex justify-content-between" *ngFor="let test of tests" (click)="selectedTest = test">
-  <div>{{test.id}}</div>
-  <div>{{test.name}}</div>
-  <div (click)="deleteItem(test.id)"><mat-icon>delete</mat-icon></div>
-</div>
-<div (click)="createItem()"><mat-icon>add</mat-icon>Add</div>
-<h3>edit the resource</h3>
-<div *ngIf="selectedTest">
-  <div>Item: {{selectedTest.id}}</div>
-  <div>
-    Name
-    <input [(ngModel)]="selectedTest.name">
+<app-directus-page url="page-test">
+  <div *appDirectusPageContent>
+    <h3>Load the test resource</h3>
+    <div class="w-100 d-inline-flex justify-content-between" *ngFor="let test of tests" (click)="selectedTest = test">
+      <div>{{test.id}}</div>
+      <div>{{test.name}}</div>
+      <div (click)="deleteItem(test.id)"><mat-icon>delete</mat-icon></div>
+    </div>
+    <div (click)="createItem()"><mat-icon>add</mat-icon>Add</div>
+    <h3>edit the resource</h3>
+    <div *ngIf="selectedTest">
+      <div>Item: {{selectedTest.id}}</div>
+      <div>
+        Name
+        <input [(ngModel)]="selectedTest.name">
+      </div>
+      <div (click)="saveItem(selectedTest)"><mat-icon>save</mat-icon></div>
+    </div>
   </div>
-  <div (click)="saveItem(selectedTest)"><mat-icon>save</mat-icon></div>
-</div>
+  <div *appDirectusPageButtonBar>
+    <button mat-stroked-button class="mx-1" [routerLink]="['/', 'faq', {tag: 1}]">
+      FAQ
+      <fa-icon icon="question-circle" size="lg"></fa-icon>
+    </button>
+    <button mat-stroked-button class="mx-1" [routerLink]="['/', 'faq', {tag: 2}]">
+      FAQ
+      <fa-icon icon="question-circle" size="lg"></fa-icon>
+    </button>
+    <button mat-stroked-button class="mx-1" [routerLink]="['/', 'faq', {tag: 3}]">
+      FAQ
+      <fa-icon icon="question-circle" size="lg"></fa-icon>
+    </button>
+  </div>
+</app-directus-page>
+

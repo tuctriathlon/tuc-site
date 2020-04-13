@@ -9,6 +9,6 @@ import {HttpClient} from '@angular/common/http';
 export class TagService extends DirectusService<TagModel> {
 
   constructor(private httpClient: HttpClient) {
-    super(httpClient, () => new TagModel(), 'tag');
+    super(httpClient, TagModel, 'tag');
   }
 }

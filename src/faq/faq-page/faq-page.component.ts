@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FaqModel} from '../faqModel';
+import {FaqModel} from '../faq.model';
 import {FaqService} from '../faq.service';
 import {Observable, Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';

@@ -1,10 +1,10 @@
-<h1 class="page-title">
-  <fa-icon icon="dumbbell" size="lg"></fa-icon> Training</h1>
-<div class="page-description"></div>
-<div class="link-bar">
-  <button mat-icon-button routerLink="/faq"><fa-icon icon="question-circle" size="lg"></fa-icon></button>
+<app-directus-page url="training"></app-directus-page>
+<div *appDirectusPageButtonBar>
+  <button mat-flat-button [routerLink]="['/', 'faq', {tag: 1}]">
+    <fa-icon icon="question-circle" size="lg"></fa-icon>
+  </button>
 </div>
-<div>
+<div *appDirectusPageContent>
   <h2>Calendrier des entrainements</h2>
   <full-calendar
     #calendar

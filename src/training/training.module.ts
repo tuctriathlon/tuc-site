@@ -8,20 +8,25 @@ import {MatButtonModule} from '@angular/material/button';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatCardModule} from '@angular/material/card';
 import {FullCalendarModule} from '@fullcalendar/angular';
+import {SharedModule} from '../shared/shared.module';
 
 const trainingRoutes: Routes = [
   {path: 'training', component: TrainingPageComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
-  declarations: [TrainingPageComponent, TrainingCardComponent],
+  declarations: [
+    TrainingPageComponent,
+    TrainingCardComponent
+  ],
   imports: [
-    CommonModule,
-    RouterModule.forChild(trainingRoutes),
-    MatButtonModule,
-    FontAwesomeModule,
-    MatCardModule,
-    FullCalendarModule
+      CommonModule,
+      RouterModule.forChild(trainingRoutes),
+      MatButtonModule,
+      FontAwesomeModule,
+      MatCardModule,
+      FullCalendarModule,
+      SharedModule
   ],
   exports: [
     TrainingPageComponent,

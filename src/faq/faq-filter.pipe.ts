@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {FaqModel} from './faqModel';
+import {FaqModel} from './faq.model';
 
 @Pipe({
   name: 'faqFilter'
