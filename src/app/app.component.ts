@@ -9,7 +9,7 @@ import {ModalEnum} from './models/modal.enum';
 import {Router} from '@angular/router';
 import {PageService} from '../shared/page.service';
 import {Observable, Subscription} from 'rxjs';
-import {PageModel} from '../shared/page.model';
+import {PageModel} from '../shared/directus-page/page.model';
 
 @Component({
   selector: 'app-root',

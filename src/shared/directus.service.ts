@@ -21,7 +21,7 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   /**
    * retrieve all data
    */
-  getAll(): Observable<T[]> {
+  getAll(full = false): Observable<T[]> {
     return this.getList(this.baseUrl);
   }
 
@@ -29,7 +29,7 @@ export abstract class DirectusService<T extends DirectusItemModel> {
    * retreive item by Id
    * @param id the item Id
    */
-  getById(id: number): Observable<T> {
+  getById(id: number, full = false): Observable<T> {
     return this.http.get(this.baseUrl + '/' + id).pipe(
       pluck('data'),
       map<any, T>(data => this.toSingleModel(data))

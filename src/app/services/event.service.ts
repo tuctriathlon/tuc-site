@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {EventModel} from '../models/event.model';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,13 @@ export class EventService {
    * @param start first index
    * @param end last index
    */
-  getAll(start?: number, end?: number) {
-    return this.list.slice(start, end);
+  getAll(start?: number, end?: number): Observable<EventModel[]> {
+    return of(this.list.slice(start, end));
   }
 
   /**
    * return element by its id
-   * @param id
+   * @param id of item
    */
   getById(id: number) {
     return this.list.find(e => e.id === id);

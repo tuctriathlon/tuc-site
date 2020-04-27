@@ -1,0 +1,108 @@
+.tuc-card {
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+  rotation-point: center;
+  transition: transform 1s linear, border 0s linear 500ms;
+  transform: rotateY(0);
+  cursor: pointer;
+  border: none;
+}
+.tuc-card.rotated {
+  transition: transform 1s linear, border 0s linear 500ms;
+  transform: rotateY(180deg);
+  border: solid 1px gray;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  filter: grayscale(100%);
+  object-fit: cover;
+  position: relative;
+}
+
+.tuc-card:hover img {
+  filter: none;
+}
+
+.tuc-card-body {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tuc-card-subtitle {
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  width: 100%;
+}
+
+.tuc-card-title {
+  width: 100%;
+  text-transform: capitalize;
+  padding: 20px 10px;
+  color: #FFEA13;
+  background: rgba(0,0,0,0.5);
+  margin: 200px 0 0 0;
+  transform: translate(0, -50%);
+  transition: background-color 0s linear 500ms, color 0s linear 500ms, margin 0s linear 500ms, transform 0s linear 500ms;
+}
+
+.rotated .tuc-card-title {
+  transform: translate(0, 0);
+  color: #000000;
+  background: #FFFFFF;
+  margin-top: 0;
+  transition: background-color 0s linear 500ms, color 0s linear 500ms, margin 0s linear 500ms, transform 0s linear 500ms;
+}
+
+.tuc-card-text {
+  flex-grow: 1;
+  text-align: justify;
+  padding: 0 10px;
+}
+
+.tuc-card-link {
+  background-color: #FFEA13;
+  color: #000000;
+  padding: 10px 15px;
+  font-weight: bold;
+}
+
+.tuc-card-link:hover {
+  box-shadow: 0 0 10px #000000;
+}
+
+.front {
+  visibility: visible;
+  transition: visibility 0s linear 500ms;
+}
+.rotated .front{
+  visibility: hidden;
+  transition: visibility 0s linear 500ms;
+}
+
+.back {
+  visibility: hidden;
+  transition: visibility 0s linear 500ms;
+}
+.rotated .back{
+  visibility: visible;
+  transition: visibility 0s linear 500ms;
+}
+.no-rotate {
+  transform: rotateY(0);
+  transition: transform 1s linear;
+}
+.rotated .no-rotate{
+  transform: rotateY(180deg);
+  transition: transform 1s linear;
+}

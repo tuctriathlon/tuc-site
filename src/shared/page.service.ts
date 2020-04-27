@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {DirectusService} from './directus.service';
-import {PageModel} from './page.model';
+import {PageModel} from './directus-page/page.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 

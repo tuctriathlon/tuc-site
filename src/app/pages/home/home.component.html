@@ -1,7 +1,11 @@
-<app-event *ngFor="let event of events" [event]="event"></app-event>
-<mat-paginator [length]="eventService.getCount()"
-               [pageSize]="10"
-               hidePageSize
-               showFirstLastButtons
-               (page)="changePage($event)">
-</mat-paginator>
+<app-directus-page url="home" [fullWidth]="true">
+  <div *appDirectusPageContent class="pt-4 card-group">
+    <app-card *ngFor="let cr of cr$ | async" [card]="cr.toCard()" class="col-lg-4 col-md-6 col-sm-12 p-1"></app-card>
+  </div>
+  <mat-paginator [length]="eventService.getCount()"
+                 [pageSize]="12"
+                 hidePageSize
+                 showFirstLastButtons
+                 (page)="changePage($event)">
+  </mat-paginator>
+</app-directus-page>

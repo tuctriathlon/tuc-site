@@ -14,7 +14,6 @@ import {HomeComponent} from './pages/home/home.component';
 import {AppRoutingModule} from './app-rooting.module';
 import {EventComponent} from './components/event/event.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {Home2Component} from './pages/home2/home2.component';
 import {EventCardComponent} from './components/event-card/event-card.component';
 import {MatCardModule} from '@angular/material/card';
 import {EventPageComponent} from './pages/event-page/event-page.component';
@@ -31,13 +30,13 @@ import {TrainingModule} from '../training/training.module';
 import {SharedModule} from '../shared/shared.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import {FaqModule} from '../faq/faq.module';
+import {CompteRenduModule} from '../compte-rendu/compte-rendu.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    Home2Component,
     EventPageComponent,
     TestPageComponent,
     EventComponent,
@@ -65,6 +64,7 @@ import {FaqModule} from '../faq/faq.module';
     AuthModule,
     TrainingModule,
     FaqModule,
+    CompteRenduModule,
     // appRouting module doit etre en dernier
     AppRoutingModule,
   ],

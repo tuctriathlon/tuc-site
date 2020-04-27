@@ -1,0 +1,14 @@
+<div class="tuc-card" [class.rotated]="rotated" (click)="rotate()">
+  <img *ngIf="card.image" [src]="card.image" class="front" alt="image">
+  <div class="tuc-card-body no-rotate">
+    <h2 class="tuc-card-title">{{card.title}}</h2>
+    <div class="tuc-card-subtitle mb-2 text-muted back">
+      <div>{{card.subtitleLeft}}</div>
+      <div>{{card.subtitleRight}}</div>
+    </div>
+    <div class="tuc-card-text back" [innerHTML]="card.summary"></div>
+    <div class="tuc-card-link back" [routerLink]="card.routerLink">
+      En savoir plus
+    </div>
+  </div>
+</div>

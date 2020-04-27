@@ -5,7 +5,7 @@
   transform: rotateY(0);
   cursor: pointer;
 }
-.card:hover {
+.card.rotated {
   transition: transform 1s linear;
   transform: rotateY(180deg);
 }
@@ -14,7 +14,7 @@
   transform: rotateY(0);
   transition: transform 1s linear;
 }
-.card:hover .no-rotate{
+.card.rotated .no-rotate{
   transform: rotateY(180deg);
   transition: transform 1s linear;
 }
@@ -23,7 +23,7 @@
   visibility: visible;
   transition: visibility 0s linear 500ms;
 }
-.card:hover .front{
+.card.rotated .front{
   visibility: hidden;
   transition: visibility 0s linear 500ms;
 }
@@ -32,7 +32,7 @@
   visibility: hidden;
   transition: visibility 0s linear 500ms;
 }
-.card:hover .back{
+.card.rotated .back{
   visibility: visible;
   transition: visibility 0s linear 500ms;
 }
@@ -46,4 +46,8 @@
 img {
   max-height: 66%;
   object-fit: cover;
+  filter: grayscale(100%);
+}
+.card:hover img {
+  filter: none;
 }

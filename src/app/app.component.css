@@ -24,13 +24,6 @@
   padding: 0;
 }
 
-.background {
-  background-image: url("../assets/fond_tuc.jpg");
-  background-repeat:no-repeat;
-  background-size:cover;
-}
-
 #app-content {
-  background: #FFFFFF;
-  padding-top: 20px;
+  background: #eeeeee;
 }

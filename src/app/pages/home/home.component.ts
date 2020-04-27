@@ -2,8 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {EventModel} from '../../models/event.model';
 import {EventService} from '../../services/event.service';
 import {PageEvent} from '@angular/material/paginator';
+import {CompteRenduService} from '../../../compte-rendu/compte-rendu.service';
+import {forkJoin, merge, Observable} from 'rxjs';
+import {CardInterface} from '../../../shared/card/card.interface';
+import { map } from 'rxjs/operators';
+import {flatMap} from 'lodash';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 12;
 
 @Component({
   selector: 'app-home',
@@ -13,14 +18,22 @@ const PAGE_SIZE = 10;
 export class HomeComponent implements OnInit {
 
   events: EventModel[];
-  constructor(public eventService: EventService) {
-    this.events = eventService.getAll(0, PAGE_SIZE);
+  cr$: Observable<CardInterface[]>;
+  constructor(public eventService: EventService,
+              public compteRenduService: CompteRenduService) {
+    this.loadItems();
   }
 
   changePage(pageEvent: PageEvent) {
     const firstIndex = pageEvent.pageIndex * PAGE_SIZE;
     const lastIndex = firstIndex + PAGE_SIZE;
-    this.events = this.eventService.getAll(firstIndex, lastIndex);
+    this.loadItems(firstIndex, lastIndex);
+  }
+
+  loadItems(firstIndex: number = 0, lastIndex: number = PAGE_SIZE) {
+    this.cr$ = forkJoin([this.compteRenduService.getAll(true), this.eventService.getAll(firstIndex, lastIndex)]).pipe(
+      map((items) => flatMap(items))
+    );
   }
 
   ngOnInit(): void {
