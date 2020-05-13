@@ -8,6 +8,7 @@ import {
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {AuthService} from './auth.service';
 import {catchError, filter, switchMap, take} from 'rxjs/operators';
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -18,8 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getJwtToken();
-
-    if (token) {
+    if (token && request.url.match(environment.directusUrl)) {
       const cloned = this.addToken(request, token);
 
       return next.handle(cloned).pipe(catchError(error => {

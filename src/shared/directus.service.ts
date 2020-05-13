@@ -28,6 +28,7 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   /**
    * retreive item by Id
    * @param id the item Id
+   * @param full load dependencies
    */
   getById(id: number, full = false): Observable<T> {
     return this.http.get(this.baseUrl + '/' + id).pipe(
@@ -41,15 +42,15 @@ export abstract class DirectusService<T extends DirectusItemModel> {
    * @param item the item to create
    */
   addItem(item: T): Observable<T> {
-    return this.http.post<T>(this.baseUrl, item).pipe(pluck('data'));
+    return this.post(this.baseUrl, item);
   }
 
   /**
    * update item
    * @param item the item to update
    */
-  updateItem(item: T): Observable<T> {
-    return this.http.patch<T>(this.baseUrl + '/' + item.id, item).pipe(pluck('data'));
+  updateItem(id: number, item: Partial<T>): Observable<T> {
+    return this.http.patch<T>(this.baseUrl + '/' + id, item).pipe(pluck('data'));
   }
 
   /**
@@ -68,6 +69,11 @@ export abstract class DirectusService<T extends DirectusItemModel> {
     );
   }
 
+  /**
+   * send request and create a list of instances
+   * @param url api
+   * @param options cf directus documentation
+   */
   protected getList(url: string, options = {}): Observable<T[]> {
     return this.http.get<T>(url, options).pipe(
       pluck('data'),
@@ -76,10 +82,22 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   }
 
   /**
+   * send post request and create instance of Item
+   * @param url api
+   * @param body content
+   */
+  protected post(url: string, body: any): Observable<T> {
+    return this.http.post<T>(url, body).pipe(
+      pluck('data'),
+      map<any, T>(data => this.toSingleModel(data))
+    );
+  }
+
+  /**
    * return a T instance from data
    * @param data any
    */
-  private toSingleModel(data: Partial<T>): T {
+  protected toSingleModel(data: Partial<T>): T {
     const t = new this.ctor(data);
     t.updateFromData(data);
     return t;
@@ -89,7 +107,7 @@ export abstract class DirectusService<T extends DirectusItemModel> {
    * return an array of T instances from data
    * @param data any
    */
-  private toArrayModel(data: any[]): T[] {
+  protected toArrayModel(data: any[]): T[] {
     return data.map(d => this.toSingleModel(d));
   }
 

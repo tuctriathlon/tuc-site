@@ -12,16 +12,24 @@ import {RouterModule, Routes} from '@angular/router';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatDialogModule} from '@angular/material/dialog';
+import {InviteComponent} from './invite/invite.component';
+import {EventCardComponent} from '../app/components/event-card/event-card.component';
+import {SharedModule} from '../shared/shared.module';
+import { InviteUserComponent } from './invite-user/invite-user.component';
 
 const authRoutes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'invite/:token', component: InviteComponent},
+  { path: 'invite', component: InviteUserComponent},
 ];
 
 @NgModule({
   declarations: [
     LoginComponent,
     ForgottenPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    InviteComponent,
+    InviteUserComponent
   ],
   providers: [
     {
@@ -39,11 +47,13 @@ const authRoutes: Routes = [
     RouterModule,
     FontAwesomeModule,
     MatDialogModule,
-    RouterModule.forChild(authRoutes)
+    RouterModule.forChild(authRoutes),
+    SharedModule
   ],
   exports: [
     LoginComponent,
-    ForgottenPasswordComponent
+    ForgottenPasswordComponent,
+    InviteComponent
   ]
 })
 export class AuthModule { }

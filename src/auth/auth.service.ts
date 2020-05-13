@@ -124,7 +124,7 @@ export class AuthService {
    * set session parameter in local storage
    * @param token the user token
    */
-  private setSession(token: string) {
+  public setSession(token: string) {
     const expiresAt = moment().add(this.TOKEN_EXPIRATION_TIME, 'second');
     localStorage.setItem(this.JWT_TOKEN, token);
     localStorage.setItem(this.REFRESH_TOKEN, JSON.stringify(expiresAt.valueOf()) );

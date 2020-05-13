@@ -3,7 +3,7 @@ import {EventModel} from '../../models/event.model';
 import {EventService} from '../../services/event.service';
 import {PageEvent} from '@angular/material/paginator';
 import {CompteRenduService} from '../../../compte-rendu/compte-rendu.service';
-import {forkJoin, merge, Observable} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {CardInterface} from '../../../shared/card/card.interface';
 import { map } from 'rxjs/operators';
 import {flatMap} from 'lodash';

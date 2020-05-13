@@ -6,6 +6,7 @@ const SUMMARY_LENGTH = 400;
 
 export class CardModel {
   title: string;
+  icon?: string;
   content: string;
   subtitleLeft: string;
   subtitleRight: string;

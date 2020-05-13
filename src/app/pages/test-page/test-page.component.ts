@@ -33,7 +33,7 @@ export class TestPageComponent implements OnInit, OnDestroy {
 
   saveItem(item: TestModel) {
     if (item.id) {
-      this.subscriptions.push(this.testService.updateItem(item).subscribe(savedItem => {
+      this.subscriptions.push(this.testService.updateItem(item.id, item).subscribe(savedItem => {
         const index = this.tests.findIndex(i => i.id === item.id);
         this.tests.splice(index, 1, savedItem);
       }));

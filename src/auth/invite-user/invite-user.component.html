@@ -1,0 +1,13 @@
+<h3>email to send</h3>
+<ul>
+  <li *ngFor="let mail of emails"> {{mail}} <button (click)="createUser(mail)">create</button> </li>
+</ul>
+<h3>new users</h3>
+<ul *ngIf="users$ | async as users">
+  <li *ngFor="let user of users">
+    <span>{{user.id}}</span>
+    <span>{{user.email}}</span>
+    <fa-icon *ngIf="user.role" icon="check-circle"></fa-icon>
+    <button (click)="updateUser(user)">create</button>
+  </li>
+</ul>

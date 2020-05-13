@@ -8,14 +8,18 @@ import {CardModel} from './card.model';
 })
 export class CardComponent implements OnInit {
   @Input() card: CardModel = CardModel.RandomCard();
+  @Input() face: 'front' | 'back' | 'rotate' = 'rotate';
   rotated: boolean;
   constructor() { }
 
   ngOnInit(): void {
+    this.rotated = this.face === 'back';
   }
 
   rotate() {
-    this.rotated = !this.rotated;
+    if (this.face === 'rotate') {
+      this.rotated = !this.rotated;
+    }
   }
 
 }

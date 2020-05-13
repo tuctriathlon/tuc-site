@@ -1,0 +1,37 @@
+<app-directus-page [page]="page">
+  <form *appDirectusPageContent [formGroup]="userForm" (ngSubmit)="save()">
+    <fieldset class="d-flex flex-column w-50">
+      <mat-form-field class="form-field">
+        <mat-label>Prénom</mat-label>
+        <input matInput name="firstName" formControlName="firstName"
+               type="text">
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Nom</mat-label>
+        <input matInput name="lastName" formControlName="lastName"
+               type="text">
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput name="password" formControlName="password"
+               type="password">
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Confirmer le mot de passe</mat-label>
+        <input matInput name="password" formControlName="confirmPassword"
+               type="password">
+      </mat-form-field>
+    </fieldset>
+    <mat-error *ngIf="userForm.hasError('different')">
+      Les mots de passe ne sont pas identiques
+    </mat-error>
+    <button mat-flat-button
+            color="primary"
+            class="button button-primary"
+            type="submit"
+            [disabled]="!userForm.valid">Enregistrer</button>
+
+    <p>Token</p>
+    <p>{{jwtToken}}</p>
+  </form>
+</app-directus-page>

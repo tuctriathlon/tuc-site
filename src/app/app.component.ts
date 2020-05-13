@@ -10,6 +10,8 @@ import {Router} from '@angular/router';
 import {PageService} from '../shared/page.service';
 import {Observable, Subscription} from 'rxjs';
 import {PageModel} from '../shared/directus-page/page.model';
+import {FooterService} from './footer.service';
+import {FooterModel} from './models/Footer.model';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +21,13 @@ import {PageModel} from '../shared/directus-page/page.model';
 export class AppComponent implements OnInit, OnDestroy {
   fillerNav = [];
   menuItems$: Observable<PageModel[]>;
+  links$: Observable<FooterModel[]>;
   events: EventModel[];
   subscriptions: Subscription[] = [];
   constructor(private authService: AuthService,
               private modalService: ModalService,
               private pageService: PageService,
+              private footerService: FooterService,
               private router: Router,
               public dialog: MatDialog) {
     this.fillerNav.push({name: 'FAQ com', link: ['/', 'faq', {pole: 1}], icon: 'question'});
@@ -38,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.authService.onLogin.subscribe(() => {
       this.menuItems$ = this.pageService.getAll();
     }));
+    this.links$ = this.footerService.getAll();
     this.subscriptions.push(this.modalService.openedModal.subscribe(modal => {
       if (modal) {
         this.openDialog(modal);

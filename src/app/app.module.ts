@@ -11,7 +11,7 @@ import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome
 import {MatButtonModule} from '@angular/material/button';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 import {HomeComponent} from './pages/home/home.component';
-import {AppRoutingModule} from './app-rooting.module';
+import {AppRoutingModule} from './app-routing.module';
 import {EventComponent} from './components/event/event.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {EventCardComponent} from './components/event-card/event-card.component';
@@ -31,6 +31,7 @@ import {SharedModule} from '../shared/shared.module';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import {FaqModule} from '../faq/faq.module';
 import {CompteRenduModule} from '../compte-rendu/compte-rendu.module';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import {CompteRenduModule} from '../compte-rendu/compte-rendu.module';
     LoginComponent,
     ForgottenPasswordComponent
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

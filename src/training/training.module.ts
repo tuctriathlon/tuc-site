@@ -9,6 +9,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatCardModule} from '@angular/material/card';
 import {FullCalendarModule} from '@fullcalendar/angular';
 import {SharedModule} from '../shared/shared.module';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 const trainingRoutes: Routes = [
   {path: 'training', component: TrainingPageComponent, canActivate: [AuthGuard]}
@@ -19,15 +20,16 @@ const trainingRoutes: Routes = [
     TrainingPageComponent,
     TrainingCardComponent
   ],
-  imports: [
-      CommonModule,
-      RouterModule.forChild(trainingRoutes),
-      MatButtonModule,
-      FontAwesomeModule,
-      MatCardModule,
-      FullCalendarModule,
-      SharedModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(trainingRoutes),
+        MatButtonModule,
+        FontAwesomeModule,
+        MatCardModule,
+        FullCalendarModule,
+        SharedModule,
+        MatButtonToggleModule
+    ],
   exports: [
     TrainingPageComponent,
     RouterModule

@@ -6,27 +6,35 @@
 </div>
 <div *appDirectusPageContent>
   <h2>Calendrier des entrainements</h2>
+  <div>
+    <button mat-button (click)="prevWeek()"><fa-icon icon="arrow-left"></fa-icon></button>
+    <button mat-button [disabled]="isToday" (click)="today()">Aujourd'hui</button>
+    <button mat-button (click)="nextWeek()"><fa-icon icon="arrow-right"></fa-icon></button>
+  </div>
   <full-calendar
     #calendar
     defaultView="dayGridWeek"
     locale="fr"
+    themeSystem="bootstrap"
     [firstDay]="1"
     [header]="{
-        left: 'prev,today,next',
+        left: '',
         center: '',
-        right: 'title'
+        right: ''
       }"
     [height]="200"
     [plugins]="calendarPlugins"
-    [googleCalendarApiKey]="googleApiKey"
     [events]="events"
-    (dateClick)="handleDateClick($event)"
+    (dateClick)="selectDate($event.dateStr)"
+    (eventClick)="handleClickEvent($event)"
   ></full-calendar>
-</div>
-<div class="container-fluid pt-4 card-group justify-content-center">
-  <app-training-card *ngFor="let training of trainingList"
-                     class="col-lg-4 col-md-6 col-sm-12"
-                     [training]="training">
-  </app-training-card>
+
+    <div class="container-fluid pt-4 card-group justify-content-center">
+      <app-card *ngFor="let training of todayTrainings"
+                class="col-lg-4 col-md-6 col-sm-12"
+                [face]="'back'"
+                [card]="training.toCard()"></app-card>
+      <h1 *ngIf="!todayTrainings.length"> <fa-icon icon="bed"></fa-icon> Repos</h1>
+    </div>
 </div>
 </app-directus-page>

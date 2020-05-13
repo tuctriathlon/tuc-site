@@ -4,10 +4,9 @@ import {TrainingService} from '../training.service';
 import * as moment from 'moment';
 import {FullCalendarComponent} from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGrigPlugin from '@fullcalendar/timegrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import googleCalendarPlugin from '@fullcalendar/google-calendar';
-import {environment} from '../../environments/environment';
+import {defaults} from 'lodash';
 
 @Component({
   selector: 'app-training-page',
@@ -16,12 +15,8 @@ import {environment} from '../../environments/environment';
 })
 export class TrainingPageComponent implements OnInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
-  calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, googleCalendarPlugin ];
-  googleApiKey = environment.googleApiKey;
-  events = {
-    googleCalendarId: environment.googleCalendarTrainingId
-  };
-
+  calendarPlugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];
+  events: any[] = [];
   trainingList: TrainingModel[] = [];
   selectedDate: moment.Moment;
 
@@ -30,20 +25,74 @@ export class TrainingPageComponent implements OnInit {
     this.selectedDate = moment();
   }
 
+  get isToday() {
+    return this.selectedDate.isSame(moment(), 'day');
+  }
+
+  get todayTrainings(): TrainingModel[] {
+    return this.trainingList.filter(e => this.selectedDate.isSame(e.start, 'day'));
+  }
+
+  get currentDateFormatted(): string {
+    return this.selectedDate.format('YYYY-MM-DD');
+  }
+
+  get calendarApi() {
+    return this.calendarComponent.getApi();
+  }
+
   ngOnInit(): void {
     this.getSelectedDateTraining();
+    this.updateEvents();
+  }
+
+  updateEvents() {
+    const startOfWeek = this.selectedDate.clone().startOf('isoWeek');
+    const endOfWeek = this.selectedDate.clone().endOf('isoWeek');
+    this.trainingService.getGoogleEvents(startOfWeek, endOfWeek).subscribe(events => {
+      this.trainingList = events;
+      console.log(this.trainingList);
+      this.events = events.map(e => e.toFullCalendar());
+    });
   }
 
   getSelectedDateTraining() {
     this.trainingService.getByDate(this.selectedDate).subscribe(trainings => {
-      console.log(trainings);
-      this.trainingList = trainings;
+      this.todayTrainings.forEach(training => {
+        const index = trainings.findIndex(t => t.type === training.type);
+        if (index >= 0) {
+          training = defaults(training, trainings[index]);
+        }
+      });
     });
   }
 
-  handleDateClick(event) {
-    this.selectedDate = moment(event.dateStr);
+  selectDate(date: string | moment.Moment) {
+    this.selectedDate = moment(date);
+    this.calendarComponent.getApi().select(this.currentDateFormatted);
     this.getSelectedDateTraining();
+  }
+
+  handleClickEvent(event) {
+    console.log(event);
+  }
+
+  nextWeek() {
+    this.calendarApi.next();
+    this.selectDate(this.selectedDate.add(1, 'week'));
+    this.updateEvents();
+  }
+
+  today() {
+    this.calendarApi.today();
+    this.selectDate(moment());
+    this.updateEvents();
+  }
+
+  prevWeek() {
+    this.calendarApi.prev();
+    this.selectDate(this.selectedDate.subtract(1, 'week'));
+    this.updateEvents();
   }
 
 }
