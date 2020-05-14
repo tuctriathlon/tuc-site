@@ -32,6 +32,10 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import {FaqModule} from '../faq/faq.module';
 import {CompteRenduModule} from '../compte-rendu/compte-rendu.module';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {TucIcon} from '../shared/icons/tuc.icon';
+import {TdtIcon} from '../shared/icons/tdt.icon';
+import {TucOmnisportIcon} from '../shared/icons/tucOmnisport.icon';
+import {AbsoluIcon} from '../shared/icons/absolu.icon';
 
 @NgModule({
   declarations: [
@@ -66,7 +70,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
     TrainingModule,
     FaqModule,
     CompteRenduModule,
-    // appRouting module doit etre en dernier
+    // appRouting module doit être en dernier
     AppRoutingModule,
   ],
   entryComponents: [
@@ -79,5 +83,13 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIconPacks(fas);
+    // @ts-ignore
+    library.addIcons(new TucIcon());
+    // @ts-ignore
+    library.addIcons(new TdtIcon());
+    // @ts-ignore
+    library.addIcons(new TucOmnisportIcon());
+    // @ts-ignore
+    library.addIcons(new AbsoluIcon());
   }
 }

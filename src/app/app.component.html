@@ -27,8 +27,16 @@
           <div class="align-items-center">{{item.title}}</div>
       </a>
       <a class="align-items-center" mat-list-item href="http://www.triathlondetoulouse.com" target="_blank" (click)="menu.toggle()">
-        <img src="../assets/logo/logo_tdt.png" alt="TdT" width="21px" height="21px" class="mr-2">
+        <fa-icon icon="tdt" class="mr-2" size="lg"></fa-icon>
         Triathlon de Toulouse
+      </a>
+      <a class="align-items-center" mat-list-item href="https://absoluraid.wixsite.com/absoluraid" target="_blank" (click)="menu.toggle()">
+        <fa-icon icon="absolu-raid" size="lg"></fa-icon>
+        Absolu raid
+      </a>
+      <a class="align-items-center" mat-list-item href="http://www.uncu.fr/les-clubs/tuc" target="_blank" (click)="menu.toggle()">
+        <fa-icon icon="tuc-omnisport" class="mr-2" size="lg"></fa-icon>
+        TUC Omnisport
       </a>
     </mat-nav-list>
   </mat-sidenav>
