@@ -1,4 +1,5 @@
 <app-directus-page url="home" [fullWidth]="true">
+  <div *appDirectusPageButtonBar></div>
   <div *appDirectusPageContent class="pt-4 card-group">
     <app-card *ngFor="let cr of cr$ | async" [card]="cr.toCard()" class="col-lg-4 col-md-6 col-sm-12 p-1"></app-card>
   </div>

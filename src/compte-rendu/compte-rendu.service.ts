@@ -4,7 +4,7 @@ import {CompteRenduModel} from './compte-rendu.model';
 import {HttpClient} from '@angular/common/http';
 import {forkJoin, Observable, of} from 'rxjs';
 import {concatMap, map, tap} from 'rxjs/operators';
-import {DirectusFileService} from '../shared/directus-file.service';
+import {DirectusFileService} from '../shared/directusFiles/directus-file.service';
 
 @Injectable({
   providedIn: 'root'

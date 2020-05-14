@@ -1,10 +1,10 @@
 import {Component, ContentChild, Input, OnInit, TemplateRef} from '@angular/core';
-import {PageService} from '../page.service';
+import {PageService} from './page.service';
 import {Observable, of} from 'rxjs';
 import {PageModel} from './page.model';
 import {concatMap, map, tap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
-import {DirectusFileService} from '../directus-file.service';
+import {DirectusFileService} from '../directusFiles/directus-file.service';
 import {DirectusPageContentDirective} from './directus-page-content.directive';
 import {DirectusPageButtonBarDirective} from './directus-page-button-bar.directive';
 import {LoaderService} from '../loader.service';
@@ -53,20 +53,7 @@ export class DirectusPageComponent implements OnInit {
         }
       }),
       // load page content
-      concatMap(() => this.pageService.getByUrl(this.url || this.paramUrl)),
-      concatMap((page) => {
-        // if page has image load file
-        if (page.image) {
-          return this.fileService.getById(page.image).pipe(
-            map(image => {
-              page.imageFile = image;
-              return page;
-            })
-          );
-        } else {
-          return of(page);
-        }
-      })
+      concatMap(() => this.pageService.getByUrl(this.url || this.paramUrl))
     );
   }
 }

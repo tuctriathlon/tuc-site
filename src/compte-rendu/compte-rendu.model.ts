@@ -4,7 +4,7 @@ import {PageInterface} from '../shared/directus-page/page.interface';
 import {CardInterface} from '../shared/card/card.interface';
 import {CardModel} from '../shared/card/card.model';
 import * as moment from 'moment';
-import {DirectusFileModel} from '../shared/directusFile.model';
+import {DirectusFileModel} from '../shared/directusFiles/directusFile.model';
 
 export class CompteRenduModel extends DirectusItemModel implements PageInterface, CardInterface {
   title: string;
@@ -40,8 +40,7 @@ export class CompteRenduModel extends DirectusItemModel implements PageInterface
     const page = new PageModel();
     page.title = this.title;
     page.description = this.recit;
-    page.image = this.image;
-    page.imageFile = this.imageFile;
+    page.image = this.imageFile;
     return page;
   }
 

@@ -7,7 +7,7 @@ import {ForgottenPasswordComponent} from '../auth/forgotten-password/forgotten-p
 import {ModalService} from './services/modal.service';
 import {ModalEnum} from './models/modal.enum';
 import {Router} from '@angular/router';
-import {PageService} from '../shared/page.service';
+import {PageService} from '../shared/directus-page/page.service';
 import {Observable, Subscription} from 'rxjs';
 import {PageModel} from '../shared/directus-page/page.model';
 import {FooterService} from './footer.service';
@@ -30,7 +30,6 @@ export class AppComponent implements OnInit, OnDestroy {
               private footerService: FooterService,
               private router: Router,
               public dialog: MatDialog) {
-    this.fillerNav.push({name: 'FAQ com', link: ['/', 'faq', {pole: 1}], icon: 'question'});
   }
 
   ngOnInit(): void {
@@ -40,7 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
       }));
     }
     this.subscriptions.push(this.authService.onLogin.subscribe(() => {
-      this.menuItems$ = this.pageService.getAll();
+      this.menuItems$ = this.pageService.getRootPages();
     }));
     this.links$ = this.footerService.getAll();
     this.subscriptions.push(this.modalService.openedModal.subscribe(modal => {
@@ -50,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.dialog.closeAll();
       }
     }));
-    this.menuItems$ = this.pageService.getAll();
+    this.menuItems$ = this.pageService.getRootPages();
   }
 
   /**
