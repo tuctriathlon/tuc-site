@@ -23,6 +23,7 @@ export class DirectusPageComponent implements OnInit {
   paramUrl: string;
   loading = false;
   page$: Observable<PageModel>;
+  childPage$: Observable<PageModel[]>;
   constructor(private pageService: PageService,
               private fileService: DirectusFileService,
               private loaderService: LoaderService,
@@ -53,7 +54,8 @@ export class DirectusPageComponent implements OnInit {
         }
       }),
       // load page content
-      concatMap(() => this.pageService.getByUrl(this.url || this.paramUrl))
+      concatMap(() => this.pageService.getByUrl(this.url || this.paramUrl)),
+      tap(page => this.childPage$ = this.pageService.getChildren(page.id))
     );
   }
 }

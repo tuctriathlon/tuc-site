@@ -13,6 +13,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {LoaderService} from './loader.service';
 import {LoaderInterceptor} from './loader.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -35,12 +36,13 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
       DirectusPageButtonBarDirective,
       CardComponent
   ],
-  imports: [
-      CommonModule,
-      FontAwesomeModule,
-      RouterModule,
-      MatButtonModule,
-      MatProgressSpinnerModule
-  ]
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
+        RouterModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        MatMenuModule
+    ]
 })
 export class SharedModule { }

@@ -5,23 +5,34 @@
         <fa-icon *ngIf="page.icon" [icon]="page.icon" class="mr-3"></fa-icon>
         <span>{{page.title}}</span>
       </h1>
-      <div class="page-image" *ngIf="page.hasImageLoaded">
+      <div class="page-image mb-2" *ngIf="page.hasImageLoaded">
         <img [src]="page.image.location" alt="page-picture" class="img-fluid mx-auto d-block"/>
-      </div>
-      <div class="page-description mt-1" [innerHTML]="page.description | safeHtml">
       </div>
       <ng-container *ngTemplateOutlet="pageButtonBarTpl ? pageButtonBarTpl : defaultButtonBar">
       </ng-container>
       <ng-template #defaultButtonBar>
-        <div class="justify-content-between d-flex">
-          <a *ngFor="let file of page.files" mat-stroked-button [href]="file.location" target="_blank">
-            <fa-icon [icon]="file.getIcon" size="lg" class="mr-2"></fa-icon>{{file.title}}
-          </a>
-          <button mat-stroked-button [routerLink]="['/', 'faq']">
+        <div class="align-content-start d-flex">
+          <button mat-stroked-button [matMenuTriggerFor]="documents" class="mr-2" *ngIf="page.files.length">
+            <fa-icon icon="chevron-down" size="lg" class="mr-2"></fa-icon>
+            Documents
+            <mat-menu #documents="matMenu">
+              <a *ngFor="let file of page.files" mat-menu-item [href]="file.location" target="_blank">
+                <fa-icon [icon]="file.getIcon" size="lg" class="mr-2"></fa-icon>{{file.title}}
+              </a>
+            </mat-menu>
+          </button>
+
+          <button *ngFor="let page of childPage$ | async" mat-stroked-button [routerLink]="['/', page.url]" class="mr-2">
+            <fa-icon [icon]="page.icon" size="lg" class="mr-2"></fa-icon>{{page.title}}
+          </button>
+
+          <button mat-stroked-button [routerLink]="['/', 'faq']" class="mr-2">
             <fa-icon icon="question-circle" size="lg" class="mr-2"></fa-icon>FAQ
           </button>
         </div>
       </ng-template>
+    <div class="page-description mt-1" [innerHTML]="page.description | safeHtml">
+    </div>
       <ng-container *ngTemplateOutlet="pageContentTpl"></ng-container>
   </ng-container>
 
