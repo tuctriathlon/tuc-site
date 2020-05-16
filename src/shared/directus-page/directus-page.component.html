@@ -33,7 +33,12 @@
       </ng-template>
     <div class="page-description mt-1" [innerHTML]="page.description | safeHtml">
     </div>
-      <ng-container *ngTemplateOutlet="pageContentTpl"></ng-container>
+      <ng-container *ngTemplateOutlet="pageContentTpl ? pageContentTpl : defaultContent"></ng-container>
+    <ng-template #defaultContent>
+      <div *ngIf="resource" class="container-fluid pt-4 card-group">
+        <app-card class="col-lg-4 col-md-6 col-sm-12 p-1" *ngFor="let card of cards$ | async" [card]="card"></app-card>
+      </div>
+    </ng-template>
   </ng-container>
 
   <ng-template #loader>

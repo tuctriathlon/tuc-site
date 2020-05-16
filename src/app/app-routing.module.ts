@@ -11,6 +11,8 @@ const appRoutes: Routes = [
   { path: 'test', component: TestPageComponent },
   { path: 'event/:id', component: EventPageComponent },
   { path: ':url', component: DirectusPageComponent },
+  { path: 'page/:resourceName', component: DirectusPageComponent },
+  { path: 'page/:resourceName/:id', component: DirectusPageComponent },
   { path: '',   redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
