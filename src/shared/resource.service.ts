@@ -50,7 +50,7 @@ export class ResourceService {
 
   loadItemPage(resourceName: string, id: number): Observable<PageModel> {
     let converter;
-    return this.getPageFields(resourceName).pipe(
+    return this.getPageConverter(resourceName).pipe(
       concatMap(fields => {
         converter = fields;
         return this.httpClient.get(`${this.baseUrl}/items/${resourceName}/${id}`);
@@ -59,7 +59,7 @@ export class ResourceService {
       map<any, PageModel>(data => {
         return new PageModel({
           title: this.replaceByContent(converter.title, data),
-          description: this.replaceByContent(converter.description, data),
+          description: this.replaceByContent(converter.description, data)
         });
       })
     );
@@ -70,10 +70,10 @@ export class ResourceService {
    * @param resourceName table name
    */
   loadCards(resourceName: string): Observable<CardModel[]> {
-    return this.getCardFields(resourceName).pipe(
+    return this.getCardConverter(resourceName).pipe(
       switchMap(() => {
         const params = new HttpParams()
-          .append('fields', this.getFields(resourceName));
+          .append('fields', this.getFilterFields(resourceName));
         return this.httpClient.get<any[]>(`${this.baseUrl}/items/${resourceName}`, {params});
       }),
       pluck('data'),
@@ -81,7 +81,7 @@ export class ResourceService {
     );
   }
 
-  getCardFields(resourceName: string): Observable<any> {
+  getCardConverter(resourceName: string): Observable<any> {
     if (this.cardFields.findIndex(f => f.table === resourceName) >= 0) {
       return of(this.cardFields.find(f => f.table === resourceName));
     } else {
@@ -96,11 +96,11 @@ export class ResourceService {
     }
   }
 
-  getPageFields(resourceName: string): Observable<any> {
+  getPageConverter(resourceName: string): Observable<any> {
     if (this.pageFields.findIndex(f => f.table === resourceName) >= 0) {
       return of(this.pageFields.find(f => f.table === resourceName));
     } else {
-      const params = new HttpParams().append('filter[table]', resourceName);
+      const params = new HttpParams().append('filter[table.table]', resourceName);
       return this.httpClient.get<any>(`${this.baseUrl}/items/item_to_page`, {params}).pipe(
         pluck('data'),
         map(data => {
@@ -111,8 +111,10 @@ export class ResourceService {
     }
   }
 
-  getResourceFields(resourceName: string) {
-    return this.httpClient.get(this.urlBuilder(['fields', resourceName]));
+  getResourceFields(resourceName: string): Observable<any[]> {
+    return this.httpClient.get<any[]>(this.urlBuilder(['fields', resourceName])).pipe(
+      pluck('data')
+    );
   }
 
   /**
@@ -150,7 +152,11 @@ export class ResourceService {
     return str;
   }
 
-  getFields(resourceName: string) {
+  /**
+   * return the filter fields value to retreive data
+   * @param resourceName item table name
+   */
+  getFilterFields(resourceName: string) {
     const converter = this.cardFields.find(f => f.table === resourceName);
     const fieldList = ['id'];
     fieldList.push(...this.getFieldsName(converter.title));
@@ -159,11 +165,28 @@ export class ResourceService {
     fieldList.push(...this.getFieldsName(converter.content));
     fieldList.push(...this.getFieldsName(converter.icon));
     fieldList.push(this.getFieldsName(converter.image)[0] + '.*');
-    console.log(fieldList);
     return fieldList.join(',');
   }
 
+  /**
+   * find all {{field}} elements and return the list of them
+   * @param str string to evaluate
+   */
   getFieldsName(str): string[] {
-    return (str.match(/\{\{[\w\_]*\}\}/g) || []).map(f => f.replace(/\{|\}/g, ''));
+    return (str.match(/{{2}[\w_]*}{2}/g) || []).map(f => f.replace(/{{2}|}{2}/g, ''));
+  }
+
+  getFieldsToDisplay(resourceName: string): Observable<any[]> {
+    let converter;
+    return this.getPageConverter(resourceName).pipe(
+      switchMap(c => {
+        converter = c;
+        return this.getResourceFields(resourceName);
+      }),
+      map(fields => {
+        const pageFields = this.getFieldsName(JSON.stringify(converter)).concat('id');
+        return fields.filter(field => pageFields.every(f => f !== field.field));
+      })
+    );
   }
 }

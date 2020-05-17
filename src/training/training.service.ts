@@ -17,7 +17,7 @@ export class TrainingService extends DirectusService<TrainingModel> {
   }
 
   getByDate(date: moment.Moment): Observable<TrainingModel[]> {
-    const filterParam = this.buildFilterParams('date_de_la_seance', 'eq', date.format('YYYY-MM-DD'));
+    const filterParam = this.buildFilterParams('date', 'eq', date.format('YYYY-MM-DD'));
     const params = new HttpParams().append(filterParam[0], filterParam[1]);
     return this.getList(this.baseUrl, {params});
   }

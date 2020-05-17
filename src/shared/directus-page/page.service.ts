@@ -18,7 +18,7 @@ export class PageService extends DirectusService<PageModel> {
 
   getByUrl(url: string): Observable<PageModel> {
     const params = new HttpParams().append('filter[url]', url)
-      .append('fields', '*,image.*,files.directus_files_id.*');
+      .append('fields', '*,image.*,files.directus_files_id.*,resources.item_to_card_id.table');
     return this.get(this.baseUrl, {params});
   }
 

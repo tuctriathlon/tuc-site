@@ -9,6 +9,7 @@ export class PageModel extends DirectusItemModel {
   image: number | DirectusFileModel;
   files: DirectusFileModel[];
   order: number;
+  resources: string[];
 
   constructor(data: Partial<PageModel> = {}) {
     super(data);
@@ -21,6 +22,7 @@ export class PageModel extends DirectusItemModel {
     }
     this.order = data.order;
     this.files = [];
+    this.resources = data.resources || [];
   }
 
   get hasImageLoaded() {
@@ -43,5 +45,6 @@ export class PageModel extends DirectusItemModel {
         return new DirectusFileModel(f.directus_files_id);
       }
     });
+    this.resources = (data.resources || []).map(r => r.item_to_card_id.table);
   }
 }

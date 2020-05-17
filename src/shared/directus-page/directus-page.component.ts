@@ -8,7 +8,6 @@ import {DirectusFileService} from '../directusFiles/directus-file.service';
 import {DirectusPageContentDirective} from './directus-page-content.directive';
 import {DirectusPageButtonBarDirective} from './directus-page-button-bar.directive';
 import {LoaderService} from '../loader.service';
-import {DirectusService} from '../directus.service';
 import {ResourceService} from '../resource.service';
 import {CardModel} from '../card/card.model';
 
@@ -30,6 +29,7 @@ export class DirectusPageComponent implements OnInit {
   page$: Observable<PageModel>;
   childPage$: Observable<PageModel[]>;
   cards$: Observable<CardModel[]>;
+  fields$: Observable<any[]>;
   constructor(private pageService: PageService,
               private fileService: DirectusFileService,
               private loaderService: LoaderService,
@@ -60,6 +60,7 @@ export class DirectusPageComponent implements OnInit {
         this.loading = false;
       } else if (this.resource && this.id) {
         this.page$ = this.resourceService.loadItemPage(this.resource, this.id);
+        this.fields$ = this.resourceService.getFieldsToDisplay(this.resource);
       } else if (this.resource) {
         this.page$ = this.resourceService.loadResourceListPage(this.resource);
         this.cards$ = this.resourceService.loadCards(this.resource);

@@ -26,6 +26,10 @@
             <fa-icon [icon]="page.icon" size="lg" class="mr-2"></fa-icon>{{page.title}}
           </button>
 
+          <button mat-stroked-button *ngFor="let resource of page.resources" [routerLink]="['/', 'page', resource]" class="mr-2">
+            {{resource}}
+          </button>
+
           <button mat-stroked-button [routerLink]="['/', 'faq']" class="mr-2">
             <fa-icon icon="question-circle" size="lg" class="mr-2"></fa-icon>FAQ
           </button>
@@ -37,6 +41,12 @@
     <ng-template #defaultContent>
       <div *ngIf="resource" class="container-fluid pt-4 card-group">
         <app-card class="col-lg-4 col-md-6 col-sm-12 p-1" *ngFor="let card of cards$ | async" [card]="card"></app-card>
+      </div>
+      <div *ngIf="id">
+        <div *ngFor="let field of fields$ | async">
+          <p>{{field.field}} {{field.type}} {{field.interface}}</p>
+          <p>valeur: </p>
+        </div>
       </div>
     </ng-template>
   </ng-container>
