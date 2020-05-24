@@ -1,0 +1,37 @@
+<app-directus-page url="inscription">
+<form *appDirectusPageContent [formGroup]="profileFrom" (ngSubmit)="onSubmit()" class="d-flex flex-column">
+  <div class="input">
+    <div class="label">Je souhaite inscrire </div>
+    <mat-radio-group color="primary" formControlName="category" class="d-flex flex-column">
+      <mat-radio-button value="adulte">un adulte</mat-radio-button>
+      <mat-radio-button value="enfant">un enfant</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="input" *ngIf="isAdult">
+    <div class="label">Je veux</div>
+    <mat-radio-group formControlName="cotisation" color="primary" class="d-flex flex-column">
+      <mat-radio-button [value]="false" >une licence au TUC Triathlon</mat-radio-button>
+      <mat-radio-button [value]="true">une simple cotisation (partenariat Absolu raid)</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="input" *ngIf="needLicence">
+    <div class="label">L'an dernier j'étais</div>
+    <mat-radio-group formControlName="status" color="primary" class="d-flex flex-column">
+      <mat-radio-button value="anciens">licencié du TUC</mat-radio-button>
+      <mat-radio-button value="mutations">licencié dans un autre club affilié à la FFTRI</mat-radio-button>
+      <mat-radio-button value="nouveaux">non licencié</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="!profileFrom.valid">Je m'inscris</button>
+  <div class="error-msg" *ngIf="profileFrom.hasError('childError')">
+    <fa-icon icon="times-circle" size="lg" class="mr-3"></fa-icon>Les inscriptions pour les enfants ne sont pas encore ouvertes
+  </div>
+  <div class="error-msg" *ngIf="profileFrom.hasError('dateError')">
+    <fa-icon icon="times-circle" size="lg" class="mr-3"></fa-icon> Les inscriptions pour les {{profileFrom.getError('dateError').status}} ouvrent le {{profileFrom.getError('dateError').date}}
+  </div>
+
+</form>
+</app-directus-page>

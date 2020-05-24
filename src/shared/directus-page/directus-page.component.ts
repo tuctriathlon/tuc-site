@@ -26,6 +26,7 @@ export class DirectusPageComponent implements OnInit {
   paramUrl: string;
   loading = false;
   id: number;
+  fullScreen = false;
   page$: Observable<PageModel>;
   childPage$: Observable<PageModel[]>;
   cards$: Observable<CardModel[]>;
@@ -42,6 +43,11 @@ export class DirectusPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.route.queryParamMap.subscribe(params => {
+      if (params.has('embedded')) {
+        this.fullScreen = true;
+      }
+    });
     this.route.paramMap.pipe(
       tap(params => {
         if (params.has('resourceName')) {

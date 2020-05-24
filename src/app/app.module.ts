@@ -18,7 +18,7 @@ import {EventCardComponent} from './components/event-card/event-card.component';
 import {MatCardModule} from '@angular/material/card';
 import {EventPageComponent} from './pages/event-page/event-page.component';
 import {TestPageComponent} from './pages/test-page/test-page.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthModule} from '../auth/auth.module';
 import {LoginComponent} from '../auth/login/login.component';
@@ -36,6 +36,10 @@ import {TucIcon} from '../shared/icons/tuc.icon';
 import {TdtIcon} from '../shared/icons/tdt.icon';
 import {TucOmnisportIcon} from '../shared/icons/tucOmnisport.icon';
 import {AbsoluIcon} from '../shared/icons/absolu.icon';
+import { InscriptionPageComponent } from './pages/inscription.page/inscription.page.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,8 @@ import {AbsoluIcon} from '../shared/icons/absolu.icon';
     EventPageComponent,
     TestPageComponent,
     EventComponent,
-    EventCardComponent
+    EventCardComponent,
+    InscriptionPageComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +77,10 @@ import {AbsoluIcon} from '../shared/icons/absolu.icon';
     CompteRenduModule,
     // appRouting module doit être en dernier
     AppRoutingModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
   entryComponents: [
     LoginComponent,

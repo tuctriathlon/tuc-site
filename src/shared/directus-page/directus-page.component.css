@@ -10,7 +10,18 @@
   text-transform: capitalize;
   font-size: 32px;
 }
-
+.page-description > * {
+  max-width: 100%;
+}
+.full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FFFFFF;
+  padding: 20px;
+}
 .loader {
   background-color: #00AAFF;
   height: 100px;

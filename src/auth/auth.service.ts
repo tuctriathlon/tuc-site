@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {environment} from '../environments/environment';
 import * as moment from 'moment';
+import {StorageService} from '../shared/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class AuthService {
     return [environment.directusUrl, environment.directusProject, 'auth'].join('/');
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private storage: StorageService) {
     this.redirectUrl = '/home';
   }
 
@@ -85,7 +87,7 @@ export class AuthService {
    * return current token
    */
   getJwtToken() {
-    return localStorage.getItem(this.JWT_TOKEN);
+    return this.storage.getItem(this.JWT_TOKEN);
   }
 
   /**
@@ -115,7 +117,7 @@ export class AuthService {
    * return token expiration date
    */
   private getExpiration() {
-    const expiration = localStorage.getItem(this.REFRESH_TOKEN);
+    const expiration = this.storage.getItem(this.REFRESH_TOKEN);
     const expiresAt = JSON.parse(expiration);
     return moment(expiresAt);
   }
@@ -126,15 +128,15 @@ export class AuthService {
    */
   public setSession(token: string) {
     const expiresAt = moment().add(this.TOKEN_EXPIRATION_TIME, 'second');
-    localStorage.setItem(this.JWT_TOKEN, token);
-    localStorage.setItem(this.REFRESH_TOKEN, JSON.stringify(expiresAt.valueOf()) );
+    this.storage.setItem(this.JWT_TOKEN, token);
+    this.storage.setItem(this.REFRESH_TOKEN, JSON.stringify(expiresAt.valueOf()) );
   }
 
   /**
    * clear local storage session parameter
    */
   private removeTokens() {
-    localStorage.removeItem(this.JWT_TOKEN);
-    localStorage.removeItem(this.REFRESH_TOKEN);
+    this.storage.removeItem(this.JWT_TOKEN);
+    this.storage.removeItem(this.REFRESH_TOKEN);
   }
 }

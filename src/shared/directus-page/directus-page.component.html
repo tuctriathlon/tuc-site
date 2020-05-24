@@ -11,7 +11,7 @@
       <ng-container *ngTemplateOutlet="pageButtonBarTpl ? pageButtonBarTpl : defaultButtonBar">
       </ng-container>
       <ng-template #defaultButtonBar>
-        <div class="align-content-start d-flex">
+        <div class="d-inline-block">
           <button mat-stroked-button [matMenuTriggerFor]="documents" class="mr-2" *ngIf="page.files.length">
             <fa-icon icon="chevron-down" size="lg" class="mr-2"></fa-icon>
             Documents
@@ -37,6 +37,7 @@
       </ng-template>
     <div class="page-description mt-1" [innerHTML]="page.description | safeHtml">
     </div>
+    <div  [class.full]="fullScreen">
       <ng-container *ngTemplateOutlet="pageContentTpl ? pageContentTpl : defaultContent"></ng-container>
     <ng-template #defaultContent>
       <div *ngIf="resource" class="container-fluid pt-4 card-group">
@@ -49,6 +50,7 @@
         </div>
       </div>
     </ng-template>
+    </div>
   </ng-container>
 
   <ng-template #loader>

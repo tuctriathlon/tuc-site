@@ -1,4 +1,4 @@
-<mat-toolbar class="header" color="primary">
+<mat-toolbar class="header" color="primary" [hidden]="fullScreen">
   <button mat-icon-button (click)="menu.toggle()"><fa-icon icon="bars" size="lg"></fa-icon></button>
   <img src="../assets/logo_tuc.jpg" height="50" alt="Logo TUC Triathlon" [routerLink]="['/']"/>
   <button *ngIf="!isLogged()" mat-icon-button (click)="openDialog('login')" class="header-right"><fa-icon icon="user" size="lg"></fa-icon></button>
