@@ -44,10 +44,8 @@
         <app-card class="col-lg-4 col-md-6 col-sm-12 p-1" *ngFor="let card of cards$ | async" [card]="card"></app-card>
       </div>
       <div *ngIf="id">
-        <div *ngFor="let field of fields$ | async">
-          <p>{{field.field}} {{field.type}} {{field.interface}}</p>
-          <p>valeur: </p>
-        </div>
+        <app-field *ngFor="let field of page.fields" [field]="field">
+        </app-field>
       </div>
     </ng-template>
     </div>

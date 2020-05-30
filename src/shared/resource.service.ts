@@ -5,6 +5,8 @@ import {Observable, of} from 'rxjs';
 import {PageModel} from './directus-page/page.model';
 import {concatMap, map, pluck, switchMap, tap} from 'rxjs/operators';
 import {CardModel} from './card/card.model';
+import {DirectusFileModel} from './directusFiles/directusFile.model';
+import {assign} from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -50,16 +52,34 @@ export class ResourceService {
 
   loadItemPage(resourceName: string, id: number): Observable<PageModel> {
     let converter;
+    let pageFields;
+    let fileFields = [];
     return this.getPageConverter(resourceName).pipe(
-      concatMap(fields => {
-        converter = fields;
-        return this.httpClient.get(`${this.baseUrl}/items/${resourceName}/${id}`);
+      switchMap(c => {
+        converter = c;
+        return this.getFieldsToDisplay(resourceName);
+      }),
+      switchMap((fields) => {
+        pageFields = fields;
+        fileFields = pageFields.filter(f => f.type === 'file');
+        const params = new HttpParams().append('fields', ['*', ...fileFields.map(f => f.field + '.*')].join(','));
+        return this.httpClient.get(`${this.baseUrl}/items/${resourceName}/${id}`, {params});
       }),
       pluck('data'),
       map<any, PageModel>(data => {
+        const fields = Object.values(converter.fields).map(value => {
+          const fieldRequired = pageFields.find(f => this.getFieldsName(value)[0] === f.field);
+          return {
+            value: fieldRequired.type === 'file' ? data[fieldRequired.field] : this.replaceByContent(value.toString(), data),
+            name: fieldRequired.field,
+            type: fieldRequired.type
+          };
+        });
         return new PageModel({
           title: this.replaceByContent(converter.title, data),
-          description: this.replaceByContent(converter.description, data)
+          description: this.replaceByContent(converter.description, data),
+          files: fileFields.map(file => new DirectusFileModel(data[file.field])),
+          fields
         });
       })
     );
@@ -100,7 +120,7 @@ export class ResourceService {
     if (this.pageFields.findIndex(f => f.table === resourceName) >= 0) {
       return of(this.pageFields.find(f => f.table === resourceName));
     } else {
-      const params = new HttpParams().append('filter[table.table]', resourceName);
+      const params = new HttpParams().append('filter[table]', resourceName);
       return this.httpClient.get<any>(`${this.baseUrl}/items/item_to_page`, {params}).pipe(
         pluck('data'),
         map(data => {
@@ -153,7 +173,7 @@ export class ResourceService {
   }
 
   /**
-   * return the filter fields value to retreive data
+   * return the filter fields value to retrieve data
    * @param resourceName item table name
    */
   getFilterFields(resourceName: string) {
@@ -184,8 +204,8 @@ export class ResourceService {
         return this.getResourceFields(resourceName);
       }),
       map(fields => {
-        const pageFields = this.getFieldsName(JSON.stringify(converter)).concat('id');
-        return fields.filter(field => pageFields.every(f => f !== field.field));
+        const pageFields = this.getFieldsName(JSON.stringify(converter.fields));
+        return fields.filter(field => pageFields.some(f => f === field.field));
       })
     );
   }
