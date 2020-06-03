@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import * as moment from 'moment';
-import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-inscription.page',
@@ -32,8 +31,8 @@ export class InscriptionPageComponent implements OnInit {
   }
 
   isValide(control: FormGroup): ValidationErrors | null {
-    const dateAncien = moment('01/06/2020', 'DD/MM/YYYY');
-    const dateNouveau = moment('01/07/2020', 'DD/MM/YYYY');
+    const dateAncien = moment('15/06/2020', 'DD/MM/YYYY');
+    const dateNouveau = moment('13/07/2020', 'DD/MM/YYYY');
     const category = control.get('category').value;
     const cotisation = control.get('cotisation').value;
     const status = control.get('status').value;

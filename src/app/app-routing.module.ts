@@ -10,7 +10,7 @@ import {InscriptionPageComponent} from './pages/inscription.page/inscription.pag
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'test', component: TestPageComponent },
-  { path: 'inscription', component: InscriptionPageComponent },
+  { path: 'inscriptions', component: InscriptionPageComponent },
   { path: 'event/:id', component: EventPageComponent },
   { path: ':url', component: DirectusPageComponent },
   { path: 'page/:resourceName', component: DirectusPageComponent },
