@@ -15,6 +15,7 @@ import {LoaderInterceptor} from './loader.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {MatMenuModule} from '@angular/material/menu';
 import { FieldComponent } from './field/field.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FieldComponent } from './field/field.component';
     DirectusPageContentDirective,
     DirectusPageButtonBarDirective,
     CardComponent,
-    FieldComponent
+    FieldComponent,
+    MapComponent
   ],
   providers: [
     LoaderService,
