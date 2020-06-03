@@ -6,7 +6,7 @@ import {PageModel} from './directus-page/page.model';
 import {concatMap, map, pluck, switchMap, tap} from 'rxjs/operators';
 import {CardModel} from './card/card.model';
 import {DirectusFileModel} from './directusFiles/directusFile.model';
-import {assign} from 'lodash';
+import {assign, get} from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -149,7 +149,7 @@ export class ResourceService {
       subtitleLeft: this.replaceByContent(converter.subtitleleft, item),
       subtitleRight: this.replaceByContent(converter.subtitleright, item),
       icon: this.replaceByContent(converter.icon, item),
-      image: item[this.getFieldsName(converter.image)[0]]?.data.full_url,
+      image: get(item, this.getFieldsName(converter.image)[0])?.data.full_url,
       content: this.replaceByContent(converter.content, item),
       routerLink: ['/', 'page', resourceName, item.id]
     });
@@ -165,9 +165,9 @@ export class ResourceService {
    * @param item to ge value from
    */
   replaceByContent(str: string = '', item: any): string {
-    const fields = str.match(/\{\{[\w\_]*\}\}/g) || [];
+    const fields = str.match(/{{[\w_.]*}}/g) || [];
     fields.forEach(field => {
-      str = str.replace(field, item[field.replace(/\{|\}/g, '')] || '');
+      str = str.replace(field, get(item, field.replace(/{|}/g, '')) || '');
     });
     return str;
   }
@@ -193,7 +193,10 @@ export class ResourceService {
    * @param str string to evaluate
    */
   getFieldsName(str): string[] {
-    return (str.match(/{{2}[\w_]*}{2}/g) || []).map(f => f.replace(/{{2}|}{2}/g, ''));
+    if (! str) {
+      return [];
+    }
+    return (str.match(/{{2}[\w_.]*}{2}/g) || []).map(f => f.replace(/{{2}|}{2}/g, ''));
   }
 
   getFieldsToDisplay(resourceName: string): Observable<any[]> {
