@@ -1,5 +1,8 @@
 <app-directus-page url="inscriptions">
 <form *appDirectusPageContent [formGroup]="profileFrom" (ngSubmit)="onSubmit()" class="d-flex flex-column">
+  <div class="warning-msg msg">
+    <fa-icon icon="exclamation-circle" size="lg"></fa-icon>Toute inscription est définitive et non remboursée
+  </div>
   <div class="input">
     <div class="label">Je souhaite inscrire </div>
     <mat-radio-group color="primary" formControlName="category" class="d-flex flex-column">
@@ -26,10 +29,11 @@
   </div>
 
   <button mat-raised-button color="primary" type="submit" [disabled]="!profileFrom.valid">Je m'inscris</button>
-  <div class="error-msg" *ngIf="profileFrom.hasError('childError')">
-    <fa-icon icon="times-circle" size="lg" class="mr-3"></fa-icon>Les inscriptions pour les enfants ne sont pas encore ouvertes
+  <div class="info-msg msg" *ngIf="profileFrom.hasError('childError')">
+    <fa-icon icon="info-circle" size="lg" class="mr-3"></fa-icon>Pour les inscriptions des enfants merci de contacter notre référent:
+    <a href="mailto:jeunes@tuc-triathlon.com" style="color: #FFFFFF">jeunes@tuc-triathlon.com</a>
   </div>
-  <div class="error-msg" *ngIf="profileFrom.hasError('dateError')">
+  <div class="error-msg msg" *ngIf="profileFrom.hasError('dateError')">
     <fa-icon icon="times-circle" size="lg" class="mr-3"></fa-icon> Les inscriptions pour les {{profileFrom.getError('dateError').status}} ouvrent le {{profileFrom.getError('dateError').date}}
   </div>
 

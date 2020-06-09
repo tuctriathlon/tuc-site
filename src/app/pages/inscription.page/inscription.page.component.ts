@@ -74,7 +74,7 @@ export class InscriptionPageComponent implements OnInit {
         }
         break;
     }
-    window.open(`https://secure.gipco-adns.com/site/7621/${url}`, '_self');
+    window.open(`https://secure.gipco-adns.com/site/7649/${url}`, '_parent');
   }
 
 }
