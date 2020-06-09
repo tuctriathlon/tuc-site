@@ -30,6 +30,13 @@
         <p [innerHTML]="faq.reponse | safeHtml"></p>
       </mat-expansion-panel>
     </mat-accordion>
-    <button class="no-result text-wrap" mat-flat-button routerLink="/contact">Contactez nous si vous ne trouvez pas de réponse à votre question</button>
+    <div class="no-result">
+      Si vous ne trouvez pas de réponse à votre question
+    </div>
+    <a href="mailto:contact@tuc-triathlon.com">
+      <button class="text-wrap no-result mb-5" mat-stroked-button>
+        Contactez nous
+      </button>
+    </a>
   </div>
 </app-directus-page>
