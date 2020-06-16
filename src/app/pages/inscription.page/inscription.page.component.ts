@@ -63,7 +63,7 @@ export class InscriptionPageComponent implements OnInit {
         url = 'inscriptions+club-ancien';
         break;
       case 'nouveaux':
-        url = 'inscriptions+club-nouveau';
+        url = 'inscriptions+club-nouveaux';
         break;
       case 'mutations':
         url = 'inscriptions+club-mutation';
