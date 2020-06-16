@@ -32,7 +32,7 @@ export class InscriptionPageComponent implements OnInit {
 
   isValide(control: FormGroup): ValidationErrors | null {
     const dateAncien = moment('15/06/2020', 'DD/MM/YYYY');
-    const dateNouveau = moment('13/07/2020', 'DD/MM/YYYY');
+    const dateNouveau = moment('14/07/2020', 'DD/MM/YYYY');
     const category = control.get('category').value;
     const cotisation = control.get('cotisation').value;
     const status = control.get('status').value;
