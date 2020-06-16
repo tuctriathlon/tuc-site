@@ -70,7 +70,7 @@ export class InscriptionPageComponent implements OnInit {
         break;
       default:
         if (this.profileFrom.get('cotisation').value) {
-          url = 'inscriptions+club-ancien';
+          url = 'inscriptions+club-cotisations';
         }
         break;
     }
