@@ -63,7 +63,7 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "lorem-ipsum": "^2.0.3",
     "protractor": "~5.4.3",
-    "standard-version": "^7.1.0",
+    "standard-version": "^8.0.1",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
     "typescript": "~3.7.5"
