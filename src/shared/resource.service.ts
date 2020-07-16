@@ -69,11 +69,20 @@ export class ResourceService {
       map<any, PageModel>(data => {
         const fields = Object.values(converter.fields).map(value => {
           const fieldRequired = pageFields.find(f => this.getFieldsName(value)[0] === f.field);
-          return {
-            value: fieldRequired.type === 'file' ? data[fieldRequired.field] : this.replaceByContent(value.toString(), data),
-            name: fieldRequired.field,
-            type: fieldRequired.type
-          };
+          if (fieldRequired) {
+            return {
+              value: fieldRequired.type === 'file' ? data[fieldRequired.field] : this.replaceByContent(value.toString(), data),
+              name: fieldRequired.field,
+              type: fieldRequired.type
+            };
+          } else {
+            return {
+              value,
+              name: value,
+              type: 'string'
+            };
+          }
+
         });
         return new PageModel({
           title: this.replaceByContent(converter.title, data),
