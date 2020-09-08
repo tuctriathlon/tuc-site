@@ -3,7 +3,7 @@ import {FaqModel} from '../faq.model';
 import {FaqService} from '../faq.service';
 import {Observable, Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {takeUntil} from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
 import {TagService} from '../../shared/tag.service';
 import {TagModel} from '../../shared/tag.model';
 
@@ -28,7 +28,9 @@ export class FaqPageComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         this.selectedTag = +params.get('tag');
     });
-    this.faqs = this.faqService.getAll();
+    this.faqs = this.faqService.getAll().pipe(
+      map(faqs => faqs.sort((a,b) => b.priorite - a.priorite))
+    );
     this.tags = this.tagService.getAll();
   }
 

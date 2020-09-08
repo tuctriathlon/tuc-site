@@ -9,6 +9,7 @@ export class FaqModel extends DirectusItemModel {
   question: string;
   reponse: string;
   tag: number;
+  priorite: number;
 
   public static randomQuestion(): FaqModel {
     const faqModel = new FaqModel();
@@ -23,5 +24,6 @@ export class FaqModel extends DirectusItemModel {
     this.question = data.question;
     this.reponse = data.reponse;
     this.tag = data.tag;
+    this.priorite = data.priorite;
   }
 }
