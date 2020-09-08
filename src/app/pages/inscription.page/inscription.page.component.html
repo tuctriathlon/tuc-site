@@ -1,41 +1,52 @@
 <app-directus-page url="inscriptions">
-<form *appDirectusPageContent [formGroup]="profileFrom" (ngSubmit)="onSubmit()" class="d-flex flex-column">
-  <div class="warning-msg msg">
-    <fa-icon icon="exclamation-circle" size="lg"></fa-icon>Toute inscription est définitive et non remboursée
-  </div>
-  <div class="input">
-    <div class="label">Je souhaite inscrire </div>
-    <mat-radio-group color="primary" formControlName="category" class="d-flex flex-column">
-      <mat-radio-button value="adulte">un adulte</mat-radio-button>
-      <mat-radio-button value="enfant">un enfant</mat-radio-button>
-    </mat-radio-group>
-  </div>
+  <div *appDirectusPageContent>
+    <form *ngIf="isOpen$ | async" [formGroup]="profileFrom" (ngSubmit)="onSubmit()" class="d-flex flex-column">
+      <div class="warning-msg msg">
+        <fa-icon icon="exclamation-circle" size="lg"></fa-icon>Toute inscription est définitive et non remboursée
+      </div>
+      <div class="input">
+        <div class="label">Je souhaite inscrire </div>
+        <mat-radio-group color="primary" formControlName="category" class="d-flex flex-column">
+          <mat-radio-button value="adulte">un adulte</mat-radio-button>
+          <mat-radio-button value="enfant">un enfant</mat-radio-button>
+        </mat-radio-group>
+      </div>
 
-  <div class="input" *ngIf="isAdult">
-    <div class="label">Je veux</div>
-    <mat-radio-group formControlName="cotisation" color="primary" class="d-flex flex-column">
-      <mat-radio-button [value]="false" >une licence au TUC Triathlon</mat-radio-button>
-      <mat-radio-button [value]="true">une simple cotisation (partenariat Absolu raid)</mat-radio-button>
-    </mat-radio-group>
-  </div>
+      <div class="input" *ngIf="isAdult">
+        <div class="label">Je veux</div>
+        <mat-radio-group formControlName="cotisation" color="primary" class="d-flex flex-column">
+          <mat-radio-button [value]="false" >une licence au TUC Triathlon</mat-radio-button>
+          <mat-radio-button [value]="true">une simple cotisation (partenariat Absolu raid)</mat-radio-button>
+        </mat-radio-group>
+      </div>
 
-  <div class="input" *ngIf="needLicence">
-    <div class="label">L'an dernier j'étais</div>
-    <mat-radio-group formControlName="status" color="primary" class="d-flex flex-column">
-      <mat-radio-button value="anciens">licencié du TUC</mat-radio-button>
-      <mat-radio-button value="mutations">licencié dans un autre club affilié à la FFTRI</mat-radio-button>
-      <mat-radio-button value="nouveaux">non licencié</mat-radio-button>
-    </mat-radio-group>
-  </div>
+      <div class="input" *ngIf="needLicence">
+        <div class="label">L'an dernier j'étais</div>
+        <mat-radio-group formControlName="status" color="primary" class="d-flex flex-column">
+          <mat-radio-button value="anciens">licencié du TUC</mat-radio-button>
+          <mat-radio-button value="mutations">licencié dans un autre club affilié à la FFTRI</mat-radio-button>
+          <mat-radio-button value="nouveaux">non licencié</mat-radio-button>
+        </mat-radio-group>
+      </div>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="!profileFrom.valid">Je m'inscris</button>
-  <div class="info-msg msg" *ngIf="profileFrom.hasError('childError')">
-    <fa-icon icon="info-circle" size="lg" class="mr-3"></fa-icon>Pour les inscriptions des enfants merci de contacter notre référent:
-    <a href="mailto:jeunes@tuc-triathlon.com" style="color: #FFFFFF">jeunes@tuc-triathlon.com</a>
-  </div>
-  <div class="error-msg msg" *ngIf="profileFrom.hasError('dateError')">
-    <fa-icon icon="times-circle" size="lg" class="mr-3"></fa-icon> Les inscriptions pour les {{profileFrom.getError('dateError').status}} ouvrent le {{profileFrom.getError('dateError').date}}
-  </div>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!profileFrom.valid">Je m'inscris</button>
+      <div class="info-msg msg" *ngIf="profileFrom.hasError('childError')">
+        <fa-icon icon="info-circle" size="lg" class="mr-3"></fa-icon>Pour les inscriptions des enfants merci de contacter notre référent:
+        <a href="mailto:jeunes@tuc-triathlon.com" style="color: #FFFFFF">jeunes@tuc-triathlon.com</a>
+      </div>
+      <div class="error-msg msg" *ngIf="profileFrom.hasError('dateError')">
+        <fa-icon icon="times-circle" size="lg" class="mr-3"></fa-icon> Les inscriptions pour les {{profileFrom.getError('dateError').status}} ouvrent le {{profileFrom.getError('dateError').date}}
+      </div>
 
-</form>
+    </form>
+    <h1 *ngIf="!(isOpen$ | async)">Les inscriptions pour la saisons 2020-2021 sont closes</h1>
+    <div class="no-result">
+      Si vous rencontrez des problèmes lors de l'inscription
+    </div>
+    <a href="mailto:communication@tuc-triathlon.com">
+      <button class="text-wrap no-result mb-5" mat-stroked-button>
+        Contactez-nous
+      </button>
+    </a>
+  </div>
 </app-directus-page>

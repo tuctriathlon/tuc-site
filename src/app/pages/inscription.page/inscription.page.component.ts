@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import * as moment from 'moment';
+import {ParametreInscritpionService} from "../../services/parametre-inscritpion.service";
+import {Observable} from "rxjs";
+import {ParametreInscrptionModel} from "../../models/parametreInscrption.model";
+import {map, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-inscription.page',
@@ -9,7 +13,8 @@ import * as moment from 'moment';
 })
 export class InscriptionPageComponent implements OnInit {
   profileFrom: FormGroup;
-  constructor(private fb: FormBuilder) {
+  isOpen$: Observable<boolean>;
+  constructor(private fb: FormBuilder, private parametreInscritpionService: ParametreInscritpionService) {
     this.profileFrom = this.fb.group({
       category: new FormControl('', [Validators.required]),
       cotisation: new FormControl(null),
@@ -19,7 +24,10 @@ export class InscriptionPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileFrom.setValidators(this.isValide);
-
+    this.isOpen$ = this.parametreInscritpionService.getById(1).pipe(
+      map(params => params.ouvert && moment().isSameOrBefore(moment(params.fermeture), 'day')
+      )
+    )
   }
 
   get isAdult(): boolean {
