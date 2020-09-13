@@ -1,4 +1,9 @@
-<div class="p-2 bg-white vh-100">
+<div class="p-2 bg-white vh-100 overflow-auto">
+  <div>
+    <button mat-button (click)="prevWeek()"><fa-icon icon="arrow-left"></fa-icon></button>
+    <button mat-button [disabled]="isToday" (click)="today()">Aujourd'hui</button>
+    <button mat-button (click)="nextWeek()"><fa-icon icon="arrow-right"></fa-icon></button>
+  </div>
   <full-calendar
     #calendar
     defaultView="dayGridWeek"
