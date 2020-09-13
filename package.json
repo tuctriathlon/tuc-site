@@ -36,6 +36,7 @@
     "@fullcalendar/interaction": "^4.4.0",
     "@fullcalendar/timegrid": "^4.4.0",
     "bootstrap": "^4.4.1",
+    "ical": "^0.8.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ol": "^6.3.1",

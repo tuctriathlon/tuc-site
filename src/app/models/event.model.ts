@@ -24,20 +24,6 @@ export class EventModel implements CardInterface, PageInterface {
   picture: string;
   labels: string[];
 
-  public static generateMock(): EventModel {
-    const pictures = ['../assets/photo/nage.jpg', '../assets/photo/velo.jpg', '../assets/photo/cap.JPG', '../assets/photo/ski.jpeg'];
-    const event = new EventModel();
-    event.author = 'TUC Triathlon';
-    event.type = Math.floor(Math.random() * 4) ? EventType.CR : EventType.GOOGLE;
-    event.title = TextUtils.randomTitle();
-    event.description = TextUtils.randomParagraph();
-    event.date = moment();
-    event.location = 'Toulouse';
-    event.picture = event.type === EventType.CR ? _.sample(pictures) : '';
-    event.labels = [];
-    return event;
-  }
-
   get summary(): string {
     return this.description.substring(0, 250) + (this.isTrunked ? '...' : '');
   }

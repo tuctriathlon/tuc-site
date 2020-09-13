@@ -173,12 +173,13 @@ export class ResourceService {
    * @param str initial string
    * @param item to ge value from
    */
-  replaceByContent(str: string = '', item: any): string {
-    const fields = str.match(/{{[\w_.]*}}/g) || [];
+  replaceByContent(str: string, item: any): string {
+    let value = str || '';
+    const fields = value.match(/{{[\w_.]*}}/g) || [];
     fields.forEach(field => {
-      str = str.replace(field, get(item, field.replace(/{|}/g, '')) || '');
+      value = value.replace(field, get(item, field.replace(/{|}/g, '')) || '');
     });
-    return str;
+    return value;
   }
 
   /**

@@ -8,7 +8,7 @@ import {CardInterface} from '../../../shared/card/card.interface';
 import { map } from 'rxjs/operators';
 import {flatMap} from 'lodash';
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 9;
 
 @Component({
   selector: 'app-home',
@@ -31,9 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadItems(firstIndex: number = 0, lastIndex: number = PAGE_SIZE) {
-    this.cr$ = forkJoin([this.compteRenduService.getAll(true), this.eventService.getAll(firstIndex, lastIndex)]).pipe(
-      map((items) => flatMap(items))
-    );
+    this.cr$ = this.compteRenduService.getAll(true);
   }
 
   ngOnInit(): void {

@@ -1,12 +1,22 @@
 <app-directus-page url="home" [fullWidth]="true">
   <div *appDirectusPageButtonBar></div>
-  <div *appDirectusPageContent class="pt-4 card-group">
-    <app-card *ngFor="let cr of cr$ | async" [card]="cr.toCard()" class="col-lg-4 col-md-6 col-sm-12 p-1"></app-card>
+  <div *appDirectusPageContent>
+    <div class="pt-4">
+      <p>News</p>
+      <p>News</p>
+      <p>News</p>
+    </div>
+    <div class="pt-4 card-group">
+      <app-card *ngFor="let cr of cr$ | async" [card]="cr.toCard()" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 p-1"></app-card>
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 p-1">
+        <div class="tuc-card"><div class="tuc-card-title">Plus</div></div>
+      </div>
+    </div>
+    <!--<mat-paginator [length]="eventService.getCount()"
+                   [pageSize]="12"
+                   hidePageSize
+                   showFirstLastButtons
+                   (page)="changePage($event)">
+    </mat-paginator>-->
   </div>
-  <mat-paginator [length]="eventService.getCount()"
-                 [pageSize]="12"
-                 hidePageSize
-                 showFirstLastButtons
-                 (page)="changePage($event)">
-  </mat-paginator>
 </app-directus-page>

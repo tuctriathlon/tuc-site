@@ -1,0 +1,27 @@
+<div class="p-2 bg-white vh-100">
+  <full-calendar
+    #calendar
+    defaultView="dayGridWeek"
+    locale="fr"
+    themeSystem="bootstrap"
+    [firstDay]="1"
+    [header]="{
+          left: '',
+          center: '',
+          right: ''
+        }"
+    [height]="200"
+    [plugins]="calendarPlugins"
+    [events]="events"
+    (dateClick)="selectDate($event.dateStr)"
+    (eventClick)="handleClickEvent($event)"
+  ></full-calendar>
+
+  <div class="container-fluid pt-4 card-group justify-content-center">
+    <app-card *ngFor="let training of todayTrainings | sortBy :['start']"
+              class="col-lg-4 col-md-6 col-sm-12"
+              [face]="'back'"
+              [card]="training.toCard()"></app-card>
+    <h1 *ngIf="!todayTrainings.length"> <fa-icon icon="bed"></fa-icon> Repos</h1>
+  </div>
+</div>

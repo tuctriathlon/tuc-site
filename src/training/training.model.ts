@@ -26,12 +26,12 @@ export class TrainingModel extends DirectusItemModel implements CardInterface {
     }
   }
 
-  private typeFromString(str: string = '') {
+  typeFromString(str: string = '') {
     if (str.match(/natation/i)) {
       return 'swim';
-    } else if (str.match(/velo|ht|home trainer/i)) {
+    } else if (str.match(/velo|vélo|ht|home trainer/i)) {
       return 'bike';
-    } else if (str.match(/cap|trail|course a pied/i)) {
+    } else if (str.match(/cap|trail|course a pied|course à pied/i)) {
       return 'run';
     }
     return 'other';
@@ -53,7 +53,7 @@ export class TrainingModel extends DirectusItemModel implements CardInterface {
     const card  = new CardModel();
     card.title = this.title;
     card.content = this.description || '';
-    card.subtitleRight = moment(this.start).format('DD-MM-YYYY HH:MM');
+    card.subtitleRight = moment(this.start).format('DD-MM-YYYY HH:mm');
     card.subtitleLeft = this.location;
     card.icon = this.icon;
     return card;
@@ -63,6 +63,7 @@ export class TrainingModel extends DirectusItemModel implements CardInterface {
     return {
       title: this.title,
       start: this.start || this.date,
+      end: this.end,
       backgroundColor: this.backgroundColor,
       textColor: this.textColor
     };

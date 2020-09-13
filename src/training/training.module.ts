@@ -10,15 +10,18 @@ import {MatCardModule} from '@angular/material/card';
 import {FullCalendarModule} from '@fullcalendar/angular';
 import {SharedModule} from '../shared/shared.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {CalendrierDynamicComponent} from './calendrier-dynamic/calendrier-dynamic.component';
 
 const trainingRoutes: Routes = [
-  {path: 'training', component: TrainingPageComponent, canActivate: [AuthGuard]}
+  {path: 'training', component: TrainingPageComponent, canActivate: [AuthGuard]},
+  {path: 'calendrier-dynamique', component: CalendrierDynamicComponent},
 ];
 
 @NgModule({
   declarations: [
     TrainingPageComponent,
-    TrainingCardComponent
+    TrainingCardComponent,
+    CalendrierDynamicComponent
   ],
     imports: [
         CommonModule,
@@ -28,7 +31,7 @@ const trainingRoutes: Routes = [
         MatCardModule,
         FullCalendarModule,
         SharedModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
     ],
   exports: [
     TrainingPageComponent,

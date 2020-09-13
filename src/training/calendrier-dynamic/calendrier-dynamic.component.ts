@@ -1,25 +1,24 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
-import {TrainingModel} from '../training.model';
-import {TrainingService} from '../training.service';
-import * as moment from 'moment';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FullCalendarComponent} from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import {TrainingModel} from '../training.model';
+import * as moment from 'moment';
+import {TrainingService} from '../training.service';
 import {defaults} from 'lodash';
 
 @Component({
-  selector: 'app-training-page',
-  templateUrl: './training-page.component.html',
-  styleUrls: ['./training-page.component.css']
+  selector: 'app-calendrier-dynamic',
+  templateUrl: './calendrier-dynamic.component.html',
+  styleUrls: ['./calendrier-dynamic.component.css']
 })
-export class TrainingPageComponent implements OnInit {
+export class CalendrierDynamicComponent implements OnInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   calendarPlugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];
   events: any[] = [];
-  trainingList: TrainingModel[] = [];
   selectedDate: moment.Moment;
-
+  trainingList: TrainingModel[];
 
   constructor(private trainingService: TrainingService) {
     this.selectedDate = moment();

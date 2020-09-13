@@ -25,7 +25,7 @@
     ></full-calendar>
 
       <div class="container-fluid pt-4 card-group justify-content-center">
-        <app-card *ngFor="let training of todayTrainings"
+        <app-card *ngFor="let training of todayTrainings | sortBy :['start']"
                   class="col-lg-4 col-md-6 col-sm-12"
                   [face]="'back'"
                   [card]="training.toCard()"></app-card>

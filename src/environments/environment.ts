@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   directusUrl: 'https://directus.tuc-triathlon.com',
   directusProject: 'tuc-site',
-  googleCalendarTrainingId: '8tvqo6tn32ilk7q4fiqjan8vr8@group.calendar.google.com',
+  googleCalendarTrainingId: 'i91adml53b74le5j0cn2n8m6us6pgrln@import.calendar.google.com',
+  //googleCalendarTrainingId: '8tvqo6tn32ilk7q4fiqjan8vr8@group.calendar.google.com',
   googleApiKey: 'AIzaSyBvXul051xTXBdtpUTQMmmlaYRrHazn6Ek'
 };
 

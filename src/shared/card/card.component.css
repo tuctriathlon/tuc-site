@@ -51,12 +51,14 @@ img {
   padding: 20px 10px;
   color: #FFEA13;
   background: rgba(0,0,0,0.5);
-  margin: 200px 0 0 0;
-  transform: translate(0, -50%);
+  position: relative;
+  top: 100%;
+  transform: translate(0, -100%);
   transition: background-color 0s linear 500ms, color 0s linear 500ms, margin 0s linear 500ms, transform 0s linear 500ms;
 }
 
 .rotated .tuc-card-title {
+  top:0;
   transform: translate(0, 0);
   color: #000000;
   background: #FFFFFF;

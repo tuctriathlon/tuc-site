@@ -5,7 +5,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import * as moment from 'moment';
 import {environment} from '../environments/environment';
-import {map, pluck} from 'rxjs/operators';
+import {map, pluck, tap} from 'rxjs/operators';
+import ical from 'ical';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,36 @@ export class TrainingService extends DirectusService<TrainingModel> {
     `key=${key}&maxResults=${maxResults}&singleEvents=true&timeMin=${encodeURIComponent(from.format())}` +
     `&timeMax=${encodeURIComponent(to.format())}`).pipe(
       pluck('items'),
-      map<any[], TrainingModel[]>( data => this.toArrayModel(data))
+      map<any[], TrainingModel[]>( items => {
+        return items.map(item => {
+          const heureDebut = (item.description || item.summary || '').match(/\d\dh\d\d/i);
+          const duree = (item.description || '').match(/\d?\d:\d\d:\d\d/i);
+          const training = new TrainingModel();
+          const debut  = moment(item.start.date);
+          if (heureDebut && heureDebut.length) {
+            debut.add(heureDebut[0].split('h')[0], 'hours').add(heureDebut[0].split('h')[1], 'minutes');
+          }
+          const fin  = debut.clone();
+          if (duree && duree.length) {
+            fin.add(duree[0].split(':')[0], 'hour').add(duree[0].split(':')[1], 'minutes');
+          }
+          console.log(debut.format('YYYY/MM/DD HH:mm'));
+          training.start = debut.toISOString(true);
+          training.end = moment(training.start).toISOString(true);
+          training.description = item.description;
+          training.title = item.summary;
+          training.type = training.typeFromString(item.description);
+          console.log(training);
+          return training;
+        });
+        //return this.toArrayModel(data);
+      })
+    );
+  }
+
+  getIcalEvents(url: string): Observable<any> {
+    return this.httpClient.get(url).pipe(
+      tap(_ => console.log('ics'))
     );
   }
 }
