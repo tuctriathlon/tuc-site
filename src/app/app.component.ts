@@ -12,6 +12,7 @@ import {Observable, Subscription} from 'rxjs';
 import {PageModel} from '../shared/directus-page/page.model';
 import {PartenaireService} from '../partenaire/partenaire.service';
 import {PartenaireModel} from '../partenaire/partenaire.model';
+import {ParametresSiteService} from "./services/parametres-site.service";
 
 @Component({
   selector: 'app-root',
