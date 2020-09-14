@@ -6,7 +6,6 @@ import {Observable} from 'rxjs';
 import * as moment from 'moment';
 import {environment} from '../environments/environment';
 import {map, pluck, tap} from 'rxjs/operators';
-import ical from 'ical';
 
 @Injectable({
   providedIn: 'root'
@@ -44,13 +43,11 @@ export class TrainingService extends DirectusService<TrainingModel> {
           if (duree && duree.length) {
             fin.add(duree[0].split(':')[0], 'hour').add(duree[0].split(':')[1], 'minutes');
           }
-          console.log(debut.format('YYYY/MM/DD HH:mm'));
           training.start = debut.toISOString(true);
           training.end = moment(training.start).toISOString(true);
-          training.description = item.description;
+          training.description = (item.description || '').replace(/Commentaire :[\w\sêéèëàäâïîôöüûù,-]*$/i, '');
           training.title = item.summary;
           training.type = training.typeFromString(item.description);
-          console.log(training);
           return training;
         });
         //return this.toArrayModel(data);

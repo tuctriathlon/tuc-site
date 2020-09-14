@@ -7,7 +7,7 @@ import {CardModel} from './card.model';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent implements OnInit {
-  @Input() card: CardModel = CardModel.RandomCard();
+  @Input() card: CardModel = new CardModel();
   @Input() face: 'front' | 'back' | 'rotate' = 'rotate';
   rotated: boolean;
   constructor() { }

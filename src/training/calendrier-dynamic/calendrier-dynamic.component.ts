@@ -6,7 +6,6 @@ import interactionPlugin from '@fullcalendar/interaction';
 import {TrainingModel} from '../training.model';
 import * as moment from 'moment';
 import {TrainingService} from '../training.service';
-import {defaults} from 'lodash';
 
 @Component({
   selector: 'app-calendrier-dynamic',
@@ -18,7 +17,7 @@ export class CalendrierDynamicComponent implements OnInit {
   calendarPlugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];
   events: any[] = [];
   selectedDate: moment.Moment;
-  trainingList: TrainingModel[];
+  trainingList: TrainingModel[] = [];
 
   constructor(private trainingService: TrainingService) {
     this.selectedDate = moment();
@@ -55,14 +54,14 @@ export class CalendrierDynamicComponent implements OnInit {
   }
 
   getSelectedDateTraining() {
-    this.trainingService.getByDate(this.selectedDate).subscribe(trainings => {
+    /*this.trainingService.getByDate(this.selectedDate).subscribe(trainings => {
       this.todayTrainings.forEach(training => {
         const index = trainings.findIndex(t => t.type === training.type);
         if (index >= 0) {
           training = defaults(training, trainings[index]);
         }
       });
-    });
+    });*/
   }
 
   selectDate(date: string | moment.Moment) {
