@@ -1,6 +1,6 @@
 <div *ngIf="isFile; else defaultRenderer">
   <ng-container [ngSwitch]="field.value.type">
-    <app-map *ngIf="isGPX" [gpx]="field.value.data.full_url"></app-map>
+    <app-map *ngIf="isGPX" [gpx]="field.value.filename_disk"></app-map>
     <img *ngIf="isImage" [src]="field.value.data.full_url" [alt]="field.name">
   </ng-container>
 </div>
