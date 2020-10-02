@@ -14,7 +14,7 @@
   border: solid 1px gray;
 }
 
-img {
+img, app-map {
   height: 100%;
   width: 100%;
   filter: grayscale(100%);
@@ -22,7 +22,7 @@ img {
   position: relative;
 }
 
-.tuc-card:hover img {
+.tuc-card:hover img, .tuc-card:hover app-map {
   filter: none;
 }
 
@@ -36,6 +36,10 @@ img {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.rotated .tuc-card-body {
+  background: #FFFFFF;
 }
 
 .tuc-card-subtitle {

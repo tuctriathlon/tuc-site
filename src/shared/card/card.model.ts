@@ -27,4 +27,8 @@ export class CardModel {
     return this.content.replace(/<img[^>]*>|<iframe>[^<\/iframe>]*<\/iframe>/, '')
       .substr(0, SUMMARY_LENGTH) + (this.content.length > SUMMARY_LENGTH ? '...' : '');
   }
+
+  get isGpx(): boolean {
+    return this.image?.endsWith('.gpx');
+  }
 }

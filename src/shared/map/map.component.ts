@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import GPX from 'ol/format/GPX';
@@ -12,22 +12,33 @@ import {environment} from '../../environments/environment';
 import Stroke from 'ol/style/Stroke';
 import SimpleGeometry from 'ol/geom/SimpleGeometry';
 import * as d3 from 'd3';
+import {defaults} from 'ol/interaction';
+import {defaults as defaultControl} from 'ol/control';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnInit {
   @Input()gpx: string;
+  @Input()move = true;
+  @ViewChild('map') mapContainer: ElementRef;
 
   private map: Map;
   private gpxLayer: VectorLayer;
   public gpxData = [];
+  public mapId: string;
   constructor() {
   }
 
+  ngOnInit() {
+    this.mapId = `map-${this.gpx.replace('.', '-')}`;
+  }
+
   ngAfterViewInit(): void {
+
+    console.log(this.mapContainer);
     const source = new VectorSource({
       url: environment.production ? `../../files/${this.gpx}`
         : `${environment.directusUrl}/uploads/${environment.directusProject}/originals/${this.gpx}`,
@@ -37,8 +48,21 @@ export class MapComponent implements AfterViewInit {
       source
     });
     this.gpxLayer.setStyle(new Style({stroke: new Stroke({color: 'firebrick', width: 5})}));
+
     this.map = new Map({
-      target: 'map',
+      interactions: this.move ? defaults() : defaults({
+        altShiftDragRotate: false,
+        onFocusOnly: false,
+        doubleClickZoom: false,
+        keyboard: false,
+        mouseWheelZoom: false,
+        shiftDragZoom: false,
+        dragPan: false,
+        pinchRotate: false,
+        pinchZoom: false
+      }),
+      controls: defaultControl({zoom: this.move}),
+      target: this.mapContainer.nativeElement,
       layers: [
         new TileLayer({
           source: new OSM(),
@@ -50,7 +74,7 @@ export class MapComponent implements AfterViewInit {
         zoom: 10
       })
     });
-    this.gpxLayer.on('change', (e) => {
+    this.gpxLayer.on('change', () => {
       if (source.getState() === 'ready') {
         const feature = source.getFeatures()[0];
         const polygon = feature.getGeometry() as SimpleGeometry;
@@ -99,7 +123,7 @@ export class MapComponent implements AfterViewInit {
     const xAxis = g => g
       .attr('transform', `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))
-      .call(g => g.select('.domain').remove());
+      .call(group => group.select('.domain').remove());
 
     const y = d3.scaleLinear()
       .domain([0, d3.max(this.gpxData, d => d.z)]).nice()
@@ -107,8 +131,8 @@ export class MapComponent implements AfterViewInit {
     const yAxis = g => g
       .attr('transform', `translate(${margin.left},0)`)
       .call(d3.axisLeft(y))
-      .call(g => g.select('.domain').remove())
-      .call(g => g.select('.tick:last-of-type text').append('tspan').text((data) => data.y));
+      .call(group => group.select('.domain').remove())
+      .call(group => group.select('.tick:last-of-type text').append('tspan').text((data) => data.y));
 
     svg.append('g')
       .call(xAxis);
@@ -119,7 +143,7 @@ export class MapComponent implements AfterViewInit {
     const grid = g => g
       .attr('stroke', 'currentColor')
       .attr('stroke-opacity', 0.1)
-      .call(g => g.append('g')
+      .call(group => group.append('g')
         .selectAll('line')
         .data(x.ticks())
         .join('line')
@@ -127,7 +151,7 @@ export class MapComponent implements AfterViewInit {
         .attr('x2', d => 0.5 + x(d))
         .attr('y1', margin.top)
         .attr('y2', height - margin.bottom))
-      .call(g => g.append('g')
+      .call(group => group.append('g')
         .selectAll('line')
         .data(y.ticks())
         .join('line')
@@ -189,11 +213,6 @@ export class MapComponent implements AfterViewInit {
       title: '',
       tickSize: 0
     };
-
-    const thresholds
-      = legend.color.domain(); // scaleThreshold
-
-    const thresholdFormat = d => d;
 
     const xLegende = d3.scaleBand()
       .domain(legend.color.domain())
