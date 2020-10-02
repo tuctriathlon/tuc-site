@@ -12,7 +12,8 @@ import {Observable, Subscription} from 'rxjs';
 import {PageModel} from '../shared/directus-page/page.model';
 import {PartenaireService} from '../partenaire/partenaire.service';
 import {PartenaireModel} from '../partenaire/partenaire.model';
-import {ParametresSiteService} from "./services/parametres-site.service";
+import {AlertService} from './services/alert.service';
+import {Alert} from './models/alert.model';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +22,10 @@ import {ParametresSiteService} from "./services/parametres-site.service";
 })
 export class AppComponent implements OnInit, OnDestroy {
   fillerNav = [];
+  errors: Alert[] = [];
   menuItems$: Observable<PageModel[]>;
   partenaires$: Observable<PartenaireModel[]>;
-  intervall;
+  interval;
   partenaireIndex = 0;
   events: EventModel[];
   subscriptions: Subscription[] = [];
@@ -34,8 +36,9 @@ export class AppComponent implements OnInit, OnDestroy {
               private partenaireService: PartenaireService,
               private router: Router,
               private route: ActivatedRoute,
+              private alertService: AlertService,
               public dialog: MatDialog) {
-    this.intervall = setInterval(() => this.partenaireIndex++, 5000);
+    this.interval = setInterval(() => this.partenaireIndex++, 5000);
   }
 
   ngOnInit(): void {
@@ -44,6 +47,12 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('connecté');
       }));
     }
+    this.subscriptions.push(this.alertService.onAlert().subscribe( err => {
+      this.errors.push(err);
+      setTimeout(() => {
+        this.errors.splice(0, 1);
+      }, 5000);
+    }));
     this.subscriptions.push(this.authService.onLogin.subscribe(() => {
       this.menuItems$ = this.pageService.getRootPages();
     }));
@@ -72,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
-    clearInterval(this.intervall);
+    clearInterval(this.interval);
   }
 
   displayIndex(index): boolean {

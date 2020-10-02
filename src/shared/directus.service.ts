@@ -23,7 +23,7 @@ export abstract class DirectusService<T extends DirectusItemModel> {
    */
   getAll(full = false, options?: {sort?: string[]}): Observable<T[]> {
     let params = new HttpParams();
-    if (options.sort) {
+    if (options?.sort) {
       params = params.append('sort', '-date');
     }
     return this.getList(this.baseUrl, {params});
@@ -52,9 +52,10 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   /**
    * update item
    * @param item the item to update
+   * @param id the id of item to update
    */
   updateItem(id: number, item: Partial<T>): Observable<T> {
-    return this.http.patch<T>(this.baseUrl + '/' + id, item).pipe(pluck('data'));
+    return this.http.patch<T>(`${this.baseUrl}/${id}`, item).pipe(pluck('data'));
   }
 
   /**

@@ -3,7 +3,7 @@ import {DirectusService} from '../shared/directus.service';
 import {CompteRenduModel} from './compte-rendu.model';
 import {HttpClient} from '@angular/common/http';
 import {forkJoin, Observable, of} from 'rxjs';
-import {concatMap, map, tap} from 'rxjs/operators';
+import {concatMap, map} from 'rxjs/operators';
 import {DirectusFileService} from '../shared/directusFiles/directus-file.service';
 
 @Injectable({
@@ -36,15 +36,14 @@ export class CompteRenduService extends DirectusService<CompteRenduModel> {
   /**
    * laod all item
    * @param full load all dependencies
+   * @param options sort, filters, fields cf directus API
    */
-  getAll(full: boolean = false, options): Observable<CompteRenduModel[]> {
+  getAll(full: boolean = false, options: {sort?: string[]}): Observable<CompteRenduModel[]> {
     return super.getAll(full, options).pipe(
       concatMap(crs => {
         const crsWithImage = crs.filter(cr => cr.image && full);
         const crsWithoutImage = crs.filter(cr => !cr.image || !full);
-        return forkJoin([...crsWithImage.map(cr => this.loadFile(cr, 'image')), ...crsWithoutImage.map(cr => of(cr))]).pipe(
-          tap(list => console.log(list))
-        );
+        return forkJoin([...crsWithImage.map(cr => this.loadFile(cr, 'image')), ...crsWithoutImage.map(cr => of(cr))]);
       })
     );
   }
