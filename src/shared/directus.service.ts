@@ -1,5 +1,5 @@
 import {DirectusItemModel} from './directusItem.model';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
 import {map, pluck} from 'rxjs/operators';
@@ -21,8 +21,12 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   /**
    * retrieve all data
    */
-  getAll(full = false): Observable<T[]> {
-    return this.getList(this.baseUrl);
+  getAll(full = false, options?: {sort?: string[]}): Observable<T[]> {
+    let params = new HttpParams();
+    if (options.sort) {
+      params = params.append('sort', '-date');
+    }
+    return this.getList(this.baseUrl, {params});
   }
 
   /**

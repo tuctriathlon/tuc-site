@@ -37,8 +37,8 @@ export class CompteRenduService extends DirectusService<CompteRenduModel> {
    * laod all item
    * @param full load all dependencies
    */
-  getAll(full: boolean = false): Observable<CompteRenduModel[]> {
-    return super.getAll(full).pipe(
+  getAll(full: boolean = false, options): Observable<CompteRenduModel[]> {
+    return super.getAll(full, options).pipe(
       concatMap(crs => {
         const crsWithImage = crs.filter(cr => cr.image && full);
         const crsWithoutImage = crs.filter(cr => !cr.image || !full);

@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadItems(firstIndex: number = 0, lastIndex: number = PAGE_SIZE) {
-    this.cr$ = this.compteRenduService.getAll(true);
+    this.cr$ = this.compteRenduService.getAll(true, {sort: ['-date']});
   }
 
   ngOnInit(): void {
