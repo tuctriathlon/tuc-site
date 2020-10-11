@@ -46,6 +46,9 @@
       <div class="position-absolute" style="right: 0">
         <div class="alert alert-danger" *ngFor="let error of errors">{{error.message}}</div>
       </div>
+      <button id="back-button" mat-fab color="primary" (click)="navigateBack()">
+        <fa-icon icon="chevron-left"></fa-icon>
+      </button>
       <router-outlet></router-outlet>
     </div>
     <mat-toolbar class="footer h-auto" [class.d-inline-flex]="!fullScreen" [hidden]="fullScreen">

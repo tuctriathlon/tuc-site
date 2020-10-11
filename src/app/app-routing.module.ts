@@ -6,11 +6,13 @@ import {DirectusPageComponent} from '../shared/directus-page/directus-page.compo
 import {TestPageComponent} from './pages/test-page/test-page.component';
 import {HomeComponent} from './pages/home/home.component';
 import {InscriptionPageComponent} from './pages/inscription.page/inscription.page.component';
+import {ErrorPageComponent} from './pages/error-page/error-page.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'test', component: TestPageComponent },
   { path: 'inscriptions', component: InscriptionPageComponent },
+  { path: 'erreur', component: ErrorPageComponent },
   { path: 'event/:id', component: EventPageComponent },
   { path: ':url', component: DirectusPageComponent },
   { path: 'page/:resourceName', component: DirectusPageComponent },

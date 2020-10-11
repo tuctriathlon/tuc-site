@@ -14,6 +14,7 @@ import {PartenaireService} from '../partenaire/partenaire.service';
 import {PartenaireModel} from '../partenaire/partenaire.model';
 import {AlertService} from './services/alert.service';
 import {Alert} from './models/alert.model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +38,8 @@ export class AppComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private alertService: AlertService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private location: Location) {
     this.interval = setInterval(() => this.partenaireIndex++, 5000);
   }
 
@@ -120,5 +122,9 @@ export class AppComponent implements OnInit, OnDestroy {
       default:
         console.log(`unknown modal name ${name}`);
     }
+  }
+
+  navigateBack() {
+    this.location.back();
   }
 }

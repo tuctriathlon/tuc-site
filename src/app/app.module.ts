@@ -41,6 +41,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {CustomErrorHandler} from './helpers/customErrorHandler';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {CustomErrorHandler} from './helpers/customErrorHandler';
     TestPageComponent,
     EventComponent,
     EventCardComponent,
-    InscriptionPageComponent
+    InscriptionPageComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

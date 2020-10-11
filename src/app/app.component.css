@@ -38,3 +38,10 @@
 #app-content {
   background: #eeeeee;
 }
+
+#back-button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+
+}
