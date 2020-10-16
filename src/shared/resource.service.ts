@@ -101,12 +101,30 @@ export class ResourceService {
   loadCards(resourceName: string): Observable<CardModel[]> {
     return this.getCardConverter(resourceName).pipe(
       switchMap(() => {
+        const fields = this.getFilterFields(resourceName);
         const params = new HttpParams()
-          .append('fields', this.getFilterFields(resourceName));
+          .append('fields', fields.join(','));
         return this.httpClient.get<any[]>(`${this.baseUrl}/items/${resourceName}`, {params});
       }),
       pluck('data'),
-      map<any[], CardModel[]>(data => data.map(d => this.toCard(resourceName, d)))
+      map<any[], any[]>(data => {
+        // si une des propriete est un tableau on duplique l'element pour afficher chaque clé
+        const result = [];
+        data.forEach(d => {
+          Object.keys(d).forEach(key => {
+            if (Array.isArray(d[key])) {
+             d[key].forEach(v => {
+               result.push(Object.assign({...d}, {[key]: v}));
+             });
+            }
+          });
+        });
+        return result;
+      }),
+      tap(data => console.log(data)),
+      map<any[], CardModel[]>(data => data.map(d => {
+        return this.toCard(resourceName, d);
+      }))
     );
   }
 
@@ -186,7 +204,7 @@ export class ResourceService {
    * return the filter fields value to retrieve data
    * @param resourceName item table name
    */
-  getFilterFields(resourceName: string) {
+  getFilterFields(resourceName: string): string[] {
     const converter = this.cardFields.find(f => f.table === resourceName);
     const fieldList = ['id'];
     fieldList.push(...this.getFieldsName(converter.title));
@@ -195,7 +213,7 @@ export class ResourceService {
     fieldList.push(...this.getFieldsName(converter.content));
     fieldList.push(...this.getFieldsName(converter.icon));
     fieldList.push(this.getFieldsName(converter.image)[0] + '.*');
-    return fieldList.join(',');
+    return fieldList;
   }
 
   /**
@@ -206,7 +224,7 @@ export class ResourceService {
     if (! str) {
       return [];
     }
-    return (str.match(/{{2}[\w_.]*}{2}/g) || []).map(f => f.replace(/{{2}|}{2}/g, ''));
+    return (str.match(/{{2}[\w_.\*]*}{2}/g) || []).map(f => f.replace(/{{2}|}{2}/g, ''));
   }
 
   getFieldsToDisplay(resourceName: string): Observable<any[]> {
