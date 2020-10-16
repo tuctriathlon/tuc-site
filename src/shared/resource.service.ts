@@ -100,10 +100,13 @@ export class ResourceService {
    */
   loadCards(resourceName: string): Observable<CardModel[]> {
     return this.getCardConverter(resourceName).pipe(
-      switchMap(() => {
+      switchMap((converter) => {
         const fields = this.getFilterFields(resourceName);
-        const params = new HttpParams()
+        let params = new HttpParams()
           .append('fields', fields.join(','));
+        if (converter.sort) {
+          params = params.append('sort', converter.sort);
+        }
         return this.httpClient.get<any[]>(`${this.baseUrl}/items/${resourceName}`, {params});
       }),
       pluck('data'),
@@ -111,13 +114,17 @@ export class ResourceService {
         // si une des propriete est un tableau on duplique l'element pour afficher chaque clé
         const result = [];
         data.forEach(d => {
-          Object.keys(d).forEach(key => {
-            if (Array.isArray(d[key])) {
-             d[key].forEach(v => {
-               result.push(Object.assign({...d}, {[key]: v}));
-             });
-            }
-          });
+          if (Object.keys(d).some(key => Array.isArray(d[key]))) {
+            Object.keys(d).forEach(key => {
+              if (Array.isArray(d[key])) {
+                d[key].forEach(v => {
+                  result.push(Object.assign({...d}, {[key]: v}));
+                });
+              }
+            });
+          } else {
+            result.push(d);
+          }
         });
         return result;
       }),
