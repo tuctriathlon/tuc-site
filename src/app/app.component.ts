@@ -12,8 +12,6 @@ import {Observable, Subscription} from 'rxjs';
 import {PageModel} from '../shared/directus-page/page.model';
 import {PartenaireService} from '../partenaire/partenaire.service';
 import {PartenaireModel} from '../partenaire/partenaire.model';
-import {AlertService} from './services/alert.service';
-import {Alert} from './models/alert.model';
 import {Location} from '@angular/common';
 
 @Component({
@@ -23,7 +21,6 @@ import {Location} from '@angular/common';
 })
 export class AppComponent implements OnInit, OnDestroy {
   fillerNav = [];
-  errors: Alert[] = [];
   menuItems$: Observable<PageModel[]>;
   partenaires$: Observable<PartenaireModel[]>;
   interval;
@@ -37,7 +34,6 @@ export class AppComponent implements OnInit, OnDestroy {
               private partenaireService: PartenaireService,
               private router: Router,
               private route: ActivatedRoute,
-              private alertService: AlertService,
               public dialog: MatDialog,
               private location: Location) {
     this.interval = setInterval(() => this.partenaireIndex++, 5000);
@@ -49,12 +45,6 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('connecté');
       }));
     }
-    this.subscriptions.push(this.alertService.onAlert().subscribe( err => {
-      this.errors.push(err);
-      setTimeout(() => {
-        this.errors.splice(0, 1);
-      }, 5000);
-    }));
     this.subscriptions.push(this.authService.onLogin.subscribe(() => {
       this.menuItems$ = this.pageService.getRootPages();
     }));

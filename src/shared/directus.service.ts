@@ -21,10 +21,13 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   /**
    * retrieve all data
    */
-  getAll(full = false, options?: {sort?: string[]}): Observable<T[]> {
+  getAll(full = false, options?: {sort?: string[], limit?: number}): Observable<T[]> {
     let params = new HttpParams();
     if (options?.sort) {
-      params = params.append('sort', '-date');
+      params = params.append('sort', options.sort.join(','));
+    }
+    if (options?.limit) {
+      params = params.append('limit', options.limit.toString());
     }
     return this.getList(this.baseUrl, {params});
   }

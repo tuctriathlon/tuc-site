@@ -1,0 +1,12 @@
+.more-button {
+  height: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1c201c;
+  border: solid 1px gray;
+}
+.more-button:hover {
+  background: lightgray;
+}

@@ -43,9 +43,6 @@
 
   <mat-sidenav-content class="w-100 d-flex flex-column">
     <div id="app-content" class="w-100 flex-grow-1">
-      <div class="position-absolute" style="right: 0">
-        <div class="alert alert-danger" *ngFor="let error of errors">{{error.message}}</div>
-      </div>
       <button id="back-button" mat-fab color="primary" (click)="navigateBack()">
         <fa-icon icon="chevron-left"></fa-icon>
       </button>

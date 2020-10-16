@@ -8,15 +8,11 @@
     </div>
     <div class="pt-4 card-group">
       <app-card *ngFor="let cr of cr$ | async" [card]="cr.toCard()" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 p-1"></app-card>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 p-1">
-        <div class="tuc-card"><div class="tuc-card-title">Plus</div></div>
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 p-1 justify-content-center" *ngIf="cr$ | async">
+        <div [routerLink]="['/', 'page', 'compte_rendu']" class="more-button">
+          <fa-icon class="align-self-center" icon="plus" size="10x"></fa-icon>
+        </div>
       </div>
     </div>
-    <!--<mat-paginator [length]="eventService.getCount()"
-                   [pageSize]="12"
-                   hidePageSize
-                   showFirstLastButtons
-                   (page)="changePage($event)">
-    </mat-paginator>-->
   </div>
 </app-directus-page>
