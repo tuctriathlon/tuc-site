@@ -33,6 +33,8 @@ export class DirectusFileModel extends DirectusItemModel {
         return 'file-pdf';
       case 'application/msword':
         return 'file-word';
+      case 'application/gpx':
+        return 'route';
       default:
         return 'file';
     }

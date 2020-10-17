@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import {DirectusService} from '../directus.service';
 import {PageModel} from './page.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {forkJoin, merge, Observable, of} from 'rxjs';
+import { merge, Observable, of} from 'rxjs';
 import {DirectusFileModel} from '../directusFiles/directusFile.model';
 import {environment} from '../../environments/environment';
-import {last, map, mergeAll, pluck, switchMap, tap} from 'rxjs/operators';
+import {last, map, pluck, switchMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

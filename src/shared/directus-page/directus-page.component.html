@@ -14,7 +14,7 @@
         <div class="d-inline-block">
           <button mat-stroked-button [matMenuTriggerFor]="documents" class="mr-2" *ngIf="page.files.length">
             <fa-icon icon="chevron-down" size="lg" class="mr-2"></fa-icon>
-            Documents
+            Documents à télécharger
             <mat-menu #documents="matMenu">
               <a *ngFor="let file of page.files" mat-menu-item [href]="file.location" target="_blank">
                 <fa-icon [icon]="file.getIcon" size="lg" class="mr-2"></fa-icon>{{file.title}}
