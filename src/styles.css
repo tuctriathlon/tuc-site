@@ -4,7 +4,9 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+* {
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
+}
 button:focus, div:focus, img:focus {
   outline: none;
 }
@@ -24,3 +26,4 @@ button:focus, div:focus, img:focus {
   color: #5b605b;
   padding: 50px;
 }
+

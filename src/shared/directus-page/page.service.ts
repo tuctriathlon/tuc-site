@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import {DirectusService} from '../directus.service';
 import {PageModel} from './page.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {forkJoin, merge, Observable, of} from 'rxjs';
 import {DirectusFileModel} from '../directusFiles/directusFile.model';
 import {environment} from '../../environments/environment';
-import {map, pluck} from 'rxjs/operators';
+import {last, map, mergeAll, pluck, switchMap, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +20,29 @@ export class PageService extends DirectusService<PageModel> {
     const params = new HttpParams().append('filter[url]', url)
       .append('fields', '*,image.*,files.directus_files_id.*,resources.item_to_card_id.table');
     if (url) {
-      return this.get(this.baseUrl, {params});
+      return this.get(this.baseUrl, {params}).pipe(
+        map(data => {
+          return data;
+        }),
+        switchMap(data => this.loadResourceTraduction(data))
+      );
     } else {
       return of(new PageModel());
     }
+  }
+
+  loadResourceTraduction(page: PageModel): Observable<PageModel> {
+    const url = [environment.directusUrl, environment.directusProject, 'collections'].join('/');
+    const queries = page.resources.map((r, index) => this.httpClient.get<any>(`${url}/${r.name}`).pipe(
+      pluck('data'),
+      map(col => {
+        page.resources[index].traduction = col.translation ? col.translation.find(t => t.local = 'fr-Fr').translation : '';
+        return page;
+      })
+    ));
+    return merge(...queries).pipe(
+      last()
+    );
   }
 
   /**
