@@ -1,0 +1,5 @@
+<app-directus-page [page]="page">
+  <div *appDirectusPageContent>
+    <app-news *ngFor="let news of news$ | async" [news]="news"></app-news>
+  </div>
+</app-directus-page>

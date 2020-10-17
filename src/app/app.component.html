@@ -48,19 +48,19 @@
       </button>
       <router-outlet></router-outlet>
     </div>
-    <mat-toolbar class="footer h-auto" [class.d-inline-flex]="!fullScreen" [hidden]="fullScreen">
-      <div class="w-50 d-inline-flex">
+    <div *ngIf="!fullScreen" class="h-auto row w-100 m-0">
+      <div class="col-md-5 col-sm-12 p-3 d-inline-flex justify-content-around">
         <div *ngFor="let partenaire of partenaires$ | async; index as i" class="footer-logo" [routerLink]="['page', 'partenaire']">
           <img class="footer-img" *ngIf="partenaire.logo && displayIndex(i)" [src]="partenaire.logoFile.location" [alt]="partenaire.nom">
         </div>
       </div>
-      <div class="text-center w-50">
+      <div class="col-md-6 col-sm-12 p-3 text-center">
         TUC TRIATHLON<br/>
         Stade Universitaire Daniel Faucher<br/>
         11 Allée du Professeur Camille Soula<br/>
         31400 TOULOUSE
       </div>
-    </mat-toolbar>
+    </div>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

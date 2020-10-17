@@ -1,0 +1,6 @@
+<div
+  class="w-100 m-1 alert alert-secondary p-0"
+  role="alert">
+  <h3 class="font-weight-bold p-2 m-0">{{news.date.format("DD-MM-YYYY")}}<span class="ml-3">{{news.titre}}</span></h3>
+  <div *ngIf="!titleOnly" class="w-100 bg-white p-2">{{news.detail}}</div>
+</div>

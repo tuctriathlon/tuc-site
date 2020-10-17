@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {DirectusService} from '../directus.service';
 import {PageModel} from './page.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {DirectusFileModel} from '../directusFiles/directusFile.model';
 import {environment} from '../../environments/environment';
 import {map, pluck} from 'rxjs/operators';
@@ -19,7 +19,11 @@ export class PageService extends DirectusService<PageModel> {
   getByUrl(url: string): Observable<PageModel> {
     const params = new HttpParams().append('filter[url]', url)
       .append('fields', '*,image.*,files.directus_files_id.*,resources.item_to_card_id.table');
-    return this.get(this.baseUrl, {params});
+    if (url) {
+      return this.get(this.baseUrl, {params});
+    } else {
+      return of(new PageModel());
+    }
   }
 
   /**
@@ -35,8 +39,12 @@ export class PageService extends DirectusService<PageModel> {
    * @param parentId parent page id
    */
   getChildren(parentId: number): Observable<PageModel[]> {
-    const params = new HttpParams().set('filter[parent]', parentId.toString());
-    return this.getList(this.baseUrl, {params});
+    if (parentId) {
+      const params = new HttpParams().set('filter[parent]', parentId.toString());
+      return this.getList(this.baseUrl, {params});
+    } else {
+      return of([]);
+    }
   }
 
   getPageFiles(pageId: number): Observable<DirectusFileModel[]> {

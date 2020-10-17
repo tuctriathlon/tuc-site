@@ -42,6 +42,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {CustomErrorHandler} from './helpers/customErrorHandler';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import {NewsModule} from './news/news.module';
 
 @NgModule({
   declarations: [
@@ -78,12 +79,14 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
     TrainingModule,
     FaqModule,
     CompteRenduModule,
+    NewsModule,
     // appRouting module doit être en dernier
     AppRoutingModule,
     MatRadioModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatSelectModule,
+
   ],
   entryComponents: [
     LoginComponent,
@@ -93,7 +96,7 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: ErrorHandler, useClass: CustomErrorHandler },
     // { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true }
-    ],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -16,7 +16,7 @@ export class PageModel extends DirectusItemModel {
     super(data);
     this.title = data.title;
     this.url = data.url;
-    this.description = data.description;
+    this.description = data.description || '';
     this.icon = data.icon;
     if (data.image) {
       this.image = typeof data.image === 'number' ? data.image : new DirectusFileModel(data.image);
