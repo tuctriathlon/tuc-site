@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
   constructor(public eventService: EventService,
               public compteRenduService: CompteRenduService,
               private newsService: NewsService) {
-    this.loadItems();
   }
 
   loadItems() {
@@ -29,6 +28,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadItems();
   }
 
 }

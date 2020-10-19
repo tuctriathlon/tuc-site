@@ -40,9 +40,13 @@ export class PageService extends DirectusService<PageModel> {
         return page;
       })
     ));
-    return merge(...queries).pipe(
-      last()
-    );
+    if (queries.length) {
+      return merge(...queries).pipe(
+        last()
+      );
+    } else {
+      return of(page);
+    }
   }
 
   /**
