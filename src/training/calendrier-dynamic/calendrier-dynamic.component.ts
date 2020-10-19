@@ -1,8 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FullCalendarComponent} from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import {CalendarOptions, FullCalendarComponent} from '@fullcalendar/angular';
 import {TrainingModel} from '../training.model';
 import * as moment from 'moment';
 import {TrainingService} from '../training.service';
@@ -14,10 +11,22 @@ import {TrainingService} from '../training.service';
 })
 export class CalendrierDynamicComponent implements OnInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
-  calendarPlugins = [dayGridPlugin, timeGridPlugin, interactionPlugin];
-  events: any[] = [];
   selectedDate: moment.Moment;
   trainingList: TrainingModel[] = [];
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridWeek',
+    locale: 'fr',
+    firstDay: 1,
+    dateClick: (event) => this.selectDate(event.dateStr),
+    height: 200,
+    headerToolbar: {
+      left: '',
+      center: '',
+      right: ''
+    },
+    eventClick: (event) => this.handleClickEvent(event),
+    events: []
+  };
 
   constructor(private trainingService: TrainingService) {
     this.selectedDate = moment();
@@ -40,7 +49,6 @@ export class CalendrierDynamicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSelectedDateTraining();
     this.updateEvents();
   }
 
@@ -49,25 +57,13 @@ export class CalendrierDynamicComponent implements OnInit {
     const endOfWeek = this.selectedDate.clone().endOf('isoWeek');
     this.trainingService.getGoogleEvents(startOfWeek, endOfWeek).subscribe(events => {
       this.trainingList = events;
-      this.events = events.map(e => e.toFullCalendar());
+      this.calendarOptions.events = events.map(e => e.toFullCalendar());
     });
-  }
-
-  getSelectedDateTraining() {
-    /*this.trainingService.getByDate(this.selectedDate).subscribe(trainings => {
-      this.todayTrainings.forEach(training => {
-        const index = trainings.findIndex(t => t.type === training.type);
-        if (index >= 0) {
-          training = defaults(training, trainings[index]);
-        }
-      });
-    });*/
   }
 
   selectDate(date: string | moment.Moment) {
     this.selectedDate = moment(date);
     this.calendarComponent.getApi().select(this.currentDateFormatted);
-    this.getSelectedDateTraining();
   }
 
   handleClickEvent(event) {

@@ -7,6 +7,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatCardModule} from '@angular/material/card';
 import {FullCalendarModule} from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 import {SharedModule} from '../shared/shared.module';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {CalendrierDynamicComponent} from './calendrier-dynamic/calendrier-dynamic.component';
@@ -15,6 +18,12 @@ const trainingRoutes: Routes = [
   {path: 'training', component: TrainingPageComponent, canActivate: [AuthGuard]},
   {path: 'calendrier-dynamique', component: CalendrierDynamicComponent},
 ];
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin,
+  timeGridPlugin
+]);
 
 @NgModule({
   declarations: [

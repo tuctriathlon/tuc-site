@@ -6,20 +6,7 @@
   </div>
   <full-calendar
     #calendar
-    defaultView="dayGridWeek"
-    locale="fr"
-    themeSystem="bootstrap"
-    [firstDay]="1"
-    [header]="{
-          left: '',
-          center: '',
-          right: ''
-        }"
-    [height]="200"
-    [plugins]="calendarPlugins"
-    [events]="events"
-    (dateClick)="selectDate($event.dateStr)"
-    (eventClick)="handleClickEvent($event)"
+    [options]="calendarOptions"
   ></full-calendar>
 
   <div class="container-fluid pt-4 card-group justify-content-center">
