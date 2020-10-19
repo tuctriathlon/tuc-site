@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSliderModule} from '@angular/material/slider';
@@ -12,11 +12,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 import {HomeComponent} from './pages/home/home.component';
 import {AppRoutingModule} from './app-routing.module';
-import {EventComponent} from './components/event/event.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {EventCardComponent} from './components/event-card/event-card.component';
 import {MatCardModule} from '@angular/material/card';
-import {EventPageComponent} from './pages/event-page/event-page.component';
 import {TestPageComponent} from './pages/test-page/test-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -43,16 +40,14 @@ import {MatSelectModule} from '@angular/material/select';
 import {CustomErrorHandler} from './helpers/customErrorHandler';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import {NewsModule} from './news/news.module';
+import {ParametresSiteService} from './services/parametres-site.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    EventPageComponent,
     TestPageComponent,
-    EventComponent,
-    EventCardComponent,
     InscriptionPageComponent,
     ErrorPageComponent
   ],
@@ -95,7 +90,12 @@ import {NewsModule} from './news/news.module';
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: ErrorHandler, useClass: CustomErrorHandler },
-    // { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true }
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (paramService: ParametresSiteService) => () => paramService.initService(),
+      deps: [ParametresSiteService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

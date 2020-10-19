@@ -1,7 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import {NgModule} from '@angular/core';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
-import {EventPageComponent} from './pages/event-page/event-page.component';
 import {DirectusPageComponent} from '../shared/directus-page/directus-page.component';
 import {TestPageComponent} from './pages/test-page/test-page.component';
 import {HomeComponent} from './pages/home/home.component';
@@ -13,7 +12,6 @@ const appRoutes: Routes = [
   { path: 'test', component: TestPageComponent },
   { path: 'inscriptions', component: InscriptionPageComponent },
   { path: 'erreur', component: ErrorPageComponent },
-  { path: 'event/:id', component: EventPageComponent },
   { path: ':url', component: DirectusPageComponent },
   { path: 'page/:resourceName', component: DirectusPageComponent },
   { path: 'page/:resourceName/:id', component: DirectusPageComponent },

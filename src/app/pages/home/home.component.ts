@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {EventModel} from '../../models/event.model';
-import {EventService} from '../../services/event.service';
 import {CompteRenduService} from '../../../compte-rendu/compte-rendu.service';
 import {Observable} from 'rxjs';
 import {CardInterface} from '../../../shared/card/card.interface';
@@ -17,8 +16,7 @@ export class HomeComponent implements OnInit {
   events: EventModel[];
   cr$: Observable<CardInterface[]>;
   news$: Observable<NewsModel[]>;
-  constructor(public eventService: EventService,
-              public compteRenduService: CompteRenduService,
+  constructor(public compteRenduService: CompteRenduService,
               private newsService: NewsService) {
   }
 

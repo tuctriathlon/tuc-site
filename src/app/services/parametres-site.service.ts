@@ -1,42 +1,32 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from '../../environments/environment';
-import {pluck, tap} from "rxjs/operators";
-import {Observable} from "rxjs";
+import {HttpClient} from '@angular/common/http';
+import {DirectusService} from '../../shared/directus.service';
+import {ParametresSite} from '../models/parametresSite.model';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ParametresSiteService {
-  _googleApiKey: string;
-  _calendrier: string;
-  constructor(private http: HttpClient) {
-    this.loadParameters()
-  }
-
-  get directusUrl() {
-    return environment.directusUrl
-  }
-
-  get directusProject() {
-    return environment.directusProject
+export class ParametresSiteService extends DirectusService<ParametresSite> {
+  private parametres: ParametresSite;
+  constructor(public http: HttpClient) {
+    super(http, ParametresSite, 'parametres_site');
   }
 
   get googleApiKey() {
-    return this._googleApiKey
+    return this.parametres.googleApiKey;
   }
 
   get calendrier() {
-    return this._calendrier
+    return this.parametres.calendrier;
   }
 
-  loadParameters():Observable<any> {
-    return this.http.get(`${this.directusUrl}/${this.directusProject}/items/parametres_site/1`).pipe(
-      pluck('data'),
-      tap((params: any) => {
-        this._googleApiKey = params.googleApiKey;
-        this._calendrier = params.calendrier_dynamique;
-      })
-    );
+  initService(): Promise<ParametresSite> {
+    return this.getById(1).pipe(
+      tap(params => {
+      this.parametres = params;
+    })
+    ).toPromise();
   }
+
 }

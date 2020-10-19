@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {Observable, of} from 'rxjs';
 import {PageModel} from './directus-page/page.model';
-import {concatMap, map, pluck, switchMap, tap} from 'rxjs/operators';
+import {map, pluck, switchMap} from 'rxjs/operators';
 import {CardModel} from './card/card.model';
 import {DirectusFileModel} from './directusFiles/directusFile.model';
-import {assign, get} from 'lodash';
+import {get} from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -128,7 +128,6 @@ export class ResourceService {
         });
         return result;
       }),
-      tap(data => console.log(data)),
       map<any[], CardModel[]>(data => data.map(d => {
         return this.toCard(resourceName, d);
       }))
@@ -178,7 +177,7 @@ export class ResourceService {
    */
   toCard(resourceName: string, item: any): CardModel {
     const converter = this.cardFields.find(f => f.table === resourceName);
-    const card = new CardModel({
+    return new CardModel({
       title: this.replaceByContent(converter.title, item),
       subtitleLeft: this.replaceByContent(converter.subtitleleft, item),
       subtitleRight: this.replaceByContent(converter.subtitleright, item),
@@ -187,7 +186,6 @@ export class ResourceService {
       content: this.replaceByContent(converter.content, item),
       routerLink: ['/', 'page', resourceName, item.id]
     });
-    return card;
   }
 
   /**

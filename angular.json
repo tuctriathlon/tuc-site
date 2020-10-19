@@ -26,7 +26,6 @@
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.css",
               "src/tuc-theme.scss",
-              "./node_modules/ol/ol.css",
               "src/styles.css"
             ],
             "scripts": []

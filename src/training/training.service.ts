@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {DirectusService} from '../shared/directus.service';
 import {TrainingModel} from './training.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import * as moment from 'moment';
-import {environment} from '../environments/environment';
-import {map, pluck, tap} from 'rxjs/operators';
+import {map, pluck} from 'rxjs/operators';
+import {ParametresSiteService} from '../app/services/parametres-site.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrainingService extends DirectusService<TrainingModel> {
 
-  constructor(protected httpClient: HttpClient) {
+  constructor(protected httpClient: HttpClient,
+              private parametresService: ParametresSiteService) {
     super(httpClient, TrainingModel, 'training');
   }
 
@@ -23,9 +24,9 @@ export class TrainingService extends DirectusService<TrainingModel> {
   }
 
   getGoogleEvents(from: moment.Moment, to: moment.Moment): Observable<any> {
-    const key = environment.googleApiKey;
+    const key = this.parametresService.googleApiKey;
     const maxResults = 20;
-    const calendarId = encodeURIComponent(environment.googleCalendarTrainingId);
+    const calendarId = encodeURIComponent(this.parametresService.calendrier);
     return this.httpClient.get(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?` +
     `key=${key}&maxResults=${maxResults}&singleEvents=true&timeMin=${encodeURIComponent(from.format())}` +
     `&timeMax=${encodeURIComponent(to.format())}`).pipe(
@@ -50,14 +51,7 @@ export class TrainingService extends DirectusService<TrainingModel> {
           training.type = training.typeFromString(item.description);
           return training;
         });
-        //return this.toArrayModel(data);
       })
-    );
-  }
-
-  getIcalEvents(url: string): Observable<any> {
-    return this.httpClient.get(url).pipe(
-      tap(_ => console.log('ics'))
     );
   }
 }

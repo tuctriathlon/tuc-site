@@ -13,7 +13,6 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatDialogModule} from '@angular/material/dialog';
 import {InviteComponent} from './invite/invite.component';
-import {EventCardComponent} from '../app/components/event-card/event-card.component';
 import {SharedModule} from '../shared/shared.module';
 import { InviteUserComponent } from './invite-user/invite-user.component';
 
