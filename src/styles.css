@@ -25,3 +25,15 @@ button:focus, div:focus, img:focus {
   padding: 50px;
 }
 
+.square::before{
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+.square-content{
+  position:  absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  bottom: 0.25rem;
+  right: 0.25rem;
+}

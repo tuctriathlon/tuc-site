@@ -1,13 +1,12 @@
 .tuc-card {
-  height: 400px;
   overflow: hidden;
-  position: relative;
-  rotation-point: center;
   transition: transform 1s linear, border 0s linear 500ms;
   transform: rotateY(0);
   cursor: pointer;
   border: none;
+  display: flex;
 }
+
 .tuc-card.rotated {
   transition: transform 1s linear, border 0s linear 500ms;
   transform: rotateY(180deg);

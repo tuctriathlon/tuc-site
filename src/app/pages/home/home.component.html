@@ -8,10 +8,12 @@
         </div>
     </div>
     <div class="pt-4 card-group">
-      <app-card *ngFor="let cr of cr$ | async" [card]="cr.toCard()" class="col-xl-3 col-lg-4 col-md-6 col-sm-12 p-1"></app-card>
-      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 p-1 justify-content-center" *ngIf="cr$ | async">
-        <div [routerLink]="['/', 'page', 'compte_rendu']" class="more-button">
+      <app-card *ngFor="let cr of cr$ | async" [card]="cr.toCard()" class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 p-0"></app-card>
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 p-0" *ngIf="cr$ | async">
+        <div [routerLink]="['/', 'page', 'compte_rendu']" class="square m-2">
+          <div class="more-button square-content">
           <fa-icon class="align-self-center" icon="plus" size="10x"></fa-icon>
+          </div>
         </div>
       </div>
     </div>

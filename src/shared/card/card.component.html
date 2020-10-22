@@ -1,4 +1,5 @@
-<div class="tuc-card" [class.rotated]="rotated" (click)="rotate()">
+<div class="square"  (click)="rotate()">
+  <div class="tuc-card square-content" [class.rotated]="rotated">
   <img *ngIf="card.image && !card.isGpx" [src]="card.image" class="front" alt="image">
   <app-map *ngIf="card.image && card.isGpx" [gpx]="card.image.split('/').reverse()[0]" [move]="false"></app-map>
   <div class="tuc-card-body no-rotate">
@@ -11,5 +12,6 @@
     <div *ngIf="card.routerLink" class="tuc-card-link back" [routerLink]="card.routerLink">
       En savoir plus
     </div>
+  </div>
   </div>
 </div>
