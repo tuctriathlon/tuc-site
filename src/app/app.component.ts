@@ -40,11 +40,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.authService.getJwtToken()) {
-      this.subscriptions.push(this.authService.refreshToken().subscribe(_ => {
-        console.log('connecté');
-      }));
-    }
     this.subscriptions.push(this.authService.onLogin.subscribe(() => {
       this.menuItems$ = this.pageService.getRootPages();
     }));
@@ -61,11 +56,15 @@ export class AppComponent implements OnInit, OnDestroy {
     // load partenaires for footer
     this.partenaires$ = this.partenaireService.getAll(true);
     // get parameter from url
-    this.route.queryParamMap.subscribe(params => {
+    this.subscriptions.push(this.route.queryParamMap.subscribe(params => {
       if (params.has('embedded')) {
         this.fullScreen = true;
       }
-    });
+      if (params.has('token')) {
+        this.authService.setSession(params.get('token'));
+        this.authService.onLogin.next(true);
+      }
+    }));
   }
 
   /**

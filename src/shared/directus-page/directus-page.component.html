@@ -1,7 +1,8 @@
 <div [ngClass]="{'container-fluid': fullWidth, 'container': !fullWidth}" class="page">
 
   <ng-container *ngIf="page$ | async as page; else loader">
-      <h1 class="page-title">
+    <div [class.full]="fullScreen">
+      <h1 class="page-title" [hidden]="fullScreen">
         <fa-icon *ngIf="page.icon" [icon]="page.icon" class="mr-3"></fa-icon>
         <span>{{page.title}}</span>
       </h1>
@@ -12,6 +13,9 @@
       </ng-container>
       <ng-template #defaultButtonBar>
         <div class="d-inline-block">
+          <button *ngIf="!fullScreen" mat-stroked-button (click)="location.back()" class="mr-2">
+            <fa-icon icon="chevron-left" size="lg" class="mr-2"></fa-icon>Retour
+          </button>
           <button mat-stroked-button [matMenuTriggerFor]="documents" class="mr-2" *ngIf="page.files.length">
             <fa-icon icon="chevron-down" size="lg" class="mr-2"></fa-icon>
             Documents à télécharger
@@ -26,28 +30,31 @@
             <fa-icon [icon]="page.icon" size="lg" class="mr-2"></fa-icon>{{page.title}}
           </button>
 
-          <button mat-stroked-button *ngFor="let resource of page.resources" [routerLink]="['/', 'page', resource.name]" class="mr-2">
+          <button
+            mat-stroked-button
+            *ngFor="let resource of page.resources"
+            [routerLink]="['/', 'page', resource.name, queryParams]"
+            class="mr-2">
             {{resource.traduction || resource.name}}
           </button>
 
-          <button mat-stroked-button [routerLink]="['/', 'faq']" class="mr-2">
+          <button mat-stroked-button [routerLink]="['/', 'faq', queryParams]" class="mr-2" [hidden]="fullScreen">
             <fa-icon icon="question-circle" size="lg" class="mr-2"></fa-icon>FAQ
           </button>
         </div>
       </ng-template>
-    <div class="page-description mt-1 roboto" [innerHTML]="page.description | safeHtml">
-    </div>
-    <div  [class.full]="fullScreen">
+      <div class="page-description mt-1 roboto" [innerHTML]="page.description | safeHtml">
+      </div>
       <ng-container *ngTemplateOutlet="pageContentTpl ? pageContentTpl : defaultContent"></ng-container>
-    <ng-template #defaultContent>
-      <div *ngIf="resource" class="container-fluid pt-4 card-group">
-        <app-card class="col-lg-4 col-md-6 col-sm-12 p-1" *ngFor="let card of cards$ | async" [card]="card"></app-card>
-      </div>
-      <div *ngIf="id">
-        <app-field *ngFor="let field of page.fields" [field]="field">
-        </app-field>
-      </div>
-    </ng-template>
+      <ng-template #defaultContent>
+        <div *ngIf="resource" class="container-fluid pt-4 card-group">
+          <app-card class="col-lg-4 col-md-6 col-sm-12 p-1" *ngFor="let card of cards$ | async" [card]="card"></app-card>
+        </div>
+        <div *ngIf="id">
+          <app-field *ngFor="let field of page.fields" [field]="field">
+          </app-field>
+        </div>
+      </ng-template>
     </div>
   </ng-container>
 

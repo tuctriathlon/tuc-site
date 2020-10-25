@@ -10,6 +10,7 @@ import {DirectusPageButtonBarDirective} from './directus-page-button-bar.directi
 import {LoaderService} from '../loader.service';
 import {ResourceService} from '../resource.service';
 import {CardModel} from '../card/card.model';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-directus-page',
@@ -31,11 +32,13 @@ export class DirectusPageComponent implements OnInit {
   childPage$: Observable<PageModel[]>;
   cards$: Observable<CardModel[]>;
   fields$: Observable<any[]>;
+  queryParams: any = {};
   constructor(private pageService: PageService,
               private fileService: DirectusFileService,
               private loaderService: LoaderService,
               private resourceService: ResourceService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              public location: Location) {
     this.loaderService.isLoading.subscribe((v) => {
       this.loading = v;
     });
@@ -46,6 +49,10 @@ export class DirectusPageComponent implements OnInit {
     this.route.queryParamMap.subscribe(params => {
       if (params.has('embedded')) {
         this.fullScreen = true;
+        this.queryParams.token = params.get('embedded');
+      }
+      if (params.has('token')) {
+        this.queryParams.token = params.get('token');
       }
     });
     this.route.paramMap.pipe(
