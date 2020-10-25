@@ -1,6 +1,4 @@
 import * as moment from 'moment';
-import * as _ from 'lodash';
-import {TextUtils} from '../../shared/text.utils';
 import {CardModel} from '../../shared/card/card.model';
 import {CardInterface} from '../../shared/card/card.interface';
 import {PageInterface} from '../../shared/directus-page/page.interface';
@@ -43,7 +41,7 @@ export class EventModel implements CardInterface, PageInterface {
     card.subtitleLeft = this.dateFormatted;
     card.content = this.description;
     card.image = this.picture;
-    card.routerLink = ['/', 'event', this.id.toString()];
+    card.link = ['/', 'event', this.id.toString()].join('/');
     return card;
   }
 

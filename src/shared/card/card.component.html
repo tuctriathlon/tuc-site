@@ -1,17 +1,24 @@
 <div class="square"  (click)="rotate()">
   <div class="tuc-card square-content" [class.rotated]="rotated">
-  <img *ngIf="card.image && !card.isGpx" [src]="card.image" class="front" alt="image">
-  <app-map *ngIf="card.image && card.isGpx" [gpx]="card.image.split('/').reverse()[0]" [move]="false"></app-map>
-  <div class="tuc-card-body no-rotate">
-    <h2 class="tuc-card-title"><fa-icon *ngIf="card.icon" [icon]="card.icon"></fa-icon> {{card.title}}</h2>
-    <div class="tuc-card-subtitle mb-2 text-muted back">
-      <div>{{card.subtitleLeft}}</div>
-      <div>{{card.subtitleRight}}</div>
+    <img *ngIf="card.image && !card.isGpx" [src]="card.image" class="front" alt="image">
+    <app-map *ngIf="card.image && card.isGpx" [gpx]="card.image.split('/').reverse()[0]" [move]="false"></app-map>
+    <div class="tuc-card-body no-rotate">
+      <h2 class="tuc-card-title"><fa-icon *ngIf="card.icon" [icon]="card.icon"></fa-icon> {{card.title}}</h2>
+      <div class="tuc-card-subtitle mb-2 text-muted back">
+        <div>{{card.subtitleLeft}}</div>
+        <div>{{card.subtitleRight}}</div>
+      </div>
+      <div class="tuc-card-text back" [innerHTML]="card.summary"></div>
+      <div *ngIf="card.link && !(card.link | isUrl)" class="tuc-card-link back" [routerLink]="card.link">
+        En savoir plus
+      </div>
+      <a *ngIf="card.link && (card.link |isUrl)"
+         class="tuc-card-link back"
+         [href]="card.link"
+         target="_blank"
+         (click)="$event.stopPropagation()">
+        En savoir plus
+      </a>
     </div>
-    <div class="tuc-card-text back" [innerHTML]="card.summary"></div>
-    <div *ngIf="card.routerLink" class="tuc-card-link back" [routerLink]="card.routerLink">
-      En savoir plus
-    </div>
-  </div>
   </div>
 </div>

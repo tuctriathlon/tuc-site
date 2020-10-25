@@ -16,6 +16,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {MatMenuModule} from '@angular/material/menu';
 import { FieldComponent } from './field/field.component';
 import { MapComponent } from './map/map.component';
+import {IsUrlPipe} from './is-url.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MapComponent } from './map/map.component';
     DirectusPageButtonBarDirective,
     CardComponent,
     FieldComponent,
-    MapComponent
+    MapComponent,
+    IsUrlPipe
   ],
   providers: [
     LoaderService,
@@ -35,6 +37,7 @@ import { MapComponent } from './map/map.component';
   exports: [
       SortByPipe,
       SafeHtmlPipe,
+      IsUrlPipe,
       DirectusPageComponent,
       DirectusPageContentDirective,
       DirectusPageButtonBarDirective,

@@ -11,14 +11,6 @@ export class FaqModel extends DirectusItemModel {
   tag: number;
   priorite: number;
 
-  public static randomQuestion(): FaqModel {
-    const faqModel = new FaqModel();
-    faqModel.question = TextUtils.randomTitle();
-    faqModel.reponse = TextUtils.randomParagraph();
-    faqModel.tag = 1;
-    return faqModel;
-  }
-
   updateFromData(data) {
     this.id = data.id;
     this.question = data.question;

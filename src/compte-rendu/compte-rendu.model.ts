@@ -32,7 +32,7 @@ export class CompteRenduModel extends DirectusItemModel implements PageInterface
     card.subtitleRight = this.date.format('DD-MM-YYYY');
     card.content = this.recit;
     card.image = this.imageFile?.location;
-    card.routerLink = ['/', 'compte-rendu', this.id.toString()];
+    card.link = ['/', 'compte-rendu', this.id.toString()].join('/');
     return card;
   }
 

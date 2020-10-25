@@ -184,7 +184,7 @@ export class ResourceService {
       icon: this.replaceByContent(converter.icon, item),
       image: get(item, this.getFieldsName(converter.image)[0])?.data.full_url,
       content: this.replaceByContent(converter.content, item),
-      routerLink: ['/', 'page', resourceName, item.id]
+      link: converter.link ? this.replaceByContent(converter.link, item) : ['/', 'page', resourceName, item.id].join('/')
     });
   }
 
@@ -217,6 +217,7 @@ export class ResourceService {
     fieldList.push(...this.getFieldsName(converter.subtitleleft));
     fieldList.push(...this.getFieldsName(converter.content));
     fieldList.push(...this.getFieldsName(converter.icon));
+    fieldList.push(...this.getFieldsName(converter.link));
     fieldList.push(this.getFieldsName(converter.image)[0] + '.*');
     return fieldList;
   }

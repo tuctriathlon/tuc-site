@@ -7,7 +7,7 @@ export class CardModel {
   subtitleLeft: string;
   subtitleRight: string;
   image: string;
-  routerLink: string[];
+  link: string;
 
   constructor(data: Partial<CardModel> = {}) {
     this.title = data.title;
@@ -16,7 +16,7 @@ export class CardModel {
     this.subtitleLeft = data.subtitleLeft;
     this.subtitleRight = data.subtitleRight;
     this.image = data.image;
-    this.routerLink = data.routerLink;
+    this.link = data.link;
   }
 
   get hasSubtitle(): boolean {
