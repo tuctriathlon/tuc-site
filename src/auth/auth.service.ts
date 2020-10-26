@@ -97,7 +97,7 @@ export class AuthService {
   requestPwd(email: string) {
     return this.http.post<any>(`${this.serviceUrl}/password/request`, {
       email,
-      reset_url: 'http://demo.tuc-triathlon.com/reset-password'
+      reset_url: 'https://demo.tuc-triathlon.com/#/reset-password'
     });
   }
 
@@ -110,7 +110,9 @@ export class AuthService {
     return this.http.post(`${this.serviceUrl}/password/reset`, {
       token,
       password
-    });
+    }).pipe(
+      tap(() => this.logout())
+    );
   }
 
   /**
