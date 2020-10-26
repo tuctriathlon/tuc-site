@@ -13,7 +13,7 @@
       </ng-container>
       <ng-template #defaultButtonBar>
         <div class="d-inline-block">
-          <button *ngIf="!fullScreen" mat-stroked-button (click)="location.back()" class="mr-2">
+          <button *ngIf="fullScreen" mat-stroked-button (click)="location.back()" class="mr-2">
             <fa-icon icon="chevron-left" size="lg" class="mr-2"></fa-icon>Retour
           </button>
           <button mat-stroked-button [matMenuTriggerFor]="documents" class="mr-2" *ngIf="page.files.length">
@@ -26,9 +26,17 @@
             </mat-menu>
           </button>
 
-          <button *ngFor="let page of childPage$ | async" mat-stroked-button [routerLink]="['/', page.url]" class="mr-2">
-            <fa-icon [icon]="page.icon" size="lg" class="mr-2"></fa-icon>{{page.title}}
-          </button>
+          <div *ngFor="let page of childPage$ | async" class="d-inline-block">
+            <button *ngIf="!(page.url |isUrl)" mat-stroked-button [routerLink]="['/', page.url]" [queryParams]="queryParams" class="mr-2">
+              <fa-icon [icon]="page.icon" size="lg" class="mr-2"></fa-icon>{{page.title}}
+            </button>
+
+            <a *ngIf="page.url | isUrl" [href]="page.url" target="_blank">
+              <button mat-stroked-button class="mr-2">
+                <fa-icon [icon]="page.icon" size="lg" class="mr-2"></fa-icon>{{page.title}}
+              </button>
+            </a>
+          </div>
 
           <button
             mat-stroked-button
