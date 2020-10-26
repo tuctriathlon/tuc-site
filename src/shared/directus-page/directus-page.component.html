@@ -55,8 +55,23 @@
       </div>
       <ng-container *ngTemplateOutlet="pageContentTpl ? pageContentTpl : defaultContent"></ng-container>
       <ng-template #defaultContent>
-        <div *ngIf="resource" class="container-fluid pt-4 card-group">
-          <app-card class="col-lg-4 col-md-6 col-sm-12 p-1" *ngFor="let card of cards$ | async" [card]="card"></app-card>
+        <div *ngIf="resource" class="mt-2">
+          <mat-chip-list selectable *ngIf="filters.length">
+            <mat-chip
+              [selected]="!selectedFilter"
+              (click)="selectedFilter = null">
+              All
+            </mat-chip>
+            <mat-chip
+              *ngFor="let filter of filters"
+              [selected]="selectedFilter === filter"
+              (click)="selectedFilter = filter">
+              {{filter}}
+            </mat-chip>
+          </mat-chip-list>
+          <div class="container-fluid pt-4 card-group">
+          <app-card class="col-lg-4 col-md-6 col-sm-12 p-1" *ngFor="let card of cards$ | async | cardFilter : selectedFilter" [card]="card"></app-card>
+          </div>
         </div>
         <div *ngIf="id">
           <app-field *ngFor="let field of page.fields" [field]="field">

@@ -33,6 +33,8 @@ export class DirectusPageComponent implements OnInit {
   cards$: Observable<CardModel[]>;
   fields$: Observable<any[]>;
   queryParams: any = {};
+  filters: string[] | number[] = [];
+  selectedFilter: string | number | null = null;
   constructor(private pageService: PageService,
               private fileService: DirectusFileService,
               private loaderService: LoaderService,
@@ -76,7 +78,10 @@ export class DirectusPageComponent implements OnInit {
         this.fields$ = this.resourceService.getFieldsToDisplay(this.resource);
       } else if (this.resource) {
         this.page$ = this.resourceService.loadResourceListPage(this.resource);
-        this.cards$ = this.resourceService.loadCards(this.resource);
+        this.cards$ = this.resourceService.loadCards(this.resource).pipe(
+          tap(cards => this.filters = cards.map(c => c.filter)
+              .filter((f, i, self) => self.indexOf(f) === i && f))
+        );
       } else {
         this.loadPage();
       }
