@@ -2,7 +2,7 @@ import {Component, ContentChild, Input, OnInit, TemplateRef} from '@angular/core
 import {PageService} from './page.service';
 import {Observable, of} from 'rxjs';
 import {PageModel} from './page.model';
-import {concatMap, map, tap} from 'rxjs/operators';
+import {concatMap, tap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {DirectusFileService} from '../directusFiles/directus-file.service';
 import {DirectusPageContentDirective} from './directus-page-content.directive';

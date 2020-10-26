@@ -39,7 +39,7 @@
 
   <mat-sidenav-content class="w-100 d-flex flex-column">
     <div id="app-content" class="w-100 flex-grow-1">
-      <button id="back-button" mat-fab color="primary" (click)="navigateBack()">
+      <button *ngIf="!fullScreen" id="back-button" mat-fab color="primary" (click)="navigateBack()">
         <fa-icon icon="chevron-left"></fa-icon>
       </button>
       <router-outlet></router-outlet>

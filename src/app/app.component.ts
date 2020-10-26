@@ -95,16 +95,14 @@ export class AppComponent implements OnInit, OnDestroy {
       case ModalEnum.LOGIN:
         if (!this.isLogged()) {
           this.dialog.open(LoginComponent, {
-            id: 'login',
-            width: '400px'
+            id: 'login'
           });
         }
         break;
       case ModalEnum.FORGOTTEN_PASSWORD:
         if (!this.isLogged()) {
           this.dialog.open(ForgottenPasswordComponent, {
-            id: 'forgotten-pwd',
-            width: '400px'
+            id: 'forgotten-pwd'
           });
         }
         break;
