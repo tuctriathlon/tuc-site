@@ -11,7 +11,6 @@ import {LoaderService} from '../loader.service';
 import {ResourceService} from '../resource.service';
 import {CardModel} from '../card/card.model';
 import {Location} from '@angular/common';
-import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-directus-page',
@@ -42,8 +41,7 @@ export class DirectusPageComponent implements OnInit, OnDestroy {
               private loaderService: LoaderService,
               private resourceService: ResourceService,
               private route: ActivatedRoute,
-              public location: Location,
-              private authService: AuthService) {
+              public location: Location) {
     this.subscriptions = [];
     this.subscriptions.push(this.loaderService.isLoading.subscribe((v) => {
       this.loading = v;
@@ -51,9 +49,6 @@ export class DirectusPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.authService.onLogin.subscribe(() => {
-      this.ngOnInit();
-    }));
     this.loading = true;
     this.route.queryParamMap.subscribe(params => {
       if (params.has('embedded')) {
