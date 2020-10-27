@@ -157,6 +157,7 @@ export class ResourceService {
       return this.httpClient.get<any>(`${this.baseUrl}/items/item_to_page`, {params}).pipe(
         pluck('data'),
         map(data => {
+          data[0].fields = data[0].fields || {};
           this.pageFields.push(data[0]);
           return data[0];
         })

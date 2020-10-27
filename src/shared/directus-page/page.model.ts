@@ -10,7 +10,7 @@ export class PageModel extends DirectusItemModel {
   files: DirectusFileModel[];
   order: number;
   resources: {name: string, traduction?: string}[];
-  fields: any;
+  fields: any[];
 
   constructor(data: Partial<PageModel> = {}) {
     super(data);
@@ -21,10 +21,10 @@ export class PageModel extends DirectusItemModel {
     if (data.image) {
       this.image = typeof data.image === 'number' ? data.image : new DirectusFileModel(data.image);
     }
-    this.order = data.order;
+    this.order = data.order || 0;
     this.files = data.files || [];
     this.resources = data.resources || [];
-    this.fields = data.fields || {};
+    this.fields = data.fields || [];
   }
 
   get hasImageLoaded() {

@@ -7,7 +7,7 @@
         <span>{{page.title}}</span>
       </h1>
       <div class="page-image mb-2" *ngIf="page.hasImageLoaded">
-        <img [src]="page.image.location" alt="page-picture" class="img-fluid mx-auto d-block"/>
+        <img [src]="page.image.location" alt="page-picture" class="img-fluid mx-auto d-block page-image"/>
       </div>
       <ng-container *ngTemplateOutlet="pageButtonBarTpl ? pageButtonBarTpl : defaultButtonBar">
       </ng-container>

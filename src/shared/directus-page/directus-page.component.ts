@@ -1,6 +1,6 @@
-import {Component, ContentChild, Input, OnInit, TemplateRef} from '@angular/core';
+import {Component, ContentChild, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {PageService} from './page.service';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 import {PageModel} from './page.model';
 import {concatMap, tap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
@@ -11,13 +11,14 @@ import {LoaderService} from '../loader.service';
 import {ResourceService} from '../resource.service';
 import {CardModel} from '../card/card.model';
 import {Location} from '@angular/common';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-directus-page',
   templateUrl: './directus-page.component.html',
   styleUrls: ['./directus-page.component.css']
 })
-export class DirectusPageComponent implements OnInit {
+export class DirectusPageComponent implements OnInit, OnDestroy {
   @Input() url: null | string = null;
   @Input() fullWidth = false;
   @Input() page: null | PageModel = null;
@@ -35,18 +36,24 @@ export class DirectusPageComponent implements OnInit {
   queryParams: any = {};
   filters: string[] | number[] = [];
   selectedFilter: string | number | null = null;
+  subscriptions: Subscription[];
   constructor(private pageService: PageService,
               private fileService: DirectusFileService,
               private loaderService: LoaderService,
               private resourceService: ResourceService,
               private route: ActivatedRoute,
-              public location: Location) {
-    this.loaderService.isLoading.subscribe((v) => {
+              public location: Location,
+              private authService: AuthService) {
+    this.subscriptions = [];
+    this.subscriptions.push(this.loaderService.isLoading.subscribe((v) => {
       this.loading = v;
-    });
+    }));
   }
 
   ngOnInit(): void {
+    this.subscriptions.push(this.authService.onLogin.subscribe(() => {
+      this.ngOnInit();
+    }));
     this.loading = true;
     this.route.queryParamMap.subscribe(params => {
       if (params.has('embedded')) {
@@ -86,6 +93,10 @@ export class DirectusPageComponent implements OnInit {
         this.loadPage();
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subs => subs.unsubscribe());
   }
 
   /**
