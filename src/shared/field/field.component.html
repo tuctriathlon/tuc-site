@@ -2,7 +2,7 @@
   <ng-container [ngSwitch]="field.value.type">
     <div class="w-100 text-center">
       <app-map *ngIf="isGPX" [gpx]="field.value.filename_disk"></app-map>
-      <img *ngIf="isImage" [src]="field.value.data.full_url" [alt]="field.name">
+      <img *ngIf="isImage" class="field-image" [src]="field.value.data.full_url" [alt]="field.name">
     </div>
   </ng-container>
 </div>
