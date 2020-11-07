@@ -35,11 +35,16 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
-    return request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    if (this.authService.isEmbedded) {
+      const params = request.params.append('access_token', token);
+      return request.clone({params});
+    } else {
+      return request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    }
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {

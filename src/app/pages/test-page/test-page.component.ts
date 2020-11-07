@@ -12,8 +12,6 @@ export class TestPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[];
   tests: TestModel[];
   selectedTest: TestModel;
-  counterValue = 3;
-  fancyCounterValue = 2;
   constructor(private testService: TestService) {
     this.tests = [];
     this.subscriptions = [];
@@ -29,6 +27,13 @@ export class TestPageComponent implements OnInit, OnDestroy {
 
   deleteItem(id: number) {
     this.subscriptions.push(this.testService.deleteItem(id).subscribe(_ => this.tests = this.tests.filter(i => i.id === id)));
+  }
+
+  updateItem(id: number) {
+    this.subscriptions.push(this.testService.updateItem(id, {name: 'updated name'}).subscribe(item => {
+      const index = this.tests.findIndex(test => test.id === id);
+      this.tests.splice(index, 1, item);
+    }));
   }
 
   saveItem(item: TestModel) {

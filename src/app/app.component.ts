@@ -60,10 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
       if (params.has('embedded')) {
         this.fullScreen = true;
       }
-      if (params.has('token')) {
-        this.authService.setSession(params.get('token'));
-        this.authService.onLogin.next(true);
-      }
     }));
   }
 

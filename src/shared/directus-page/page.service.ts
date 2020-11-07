@@ -20,6 +20,7 @@ export class PageService extends DirectusService<PageModel> {
     const params = new HttpParams().append('filter[url]', url)
       .append('fields', '*,image.*,files.directus_files_id.*,resources.item_to_card_id.table');
     if (url) {
+      console.log('load page');
       return this.get(this.baseUrl, {params}).pipe(
         map(data => {
           return data;

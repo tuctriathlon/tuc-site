@@ -1,7 +1,6 @@
 import {ErrorHandler, Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AlertService} from '../services/alert.service';
-import {Location} from '@angular/common';
 import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 
@@ -23,6 +22,7 @@ export class CustomErrorHandler implements ErrorHandler {
       } else {
         alertService.error(error.toString());
       }
+      // await this.router.navigateByUrl('erreur');
     }
     console.error(error);
   }

@@ -22,8 +22,8 @@ export class UserService extends DirectusService<UserModel> {
     return this.post(`${this.baseUrl}/invite/${token}`, {});
   }
 
-  invite(email: string): Observable<UserModel> {
-    return this.post(`${this.baseUrl}/invite`, {email});
+  invite(email: string[]): Observable<UserModel[]> {
+    return this.postList(`${this.baseUrl}/invite`, {email});
   }
 
 }

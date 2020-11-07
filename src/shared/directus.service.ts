@@ -102,6 +102,18 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   }
 
   /**
+   * send request and create a list of instances
+   * @param url api
+   * @param body content
+   */
+  protected postList(url: string, body: any): Observable<T[]> {
+    return this.http.post<T>(url, body).pipe(
+      pluck('data'),
+      map<any[], T[]>(data => this.toArrayModel(data))
+    );
+  }
+
+  /**
    * return a T instance from data
    * @param data any
    */

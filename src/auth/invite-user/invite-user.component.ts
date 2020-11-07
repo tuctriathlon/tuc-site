@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../user.service';
-import {UserModel, UserStatus} from '../user.model';
-import { map, switchMap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {UserModel} from '../user.model';
+import {switchMap} from 'rxjs/operators';
+import {combineLatest, Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-invite-user',
@@ -10,41 +11,31 @@ import {Observable} from 'rxjs';
   styleUrls: ['./invite-user.component.css']
 })
 export class InviteUserComponent implements OnInit {
-  emails: string[] = [];
   users$: Observable<UserModel[]>;
+  emailsCSV = '';
+  errors: string[] = [];
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private router: Router) {
   }
 
-  ngOnInit(): void {
-    this.users$ = this.getAllInvitedUsers();
+  ngOnInit(): void {}
+
+  get emails(): string[] {
+    return this.emailsCSV.split(',').map(mail => mail.trim());
   }
 
-  getAllInvitedUsers(): Observable<UserModel[]> {
-    return this.userService.getAll().pipe(
-      map(users => users.filter(user => user.status === UserStatus.ACTIVE))
-    );
+  inviteUsers() {
+    return this.userService.invite(this.emails).pipe(
+      switchMap(users => combineLatest(
+        users.map(user => this.userService.updateItem(user.id, {role: 7})))
+      ));
   }
 
-  createUser(email: string) {
-    this.userService.invite(email).pipe(
-      switchMap(user => {
-        console.log(user);
-        return this.userService.updateItem(user.id, { email: user.email.trim()});
-      })
-    ).subscribe(() => {
+  async sendInvitations() {
+    this.inviteUsers().toPromise().then(() => {
+      this.router.navigateByUrl('home').then(() => console.log('invitation send'));
     });
-  }
-
-  updateUser(user: UserModel) {
-    this.userService.updateItem(user.id, {role: 7, status: UserStatus.ACTIVE, password: 'tuc123', email: user.email.trim()})
-      .subscribe(u => {
-      user = u;
-    });
-  }
-
-  deleteUser(user: UserModel) {
-    this.userService.deleteItem(user.id).subscribe(() => console.log(`${user.id} user deleted`));
   }
 
 }

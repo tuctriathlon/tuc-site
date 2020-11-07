@@ -50,7 +50,7 @@ export class DirectusPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    this.route.queryParamMap.subscribe(params => {
+    this.subscriptions.push(this.route.queryParamMap.subscribe(params => {
       if (params.has('embedded')) {
         this.fullScreen = true;
         this.queryParams.token = params.get('embedded');
@@ -58,7 +58,7 @@ export class DirectusPageComponent implements OnInit, OnDestroy {
       if (params.has('token')) {
         this.queryParams.token = params.get('token');
       }
-    });
+    }));
     this.route.paramMap.pipe(
       tap(params => {
         if (params.has('resourceName')) {

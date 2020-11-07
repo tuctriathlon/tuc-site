@@ -41,6 +41,7 @@ import {CustomErrorHandler} from './helpers/customErrorHandler';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import {NewsModule} from './news/news.module';
 import {ParametresSiteService} from './services/parametres-site.service';
+import { HomeTrainerPageComponent } from './pages/home-trainer-page/home-trainer-page.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {ParametresSiteService} from './services/parametres-site.service';
     HomeComponent,
     TestPageComponent,
     InscriptionPageComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    HomeTrainerPageComponent
   ],
   imports: [
     BrowserModule,

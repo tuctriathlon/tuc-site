@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable, of} from 'rxjs';
 import {environment} from '../environments/environment';
 import * as moment from 'moment';
 import {StorageService} from '../shared/storage.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class AuthService {
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   // cf documentation directus 20min
   private readonly TOKEN_EXPIRATION_TIME = 20 * 60;
+  private embedded = false;
   // url to redirect after login
   redirectUrl: string;
   onLogin: BehaviorSubject<boolean> =  new BehaviorSubject(false);
@@ -22,9 +24,34 @@ export class AuthService {
     return [environment.directusUrl, environment.directusProject, 'auth'].join('/');
   }
 
+  get isEmbedded(): boolean {
+    return this.embedded;
+  }
+
+  set isEmbedded(value: boolean) {
+    this.embedded = value;
+  }
+
   constructor(private http: HttpClient,
-              private storage: StorageService) {
+              private storage: StorageService,
+              private route: ActivatedRoute) {
     this.redirectUrl = '/home';
+    this.init();
+  }
+
+  /**
+   * init service with query params
+   */
+  init(): void {
+    this.route.queryParamMap.subscribe(params => {
+      if (params.has('embedded')) {
+        this.isEmbedded = true;
+      }
+      if (params.has('token') && params.get('token')) {
+        this.setSession(params.get('token'));
+        this.onLogin.next(true);
+      }
+    });
   }
 
   /**
@@ -74,7 +101,7 @@ export class AuthService {
         this.onLogin.next(true);
         this.setSession(data.token);
       }),
-    catchError(err => {
+      catchError(err => {
         console.log(err);
         this.onLogin.next(false);
         this.logout();
