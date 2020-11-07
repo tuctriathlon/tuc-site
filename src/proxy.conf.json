@@ -1,0 +1,5 @@
+{
+  "*" : {
+    "headers": {"Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, HEAD, OPTIONS, PATCH"}
+  }
+}
