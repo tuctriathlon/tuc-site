@@ -1,7 +1,13 @@
 <div class="container bg-white h-100 d-flex flex-column">
   <h1>Créer des utilisateurs</h1>
-  <textarea [(ngModel)]="emailsCSV"></textarea>
-  <button mat-raised-button (click)="sendInvitations()">Envoyer</button>
+  <textarea matInput aria-label="emails" [(ngModel)]="emailsCSV"></textarea>
+  <mat-radio-group aria-label="select role" class="d-inline-flex justify-content-between mt-2" [value]="selectedRole" (change)="selectedRole = $event.value">
+    <mat-radio-button
+      color="primary"
+      *ngFor="let role of roles$ | async"
+      [value]="role.id">{{role.name}}</mat-radio-button>
+  </mat-radio-group>
+  <button class="mt-2" mat-raised-button (click)="sendInvitations()">Envoyer</button>
   <ul>
     <li *ngFor="let email of emails">{{email}}</li>
   </ul>

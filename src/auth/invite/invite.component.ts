@@ -25,10 +25,8 @@ export class InviteComponent implements OnInit {
     this.user$ = this.route.paramMap.pipe(
       switchMap(params => this.userService.accepteInvitation(params.get('token'))),
       switchMap(user => {
-        this.authService.requestPwd(user.email);
-        return of(user);
+        return this.authService.requestPwd(user.email).pipe(switchMap(() => of(user)));
       })
-  );
-
+    );
   }
 }

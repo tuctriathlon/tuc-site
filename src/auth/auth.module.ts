@@ -15,6 +15,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {InviteComponent} from './invite/invite.component';
 import {SharedModule} from '../shared/shared.module';
 import {InviteUserComponent} from './invite-user/invite-user.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 const authRoutes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent},
@@ -37,19 +38,20 @@ const authRoutes: Routes = [
       multi: true
     }
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    RouterModule,
-    FontAwesomeModule,
-    MatDialogModule,
-    RouterModule.forChild(authRoutes),
-    SharedModule,
-    FormsModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        RouterModule,
+        FontAwesomeModule,
+        MatDialogModule,
+        RouterModule.forChild(authRoutes),
+        SharedModule,
+        FormsModule,
+        MatRadioModule
+    ],
   exports: [
     LoginComponent,
     ForgottenPasswordComponent,
