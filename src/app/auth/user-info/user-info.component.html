@@ -1,0 +1,22 @@
+<div class="container bg-white h-100 p-3">
+  <h2>Profile</h2>
+  <form class="d-flex flex-column align-items-stretch" [formGroup]="userForm" (ngSubmit)="save()">
+    <mat-form-field>
+      <mat-label>Prénom</mat-label>
+      <input matInput placeholder="Jean-Michel" formControlName="first_name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput placeholder="Tacos" formControlName="last_name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="jm.tacos@tuc.fr" formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Présentation</mat-label>
+      <textarea matInput placeholder="Présentation" formControlName="company"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Enregistrer</button>
+  </form>
+</div>

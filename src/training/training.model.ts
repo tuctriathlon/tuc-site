@@ -1,7 +1,7 @@
 import {DirectusItemModel} from '../shared/directusItem.model';
 import {CardInterface} from '../shared/card/card.interface';
 import {CardModel} from '../shared/card/card.model';
-import * as moment from 'moment';
+import {utc} from 'moment';
 
 export class TrainingModel extends DirectusItemModel implements CardInterface {
   type: string;
@@ -53,7 +53,7 @@ export class TrainingModel extends DirectusItemModel implements CardInterface {
     const card  = new CardModel();
     card.title = this.title;
     card.content = this.description || '';
-    card.subtitleRight = moment(this.start).format('DD-MM-YYYY HH:mm');
+    card.subtitleRight = utc(this.start).format('DD-MM-YYYY HH:mm');
     card.subtitleLeft = this.location;
     card.icon = this.icon;
     return card;

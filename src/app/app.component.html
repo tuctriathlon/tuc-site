@@ -4,8 +4,12 @@
   <button *ngIf="!isLogged()" mat-icon-button (click)="openDialog('login')" class="header-right"><fa-icon icon="user" size="lg"></fa-icon></button>
   <button *ngIf="isLogged()" mat-icon-button [matMenuTriggerFor]="userMenu" class="header-right"><fa-icon icon="user" size="lg"></fa-icon></button>
   <mat-menu #userMenu="matMenu">
+    <button mat-menu-item routerLink="user">
+      <fa-icon icon="user" class="col-2 mr-2" size="lg"></fa-icon>
+      <span>Profil</span>
+    </button>
     <button mat-menu-item (click)="logout()">
-      <fa-icon icon="power-off" size="lg"></fa-icon>
+      <fa-icon icon="power-off" class="col-2 mr-2" size="lg"></fa-icon>
       <span>Déconnexion</span>
     </button>
   </mat-menu>

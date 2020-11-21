@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {CalendarOptions, FullCalendarComponent} from '@fullcalendar/angular';
 import {TrainingModel} from '../training.model';
-import * as moment from 'moment';
 import {TrainingService} from '../training.service';
+import {Moment, utc} from 'moment';
 
 @Component({
   selector: 'app-calendrier-dynamic',
@@ -11,7 +11,7 @@ import {TrainingService} from '../training.service';
 })
 export class CalendrierDynamicComponent implements OnInit {
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
-  selectedDate: moment.Moment;
+  selectedDate: Moment;
   trainingList: TrainingModel[] = [];
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridWeek',
@@ -29,11 +29,11 @@ export class CalendrierDynamicComponent implements OnInit {
   };
 
   constructor(private trainingService: TrainingService) {
-    this.selectedDate = moment();
+    this.selectedDate = utc();
   }
 
   get isToday() {
-    return this.selectedDate.isSame(moment(), 'day');
+    return this.selectedDate.isSame(utc(), 'day');
   }
 
   get todayTrainings(): TrainingModel[] {
@@ -61,8 +61,8 @@ export class CalendrierDynamicComponent implements OnInit {
     });
   }
 
-  selectDate(date: string | moment.Moment) {
-    this.selectedDate = moment(date);
+  selectDate(date: string | Moment) {
+    this.selectedDate = utc(date);
     this.calendarComponent.getApi().select(this.currentDateFormatted);
   }
 
@@ -78,7 +78,7 @@ export class CalendrierDynamicComponent implements OnInit {
 
   today() {
     this.calendarApi.today();
-    this.selectDate(moment());
+    this.selectDate(utc());
     this.updateEvents();
   }
 

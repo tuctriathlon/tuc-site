@@ -3,8 +3,8 @@ import {UserService} from '../user.service';
 import {UserModel} from '../user.model';
 import {switchMap} from 'rxjs/operators';
 import {combineLatest, Observable} from 'rxjs';
-import {RoleService} from '../../app/services/role.service';
-import {RoleModel} from '../../app/models/role.model';
+import {RoleService} from '../../services/role.service';
+import {RoleModel} from '../../models/role.model';
 
 @Component({
   selector: 'app-invite-user',

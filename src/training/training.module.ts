@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TrainingPageComponent } from './training-page/training-page.component';
 import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from '../auth/authGuard';
+import {AuthGuard} from '../app/auth/authGuard';
 import {MatButtonModule} from '@angular/material/button';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatCardModule} from '@angular/material/card';

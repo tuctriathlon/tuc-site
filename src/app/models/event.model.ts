@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import {Moment} from 'moment';
 import {CardModel} from '../../shared/card/card.model';
 import {CardInterface} from '../../shared/card/card.interface';
 import {PageInterface} from '../../shared/directus-page/page.interface';
@@ -17,7 +17,7 @@ export class EventModel implements CardInterface, PageInterface {
   title: string;
   description: string;
   author: string;
-  date: moment.Moment;
+  date: Moment;
   location: string;
   picture: string;
   labels: string[];

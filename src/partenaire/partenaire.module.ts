@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from '../auth/authGuard';
+import {AuthGuard} from '../app/auth/authGuard';
 import {PartenairePageComponent} from './partenaire-page/partenaire-page.component';
 
 const partenaireRoutes: Routes = [

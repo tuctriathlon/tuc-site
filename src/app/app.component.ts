@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventModel} from './models/event.model';
-import {LoginComponent} from '../auth/login/login.component';
+import {LoginComponent} from './auth/login/login.component';
 import {MatDialog} from '@angular/material/dialog';
-import {AuthService} from '../auth/auth.service';
-import {ForgottenPasswordComponent} from '../auth/forgotten-password/forgotten-password.component';
+import {AuthService} from './auth/auth.service';
+import {ForgottenPasswordComponent} from './auth/forgotten-password/forgotten-password.component';
 import {ModalService} from './services/modal.service';
 import {ModalEnum} from './models/modal.enum';
 import {ActivatedRoute, Router} from '@angular/router';

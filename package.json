@@ -37,12 +37,10 @@
     "@fullcalendar/timegrid": "^5.3.1",
     "bootstrap": "^4.4.1",
     "d3": "^6.2.0",
-    "lodash": "^4.17.20",
     "moment": "^2.24.0",
     "ol": "^6.3.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
-    "unidecode": "^0.1.8",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

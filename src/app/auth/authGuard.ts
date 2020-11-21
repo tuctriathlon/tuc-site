@@ -1,8 +1,8 @@
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {AuthService} from './auth.service';
-import {ModalService} from '../app/services/modal.service';
-import {ModalEnum} from '../app/models/modal.enum';
+import {ModalService} from '../services/modal.service';
+import {ModalEnum} from '../models/modal.enum';
 
 @Injectable({
   providedIn: 'root'

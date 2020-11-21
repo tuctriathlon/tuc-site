@@ -3,8 +3,8 @@ import {AuthService} from '../auth.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatDialogRef} from '@angular/material/dialog';
-import {ModalService} from '../../app/services/modal.service';
-import {ModalEnum} from '../../app/models/modal.enum';
+import {ModalService} from '../../services/modal.service';
+import {ModalEnum} from '../../models/modal.enum';
 
 @Component({
   selector: 'app-login',

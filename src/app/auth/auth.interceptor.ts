@@ -8,7 +8,7 @@ import {
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {AuthService} from './auth.service';
 import {catchError, filter, switchMap, take} from 'rxjs/operators';
-import {environment} from '../environments/environment';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import sortBy from 'lodash.sortBy';
+import {sortBy} from '../app/utils/utils';
+
 
 @Pipe({
   name: 'sortBy'

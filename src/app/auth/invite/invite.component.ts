@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {PageModel} from '../../shared/directus-page/page.model';
+import {PageModel} from '../../../shared/directus-page/page.model';
 import {UserModel} from '../user.model';
 import {switchMap} from 'rxjs/operators';
 import {UserService} from '../user.service';
@@ -18,7 +18,6 @@ export class InviteComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private userService: UserService,
               private authService: AuthService) {
-    this.page = new UserModel().toPage();
   }
 
   ngOnInit(): void {

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import * as moment from 'moment';
-import {ParametreInscritpionService} from "../../services/parametre-inscritpion.service";
-import {Observable} from "rxjs";
-import {ParametreInscrptionModel} from "../../models/parametreInscrption.model";
-import {map, tap} from "rxjs/operators";
+import {ParametreInscritpionService} from '../../services/parametre-inscritpion.service';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {utc} from 'moment';
 
 @Component({
   selector: 'app-inscription.page',
@@ -25,9 +24,9 @@ export class InscriptionPageComponent implements OnInit {
   ngOnInit(): void {
     this.profileFrom.setValidators(this.isValide);
     this.isOpen$ = this.parametreInscritpionService.getById(1).pipe(
-      map(params => params.ouvert && moment().isSameOrBefore(moment(params.fermeture), 'day')
+      map(params => params.ouvert && utc().isSameOrBefore(utc(params.fermeture), 'day')
       )
-    )
+    );
   }
 
   get isAdult(): boolean {
@@ -39,8 +38,8 @@ export class InscriptionPageComponent implements OnInit {
   }
 
   isValide(control: FormGroup): ValidationErrors | null {
-    const dateAncien = moment('15/06/2020', 'DD/MM/YYYY');
-    const dateNouveau = moment('14/07/2020', 'DD/MM/YYYY');
+    const dateAncien = utc('15/06/2020', 'DD/MM/YYYY');
+    const dateNouveau = utc('14/07/2020', 'DD/MM/YYYY');
     const category = control.get('category').value;
     const cotisation = control.get('cotisation').value;
     const status = control.get('status').value;
@@ -50,15 +49,15 @@ export class InscriptionPageComponent implements OnInit {
     if (cotisation === null) {
       return {required: true};
     } else if (cotisation === true) {
-      return moment().diff(dateAncien, 'day') < 0 ? {dateError: {status: 'cotisations', date: dateAncien.format('DD/MM/YYYY')}} : null;
+      return utc().diff(dateAncien, 'day') < 0 ? {dateError: {status: 'cotisations', date: dateAncien.format('DD/MM/YYYY')}} : null;
     }
     switch (status) {
       case 'anciens':
-        return moment().diff(dateAncien, 'day') < 0 ? {dateError: {status, date: dateAncien.format('DD/MM/YYYY')}} : null;
+        return utc().diff(dateAncien, 'day') < 0 ? {dateError: {status, date: dateAncien.format('DD/MM/YYYY')}} : null;
       case 'nouveaux':
-        return moment().diff(dateNouveau, 'day') < 0 ? {dateError: {status, date: dateNouveau.format('DD/MM/YYYY')}} : null;
+        return utc().diff(dateNouveau, 'day') < 0 ? {dateError: {status, date: dateNouveau.format('DD/MM/YYYY')}} : null;
       case 'mutations':
-        return moment().diff(dateNouveau, 'day') < 0 ? {dateError: {status, date: dateNouveau.format('DD/MM/YYYY')}} : null;
+        return utc().diff(dateNouveau, 'day') < 0 ? {dateError: {status, date: dateNouveau.format('DD/MM/YYYY')}} : null;
       default:
         return {required: true};
     }

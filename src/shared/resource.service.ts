@@ -6,7 +6,7 @@ import {PageModel} from './directus-page/page.model';
 import {map, pluck, switchMap} from 'rxjs/operators';
 import {CardModel} from './card/card.model';
 import {DirectusFileModel} from './directusFiles/directusFile.model';
-import {get} from 'lodash';
+import {get} from '../app/utils/utils';
 
 @Injectable({
   providedIn: 'root'

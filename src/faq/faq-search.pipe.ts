@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import {FaqModel} from './faq.model';
-import unidecode from 'unidecode';
+import {unidecode} from '../app/utils/utils';
 
 @Pipe({
   name: 'faqSearch'
@@ -16,3 +16,4 @@ export class FaqSearchPipe implements PipeTransform {
   }
 
 }
+

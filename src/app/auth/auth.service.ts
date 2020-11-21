@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {catchError, mapTo, pluck, shareReplay, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {environment} from '../environments/environment';
-import * as moment from 'moment';
-import {StorageService} from '../shared/storage.service';
+import {environment} from '../../environments/environment';
+import {StorageService} from '../../shared/storage.service';
 import {ActivatedRoute} from '@angular/router';
+import {utc} from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -86,7 +86,7 @@ export class AuthService {
    * return if user is logged
    */
   isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+    return utc().isBefore(this.getExpiration());
   }
 
   /**
@@ -148,7 +148,7 @@ export class AuthService {
   private getExpiration() {
     const expiration = this.storage.getItem(this.REFRESH_TOKEN);
     const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
+    return utc(expiresAt);
   }
 
   /**
@@ -156,7 +156,7 @@ export class AuthService {
    * @param token the user token
    */
   public setSession(token: string) {
-    const expiresAt = moment().add(this.TOKEN_EXPIRATION_TIME, 'second');
+    const expiresAt = utc().add(this.TOKEN_EXPIRATION_TIME, 'second');
     this.storage.setItem(this.JWT_TOKEN, token);
     this.storage.setItem(this.REFRESH_TOKEN, JSON.stringify(expiresAt.valueOf()) );
   }

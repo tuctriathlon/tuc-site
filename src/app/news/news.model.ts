@@ -1,17 +1,17 @@
 import {DirectusItemModel} from '../../shared/directusItem.model';
-import * as moment from 'moment';
+import {Moment, utc} from 'moment';
 
 export class NewsModel extends DirectusItemModel {
   titre: string;
   detail: string;
-  date: moment.Moment;
+  date: Moment;
 
   constructor(data?: Partial<NewsModel>) {
     super(data);
     if (data) {
       this.titre = data.titre;
       this.detail = data.detail;
-      this.date = moment(data.date, 'YYYY-MM-DD');
+      this.date = utc(data.date, 'YYYY-MM-DD');
     }
   }
 }

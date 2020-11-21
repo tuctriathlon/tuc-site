@@ -13,14 +13,18 @@ import {ResetPasswordComponent} from './reset-password/reset-password.component'
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatDialogModule} from '@angular/material/dialog';
 import {InviteComponent} from './invite/invite.component';
-import {SharedModule} from '../shared/shared.module';
+import {SharedModule} from '../../shared/shared.module';
 import {InviteUserComponent} from './invite-user/invite-user.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { UserInfoComponent } from './user-info/user-info.component';
+import {AuthGuard} from './authGuard';
 
 const authRoutes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'invite/:token', component: InviteComponent},
   { path: 'invite', component: InviteUserComponent},
+  { path: 'user/:id', component: UserInfoComponent, canActivate: [AuthGuard]},
+  { path: 'user', component: UserInfoComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
@@ -29,7 +33,8 @@ const authRoutes: Routes = [
     ForgottenPasswordComponent,
     ResetPasswordComponent,
     InviteComponent,
-    InviteUserComponent
+    InviteUserComponent,
+    UserInfoComponent
   ],
   providers: [
     {

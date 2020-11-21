@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {ModalEnum} from '../../app/models/modal.enum';
-import {ModalService} from '../../app/services/modal.service';
+import {ModalEnum} from '../../models/modal.enum';
+import {ModalService} from '../../services/modal.service';
 
 @Component({
   selector: 'app-reset-password',
