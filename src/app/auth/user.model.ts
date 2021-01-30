@@ -1,6 +1,7 @@
 import {DirectusItemModel} from '../../shared/directusItem.model';
 import {CardInterface} from '../../shared/card/card.interface';
 import {CardModel} from '../../shared/card/card.model';
+import {DirectusFileModel} from '../../shared/directusFiles/directusFile.model';
 
 export enum UserStatus {
   DRAFT= 'draft',
@@ -18,6 +19,7 @@ export class UserModel extends DirectusItemModel implements CardInterface {
   role: number;
   status: UserStatus;
   company: string;
+  avatar: number | DirectusFileModel;
 
   updateFromData(data: any) {
     super.updateFromData(data);
@@ -28,6 +30,7 @@ export class UserModel extends DirectusItemModel implements CardInterface {
     this.role = data.role;
     this.status = data.status;
     this.company = data.company;
+    this.avatar = data.avatar;
   }
 
   toData(): any {

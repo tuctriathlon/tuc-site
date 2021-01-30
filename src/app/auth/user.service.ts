@@ -27,6 +27,10 @@ export class UserService extends DirectusService<UserModel> {
     return this.postList(`${this.baseUrl}/invite`, {email});
   }
 
+  checkIfExist(emails: string[]): Observable<UserModel[]> {
+    return this.getAll(false, {filter: [{field: 'email', operator: 'in', value: emails.join(',')}]});
+  }
+
   /**
    * retrieve user data
    */

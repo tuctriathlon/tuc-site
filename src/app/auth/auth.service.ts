@@ -124,7 +124,7 @@ export class AuthService {
   requestPwd(email: string) {
     return this.http.post<any>(`${this.serviceUrl}/password/request`, {
       email,
-      reset_url: 'https://demo.tuc-triathlon.com/#/reset-password'
+      reset_url: 'https://www.tuc-triathlon.com/#/reset-password'
     });
   }
 

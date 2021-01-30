@@ -1,14 +1,37 @@
 <div class="container bg-white h-100 d-flex flex-column">
   <h1>Créer des utilisateurs</h1>
-  <textarea matInput aria-label="emails" [(ngModel)]="emailsCSV"></textarea>
+  <div class="row">
+    <input class="form-control" type='file' (change)='convertFile(input)' id='fileInput' #input>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Email</th>
+      <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of usersToAdd; let index = index">
+      <td scope="row">{{index}}</td>
+      <td>{{user.last_name}}</td>
+      <td>{{user.first_name}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.creationStatus}}</td>
+    </tr>
+    </tbody>
+  </table>
   <mat-radio-group aria-label="select role" class="d-inline-flex justify-content-between mt-2" [value]="selectedRole" (change)="selectedRole = $event.value">
     <mat-radio-button
       color="primary"
       *ngFor="let role of roles$ | async"
       [value]="role.id">{{role.name}}</mat-radio-button>
   </mat-radio-group>
-  <button class="mt-2" mat-raised-button (click)="sendInvitations()">Envoyer</button>
-  <ul>
-    <li *ngFor="let email of emails">{{email}}</li>
-  </ul>
+  <button class="mt-2" mat-raised-button [disabled]="!usersToAdd.length" (click)="inviteUsers()">Envoyer</button>
+  <div *ngIf="users$ | async as users">
+    <p *ngFor="let user of users">{{user.email}}</p>
+  </div>
 </div>

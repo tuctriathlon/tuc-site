@@ -4,6 +4,12 @@ import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
 import {map, pluck} from 'rxjs/operators';
 
+export interface DirectusFilter {
+  field: string;
+  operator: 'eq' | 'in';
+  value: string;
+}
+
 export abstract class DirectusService<T extends DirectusItemModel> {
   protected resourceName: string;
   protected resourceList: T[];
@@ -21,13 +27,18 @@ export abstract class DirectusService<T extends DirectusItemModel> {
   /**
    * retrieve all data
    */
-  getAll(full = false, options?: {sort?: string[], limit?: number}): Observable<T[]> {
+  getAll(full = false, options?: {sort?: string[], limit?: number, filter?: DirectusFilter[]}): Observable<T[]> {
     let params = new HttpParams();
     if (options?.sort) {
       params = params.append('sort', options.sort.join(','));
     }
     if (options?.limit) {
       params = params.append('limit', options.limit.toString());
+    }
+    if (options?.filter) {
+      options.filter.forEach(filter => {
+        params = params.append(`filter[${filter.field}][${filter.operator}]`, filter.value);
+      });
     }
     return this.getList(this.baseUrl, {params});
   }
