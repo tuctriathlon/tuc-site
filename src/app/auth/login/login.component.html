@@ -4,6 +4,7 @@
     <fa-icon icon="times" size="lg"></fa-icon>
   </button>
 </div>
+<div [class.d-none]="!error" class="mat-error text-center">Identifiants invalides</div>
 <form [formGroup]="loginForm" mat-dialog-content>
   <fieldset class="d-flex flex-column">
     <mat-form-field class="form-field">

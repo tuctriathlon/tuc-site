@@ -16,7 +16,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card';
 import {TestPageComponent} from './pages/test-page/test-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthModule} from './auth/auth.module';
 import {LoginComponent} from './auth/login/login.component';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -42,6 +42,8 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import {NewsModule} from './news/news.module';
 import {ParametresSiteService} from './services/parametres-site.service';
 import { HomeTrainerPageComponent } from './pages/home-trainer-page/home-trainer-page.component';
+import {AuthInterceptor} from './auth/auth.interceptor';
+import {ErrorInterceptor} from './helpers/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,11 @@ import { HomeTrainerPageComponent } from './pages/home-trainer-page/home-trainer
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: ErrorHandler, useClass: CustomErrorHandler },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
     {
       provide: APP_INITIALIZER,
       useFactory: (paramService: ParametresSiteService) => () => paramService.initService(),

@@ -6,6 +6,7 @@ import {MatDialogRef} from '@angular/material/dialog';
 import {ModalService} from '../../services/modal.service';
 import {ModalEnum} from '../../models/modal.enum';
 import {catchError} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -34,18 +35,18 @@ export class LoginComponent implements OnInit {
     const val = this.loginForm.value;
     this.loginForm.updateValueAndValidity();
     if (this.loginForm.valid) {
-      this.authService.login({ email: val.email, password: val.password }).pipe(
-        catchError(err => {
-          this.error = err.toString();
-          throw err;
-        })
-      )
+      this.authService.login({ email: val.email, password: val.password })
+        .pipe(
+          catchError(err => of(err))
+        )
         .subscribe(
-          () => {
-            this.router.navigateByUrl(this.authService.redirectUrl).then(_ => {
-              // TODO welcome message
-            });
-            this.dialogRef.close();
+          async (isLogged) => {
+            if (isLogged) {
+              await this.router.navigateByUrl(this.authService.redirectUrl);
+              this.dialogRef.close();
+            } else {
+              this.error = 'wrong credentials';
+            }
           }
         );
     }
