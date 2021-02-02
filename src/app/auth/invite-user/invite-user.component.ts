@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../user.service';
 import {UserModel, UserStatus} from '../user.model';
-import {Observable, of, zip} from 'rxjs';
+import {Observable, zip} from 'rxjs';
 import {RoleService} from '../../services/role.service';
 import {RoleModel} from '../../models/role.model';
-import {map, mergeMap, tap} from 'rxjs/operators';
+import {map, mergeMap} from 'rxjs/operators';
 import {MailService} from '../../mail/mail.service';
 
 @Component({
@@ -13,13 +13,13 @@ import {MailService} from '../../mail/mail.service';
   styleUrls: ['./invite-user.component.css']
 })
 export class InviteUserComponent implements OnInit {
-  users$: Observable<Partial<User2Create>[]>;
+  users$: Observable<UserModel[]>;
   emailsCSV = '';
   errors: string[] = [];
   roles$: Observable<RoleModel[]>;
   selectedRole = 4; // role licencié
   text: any ;
-  usersToAdd: Partial<User2Create>[] = [];
+  usersToAdd: UserModel[] = [];
 
   constructor(private userService: UserService,
               private roleService: RoleService,
@@ -34,10 +34,10 @@ export class InviteUserComponent implements OnInit {
   inviteUsers() {
     this.users$ = this.userService.checkIfExist(this.usersToAdd.map( u => u.email)).pipe(
       mergeMap(users => {
-        const createUsers = this.usersToAdd.filter(user => !users.find(u => u.email === user.email)).map(u => of(u));
+        const createUsers = this.usersToAdd.filter(user => !users.find(u => u.email === user.email))
+          .map(u => this.userService.addItem(u));
         return zip(...createUsers);
       }),
-      tap(data => console.log(data)),
       mergeMap(createdUsers => {
         const sendMails = createdUsers.map(user =>
           this.mailService.createAccountMail(user.email, `${user.first_name} ${user.last_name}`)
@@ -63,13 +63,13 @@ export class InviteUserComponent implements OnInit {
           obj[header] = currentLine[i].trim();
         }
       });
-      this.usersToAdd.push({
+
+      this.usersToAdd.push(new UserModel({
         ...obj,
-        creationStatus: 'toCreate',
         status: UserStatus.ACTIVE,
         role: this.selectedRole,
         password: this.passwordGenerator()
-      });
+      }));
     });
     this.usersToAdd = this.usersToAdd.filter((user, index, self) =>
       user.email && self.findIndex(u => u.email === user.email) === index
@@ -109,6 +109,3 @@ export class InviteUserComponent implements OnInit {
   }
 }
 
-export interface User2Create extends UserModel {
-  creationStatus: 'toCreate'| 'alreadyExist' | 'created' | 'error';
-}

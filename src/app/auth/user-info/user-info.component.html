@@ -1,6 +1,6 @@
 <div class="container bg-white h-100 p-3">
   <h2>Profile</h2>
-  <form class="w-100" [formGroup]="userForm" (ngSubmit)="save()">
+  <form class="w-100" [formGroup]="userForm" (ngSubmit)="save($event)">
     <div class="row">
       <div class="col-6 d-flex flex-column align-items-stretch">
         <mat-form-field>
@@ -22,11 +22,11 @@
       </div>
       <div class="col-6 d-flex flex-column align-items-stretch">
         <h3>Avatar</h3>
-<!--        <input #fileInput type="file" hidden (change)="preview($event.target.files)"/>-->
-<!--        <div class="form-row flex-grow-1">-->
-<!--          <img class="m-auto" [src]="imageUrl" height="300" *ngIf="imageUrl" alt="original-image">-->
-<!--        </div>-->
-<!--        <button mat-raised-button (click)="fileInput.click()">Parcourir</button>-->
+        <input #fileInput type="file" hidden (change)="preview($event)"/>
+        <div class="form-row flex-grow-1">
+          <img id="avatar-preview" class="m-auto" [src]="imageUrl || '../../../assets/logo_tuc.jpg'" alt="original-image">
+        </div>
+        <button mat-raised-button (click)="$event.preventDefault(); fileInput.click()">Parcourir</button>
       </div>
     </div>
     <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Enregistrer</button>

@@ -40,7 +40,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.authService.onLogin.subscribe(() => {
+    this.subscriptions.push(this.authService.onLogin.subscribe(isLogged => {
+      if (isLogged) {
+        setTimeout(() => this.authService.refreshToken().toPromise().then(() => console.log('refresh')), 10 * 1 * 1000);
+      }
       this.menuItems$ = this.pageService.getRootPages();
     }));
     // open modals

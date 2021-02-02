@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {UserService} from '../user.service';
 import {DirectusFileService} from '../../../shared/directusFiles/directus-file.service';
-import {tap} from 'rxjs/operators';
+import {map, switchMap, tap} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-user-info',
@@ -11,6 +12,7 @@ import {tap} from 'rxjs/operators';
 })
 export class UserInfoComponent implements OnInit {
   imageUrl: string | ArrayBuffer;
+  imageFile: File;
   userForm = this.fb.group({
     id: [-1, Validators.required],
     first_name: ['', Validators.required],
@@ -18,7 +20,7 @@ export class UserInfoComponent implements OnInit {
     email: ['', Validators.required],
     password: '',
     company: '',
-    avatar: [null, Validators.required]
+    avatar: [null]
   });
   constructor(private fb: FormBuilder,
               private userService: UserService,
@@ -39,7 +41,8 @@ export class UserInfoComponent implements OnInit {
     });
   }
 
-  save() {
+  save(event) {
+    event.preventDefault();
     const data2save = this.userForm.value;
     if (!data2save.password) {
       delete data2save.password;
@@ -47,20 +50,24 @@ export class UserInfoComponent implements OnInit {
     if (! data2save.description) {
       delete data2save.description;
     }
-    /*const fileSave = data2save.avatar < 0 ?
-      this.fileService.createFile(btoa(String.fromCharCode(
-      ...new Uint8Array(this.imageUrl))),
-       ['avatar', `${data2save.first_name} ${data2save.last_name}`])
-      .pipe(map(file => data2save.avatar = file.id)) : of(1);
+    let fileSave: Observable<any>;
+    if (this.imageFile) {
+      const formData = new FormData();
+      formData.append('data', this.imageFile, this.imageFile.name);
+      fileSave = this.fileService.createFile(formData).pipe(map(file => data2save.avatar = file.id));
+    } else {
+      fileSave = of(1);
+    }
 
     fileSave.pipe(
       switchMap(() => this.userService.updateItem(this.userForm.value.id, data2save))
     ).subscribe(user => {
       this.userForm.patchValue(user);
-    });*/
+    });
   }
 
-  preview(files) {
+  preview(event) {
+    const files = event.target.files;
     const reader = new FileReader();
     this.userForm.patchValue({
       avatar: -1
@@ -79,6 +86,7 @@ export class UserInfoComponent implements OnInit {
       }
       this.imageUrl = reader.result;
     };
+    this.imageFile = files[0];
     reader.readAsDataURL(files[0]);
   }
 

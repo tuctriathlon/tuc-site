@@ -21,6 +21,10 @@ export class UserModel extends DirectusItemModel implements CardInterface {
   company: string;
   avatar: number | DirectusFileModel;
 
+  constructor(data: Partial<UserModel>) {
+    super();
+    Object.assign(this, data);
+  }
   updateFromData(data: any) {
     super.updateFromData(data);
     this.first_name = data.first_name;

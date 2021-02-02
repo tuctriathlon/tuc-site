@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {MatDialogRef} from '@angular/material/dialog';
 import {ModalService} from '../../services/modal.service';
 import {ModalEnum} from '../../models/modal.enum';
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import {ModalEnum} from '../../models/modal.enum';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  error: string;
   constructor(private authService: AuthService,
               private modalService: ModalService,
               private fb: FormBuilder,
@@ -32,10 +34,14 @@ export class LoginComponent implements OnInit {
     const val = this.loginForm.value;
     this.loginForm.updateValueAndValidity();
     if (this.loginForm.valid) {
-      this.authService.login({ email: val.email, password: val.password })
+      this.authService.login({ email: val.email, password: val.password }).pipe(
+        catchError(err => {
+          this.error = err.toString();
+          throw err;
+        })
+      )
         .subscribe(
           () => {
-            console.log('User is logged in');
             this.router.navigateByUrl(this.authService.redirectUrl).then(_ => {
               // TODO welcome message
             });

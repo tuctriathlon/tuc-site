@@ -4,13 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "rm -rf dist && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "release": "standard-version",
     "prerelease": "standard-version --prerelease alpha",
-    "deploy": "scp -r -p ./dist/site/** tuctri@ssh.cluster003.hosting.ovh.net:/homez.912/tuctri/demo"
+    "deploy": "scp -r -p ./dist/site/** tuctri@ssh.cluster003.hosting.ovh.net:/homez.912/tuctri/www"
   },
   "private": true,
   "dependencies": {

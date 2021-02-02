@@ -11,16 +11,14 @@
       <th scope="col">Nom</th>
       <th scope="col">Prénom</th>
       <th scope="col">Email</th>
-      <th scope="col">Status</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let user of usersToAdd; let index = index">
-      <td scope="row">{{index}}</td>
+      <td>{{index}}</td>
       <td>{{user.last_name}}</td>
       <td>{{user.first_name}}</td>
       <td>{{user.email}}</td>
-      <td>{{user.creationStatus}}</td>
     </tr>
     </tbody>
   </table>

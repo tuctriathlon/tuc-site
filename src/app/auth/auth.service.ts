@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {catchError, mapTo, pluck, shareReplay, tap} from 'rxjs/operators';
+import {catchError, mapTo, pluck, share, shareReplay, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {environment} from '../../environments/environment';
@@ -14,7 +14,7 @@ export class AuthService {
   private readonly JWT_TOKEN = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   // cf documentation directus 20min
-  private readonly TOKEN_EXPIRATION_TIME = 20 * 60;
+  private readonly TOKEN_EXPIRATION_TIME = 10 * 60;
   private embedded = false;
   // url to redirect after login
   redirectUrl: string;
@@ -52,6 +52,7 @@ export class AuthService {
         this.onLogin.next(true);
       }
     });
+    this.onLogin.next(!!this.getJwtToken());
   }
 
   /**
@@ -68,8 +69,7 @@ export class AuthService {
         }),
         mapTo(true),
         shareReplay(),
-        catchError(error => {
-          alert(error.error);
+        catchError(() => {
           return of(false);
         }));
   }
@@ -96,13 +96,13 @@ export class AuthService {
     return this.http.post<any>(`${this.serviceUrl}/refresh`, {
       token: this.getJwtToken()
     }).pipe(
+      share(),
       pluck('data'),
       tap((data) => {
         this.onLogin.next(true);
         this.setSession(data.token);
       }),
-      catchError(err => {
-        console.log(err);
+      catchError(() => {
         this.onLogin.next(false);
         this.logout();
         return of(false);
