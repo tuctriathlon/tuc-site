@@ -1,7 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -16,7 +16,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card';
 import {TestPageComponent} from './pages/test-page/test-page.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {AuthModule} from './auth/auth.module';
 import {LoginComponent} from './auth/login/login.component';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -25,7 +25,7 @@ import {ForgottenPasswordComponent} from './auth/forgotten-password/forgotten-pa
 import {MatMenuModule} from '@angular/material/menu';
 import {TrainingModule} from '../training/training.module';
 import {SharedModule} from '../shared/shared.module';
-import { FullCalendarModule } from '@fullcalendar/angular';
+import {FullCalendarModule} from '@fullcalendar/angular';
 import {FaqModule} from '../faq/faq.module';
 import {CompteRenduModule} from '../compte-rendu/compte-rendu.module';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
@@ -33,17 +33,15 @@ import {TucIcon} from '../shared/icons/tuc.icon';
 import {TdtIcon} from '../shared/icons/tdt.icon';
 import {TucOmnisportIcon} from '../shared/icons/tucOmnisport.icon';
 import {AbsoluIcon} from '../shared/icons/absolu.icon';
-import { InscriptionPageComponent } from './pages/inscription.page/inscription.page.component';
+import {InscriptionPageComponent} from './pages/inscription.page/inscription.page.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {CustomErrorHandler} from './helpers/customErrorHandler';
-import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import {ErrorPageComponent} from './pages/error-page/error-page.component';
 import {NewsModule} from './news/news.module';
 import {ParametresSiteService} from './services/parametres-site.service';
-import { HomeTrainerPageComponent } from './pages/home-trainer-page/home-trainer-page.component';
-import {AuthInterceptor} from './auth/auth.interceptor';
-import {ErrorInterceptor} from './helpers/error.interceptor';
+import {HomeTrainerPageComponent} from './pages/home-trainer-page/home-trainer-page.component';
 
 @NgModule({
   declarations: [
@@ -94,11 +92,6 @@ import {ErrorInterceptor} from './helpers/error.interceptor';
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: ErrorHandler, useClass: CustomErrorHandler },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-    },
     {
       provide: APP_INITIALIZER,
       useFactory: (paramService: ParametresSiteService) => () => paramService.initService(),

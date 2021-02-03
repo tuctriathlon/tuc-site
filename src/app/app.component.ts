@@ -20,7 +20,6 @@ import {Location} from '@angular/common';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  fillerNav = [];
   menuItems$: Observable<PageModel[]>;
   partenaires$: Observable<PartenaireModel[]>;
   interval;
@@ -42,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(this.authService.onLogin.subscribe(isLogged => {
       if (isLogged) {
-        setTimeout(() => this.authService.refreshToken().toPromise().then(() => console.log('refresh')), 10 * 1 * 1000);
+        setTimeout(async () => await this.authService.refreshToken().toPromise(), 10 * 60 * 1000);
       }
       this.menuItems$ = this.pageService.getRootPages();
     }));

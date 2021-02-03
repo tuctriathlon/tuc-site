@@ -14,7 +14,7 @@ export class AuthService {
   private readonly JWT_TOKEN = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   // cf documentation directus 20min
-  private readonly TOKEN_EXPIRATION_TIME = 10 * 60;
+  private readonly TOKEN_EXPIRATION_TIME = 20 * 60;
   private embedded = false;
   // url to redirect after login
   redirectUrl: string;
@@ -53,6 +53,9 @@ export class AuthService {
       }
     });
     this.onLogin.next(!!this.getJwtToken());
+    if (this.isLoggedIn()) {
+      this.refreshToken().toPromise().then(() => {});
+    }
   }
 
   /**

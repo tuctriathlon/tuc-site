@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {CardInterface} from '../../../shared/card/card.interface';
 import {NewsModel} from '../../news/news.model';
 import {NewsService} from '../../news/news.service';
+import {share} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -21,8 +22,8 @@ export class HomeComponent implements OnInit {
   }
 
   loadItems() {
-    this.cr$ = this.compteRenduService.getAll(true, {sort: ['-date'], limit: 7});
-    this.news$ = this.newsService.getAll(true, {sort: ['-date'], limit: 3});
+    this.cr$ = this.compteRenduService.getAll(true, {sort: ['-date'], limit: 7}).pipe(share());
+    this.news$ = this.newsService.getAll(true, {sort: ['-date'], limit: 3}).pipe(share());
   }
 
   ngOnInit(): void {
