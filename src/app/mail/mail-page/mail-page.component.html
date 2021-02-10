@@ -1,1 +1,22 @@
-<p>mail-page works!</p>
+<div class="container bg-white h-100 d-flex flex-column">
+  <form [formGroup]="mailForm" (ngSubmit)="sendMail($event)" class="pt-3 d-flex flex-column h-100">
+    <mat-form-field class="w-100">
+      <mat-label>Destinataire</mat-label>
+      <input type="text" matInput formControlName="to" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.email">
+          {{displayFn(option)}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <mat-label>Objet</mat-label>
+      <input type="text" matInput formControlName="object">
+    </mat-form-field>
+    <editor class="flex-grow-1" [init]="initTinyMCE" formControlName="content"></editor>
+    <div class="d-inline-flex justify-content-around">
+      <button mat-button type="reset">Annuler</button>
+      <button mat-button type="submit" [disabled]="!mailForm.valid">Envoyer</button>
+    </div>
+  </form>
+</div>

@@ -42,6 +42,7 @@ import {ErrorPageComponent} from './pages/error-page/error-page.component';
 import {NewsModule} from './news/news.module';
 import {ParametresSiteService} from './services/parametres-site.service';
 import {HomeTrainerPageComponent} from './pages/home-trainer-page/home-trainer-page.component';
+import {MailModule} from './mail/mail.module';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import {HomeTrainerPageComponent} from './pages/home-trainer-page/home-trainer-p
     FaqModule,
     CompteRenduModule,
     NewsModule,
+    MailModule,
     // appRouting module doit être en dernier
     AppRoutingModule,
     MatRadioModule,

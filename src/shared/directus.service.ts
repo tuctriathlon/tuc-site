@@ -6,7 +6,7 @@ import {map, pluck} from 'rxjs/operators';
 
 export interface DirectusFilter {
   field: string;
-  operator: 'eq' | 'in';
+  operator: 'eq' | 'in' | 'like' | 'logical';
   value: string;
 }
 
