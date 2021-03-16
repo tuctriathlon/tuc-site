@@ -43,10 +43,12 @@ export class PageModel extends DirectusItemModel {
     this.files = (data.files || []).map( f => {
       if (typeof f === 'number') {
         return f;
-      } else {
+      } else if (f.directus_files_id) {
         return new DirectusFileModel(f.directus_files_id);
+      } else {
+        return null;
       }
-    });
+    }).filter(f => !!f);
     this.resources = (data.resources || []).map(r => {
       return {name: r.item_to_card_id.table};
     });

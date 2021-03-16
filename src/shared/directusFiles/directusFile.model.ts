@@ -7,6 +7,7 @@ export class DirectusFileModel extends DirectusItemModel {
   description: string;
   tags: any[];
   data: any;
+  embed?: string;
 
   constructor(props: Partial<DirectusFileModel> = {}) {
     super(props);
@@ -15,6 +16,7 @@ export class DirectusFileModel extends DirectusItemModel {
     this.description = props.description;
     this.tags = props.tags;
     this.data = props.data;
+    this.embed = props.embed;
   }
 
   /**

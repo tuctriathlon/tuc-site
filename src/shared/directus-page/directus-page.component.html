@@ -6,8 +6,13 @@
         <fa-icon *ngIf="page.icon" [icon]="page.icon" class="mr-3"></fa-icon>
         <span>{{page.title}}</span>
       </h1>
-      <div class="page-image mb-2" *ngIf="page.hasImageLoaded">
-        <img [src]="page.image.location" alt="page-picture" class="img-fluid mx-auto d-block page-image"/>
+      <div class="page-image mb-2 text-center" *ngIf="page.hasImageLoaded">
+        <youtube-player *ngIf="page.image.type === 'embed/youtube'"
+                        [videoId]="page.image.embed"
+                        height="300"
+                        width="600"
+        ></youtube-player>
+        <img *ngIf="page.image.type !== 'embed/youtube'" [src]="page.image.location" alt="page-picture" class="img-fluid mx-auto d-block page-image"/>
       </div>
       <ng-container *ngTemplateOutlet="pageButtonBarTpl ? pageButtonBarTpl : defaultButtonBar">
       </ng-container>
@@ -70,7 +75,7 @@
             </mat-chip>
           </mat-chip-list>
           <div class="container-fluid pt-4 card-group">
-          <app-card class="col-lg-4 col-md-6 col-sm-12 p-1" *ngFor="let card of cards$ | async | cardFilter : selectedFilter" [card]="card"></app-card>
+            <app-card class="col-lg-4 col-md-6 col-sm-12 p-1" *ngFor="let card of cards$ | async | cardFilter : selectedFilter" [card]="card"></app-card>
           </div>
         </div>
         <div *ngIf="id">

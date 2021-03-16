@@ -19,6 +19,7 @@ import {MapComponent} from './map/map.component';
 import {IsUrlPipe} from './is-url.pipe';
 import {MatChipsModule} from '@angular/material/chips';
 import {CardFilterPipe} from './card/cardFilterPipe';
+import {YouTubePlayerModule} from '@angular/youtube-player';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {CardFilterPipe} from './card/cardFilterPipe';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatChipsModule
+    MatChipsModule,
+    YouTubePlayerModule
   ]
 })
 export class SharedModule { }

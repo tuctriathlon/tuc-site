@@ -1,7 +1,0 @@
-<div class="container bg-white h-100 text-center">
-  <ng-container *ngIf="user$ | async as user">
-    <p>Votre compte est activé.</p>
-    <p>Un mail pour initialiser votre mot de passe vous a été envoyé sur l'adresse {{user.email}}</p>
-    <button mat-raised-button color="primary" routerLink="/home">OK</button>
-  </ng-container>
-</div>

@@ -12,16 +12,17 @@ import {RouterModule, Routes} from '@angular/router';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {MatDialogModule} from '@angular/material/dialog';
-import {InviteComponent} from './invite/invite.component';
 import {SharedModule} from '../../shared/shared.module';
 import {InviteUserComponent} from './invite-user/invite-user.component';
 import {MatRadioModule} from '@angular/material/radio';
-import { UserInfoComponent } from './user-info/user-info.component';
+import {UserInfoComponent} from './user-info/user-info.component';
 import {AuthGuard} from './authGuard';
+import {StoreModule} from '@ngrx/store';
+import {authReducer} from './auth.reducer';
+
 
 const authRoutes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent},
-  { path: 'invite/:token', component: InviteComponent},
   { path: 'invite', component: InviteUserComponent},
   { path: 'user/:id', component: UserInfoComponent, canActivate: [AuthGuard]},
   { path: 'user', component: UserInfoComponent, canActivate: [AuthGuard]},
@@ -32,7 +33,6 @@ const authRoutes: Routes = [
     LoginComponent,
     ForgottenPasswordComponent,
     ResetPasswordComponent,
-    InviteComponent,
     InviteUserComponent,
     UserInfoComponent
   ],
@@ -43,24 +43,24 @@ const authRoutes: Routes = [
       multi: true
     }
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        RouterModule,
-        FontAwesomeModule,
-        MatDialogModule,
-        RouterModule.forChild(authRoutes),
-        SharedModule,
-        FormsModule,
-        MatRadioModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    RouterModule,
+    FontAwesomeModule,
+    MatDialogModule,
+    RouterModule.forChild(authRoutes),
+    SharedModule,
+    FormsModule,
+    MatRadioModule,
+    StoreModule.forRoot({auth: authReducer})
+  ],
   exports: [
     LoginComponent,
-    ForgottenPasswordComponent,
-    InviteComponent
+    ForgottenPasswordComponent
   ]
 })
 export class AuthModule { }
