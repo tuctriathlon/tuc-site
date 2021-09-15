@@ -1,1 +1,3 @@
-<app-directus-page *ngIf="cr$ | async as cr" [page]="cr.toPage()"></app-directus-page>
+<app-directus-page *ngIf="cr$ | async as cr" [page]="cr.toPage()">
+  <div *appDirectusPageButtonBar></div>
+</app-directus-page>

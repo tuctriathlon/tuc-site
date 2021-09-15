@@ -33,7 +33,6 @@ import {TucIcon} from '../shared/icons/tuc.icon';
 import {TdtIcon} from '../shared/icons/tdt.icon';
 import {TucOmnisportIcon} from '../shared/icons/tucOmnisport.icon';
 import {AbsoluIcon} from '../shared/icons/absolu.icon';
-import {InscriptionPageComponent} from './pages/inscription.page/inscription.page.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
@@ -50,7 +49,6 @@ import {MailModule} from './mail/mail.module';
     PageNotFoundComponent,
     HomeComponent,
     TestPageComponent,
-    InscriptionPageComponent,
     ErrorPageComponent,
     HomeTrainerPageComponent
   ],
