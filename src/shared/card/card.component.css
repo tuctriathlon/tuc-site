@@ -80,6 +80,8 @@ img, app-map {
   color: #000000;
   padding: 10px 15px;
   font-weight: bold;
+  position: fixed;
+  bottom: 0;
 }
 
 .tuc-card-link:hover {

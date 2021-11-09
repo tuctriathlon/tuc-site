@@ -37,3 +37,8 @@ button:focus, div:focus, img:focus {
   bottom: 0.25rem;
   right: 0.25rem;
 }
+
+.card-group{
+  display: flex;
+  flex-flow: row wrap;
+}
