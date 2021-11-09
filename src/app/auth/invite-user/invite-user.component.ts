@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../user.service';
 import {UserModel, UserStatus} from '../user.model';
-import {Observable, zip} from 'rxjs';
+import {Observable} from 'rxjs';
 import {RoleService} from '../../services/role.service';
 import {RoleModel} from '../../models/role.model';
-import {map, mergeMap} from 'rxjs/operators';
 import {MailService} from '../../mail/mail.service';
 
 @Component({
@@ -14,7 +13,6 @@ import {MailService} from '../../mail/mail.service';
 })
 export class InviteUserComponent implements OnInit {
   users$: Observable<UserModel[]>;
-  emailsCSV = '';
   errors: string[] = [];
   roles$: Observable<RoleModel[]>;
   selectedRole = 4; // role licencié
@@ -31,29 +29,51 @@ export class InviteUserComponent implements OnInit {
   }
 
 
+  /**
+   * créer les utilisateurs et envoie le mail d'invitation
+   * les utilisateurs deja existant sont filtrés
+   */
   inviteUsers() {
-    this.users$ = this.userService.checkIfExist(this.usersToAdd.map( u => u.email)).pipe(
-      mergeMap(users => {
-        const createUsers = this.usersToAdd.filter(user => !users.find(u => u.email === user.email))
-          .map(u => this.userService.addItem(u));
-        return zip(...createUsers);
-      }),
-      mergeMap(createdUsers => {
-        const sendMails = createdUsers.map(user =>
-          this.mailService.createAccountMail(user.email, `${user.first_name} ${user.last_name}`)
-          .pipe(
-            map(() => user)
-          ));
-        return zip(...sendMails);
-      })
-    );
+    const creation = new Promise<void>(async (resolve) => {
+      for (const user of this.usersToAdd) {
+        const u = await this.userService.checkIfExist([user.email]).toPromise();
+        // si l'utlisateur n'existe pas
+        if (!u.length) {
+          // creation de l'utilisateur
+          await this.userService.addItem(user);
+          // envoie de l'email d'invitation
+          await this.mailService.createAccountMail(user.email, `${user.first_name} ${user.last_name}`);
+        }
+      }
+      resolve();
+    });
+    creation.then(() => this.usersToAdd = []);
   }
 
 
-  csvJSON(csvText): void {
+  /**
+   * parse le csv pour definir la liste d'ulitsateur présent dedans
+   * @param csvText contenue du fichier
+   */
+  csvJSON(csvText: string): void {
     const lines = csvText.split('\n');
     this.usersToAdd = [];
-    const headers = lines[0].split(',').map(header => header.trim());
+    const headers = lines[0].split(',')
+      // format l'entete des colonnes
+      .map(header => this.toCamelCase(header.trim().replace(/[éèêë]/, 'e')))
+      // remplace les entetes par leur equivalents en BDD
+      .map(header => {
+        switch (header) {
+          case 'prenom':
+            return 'first_name';
+          case 'prénom':
+            return 'first_name';
+          case'nom':
+            return 'last_name';
+          default:
+            return header;
+        }
+      });
     lines.shift();
     lines.forEach(line => {
       const obj = {};
@@ -71,6 +91,8 @@ export class InviteUserComponent implements OnInit {
         password: this.passwordGenerator()
       }));
     });
+    // retrait des doublons mails
+    // 1 utilisateur = 1 adresse mail
     this.usersToAdd = this.usersToAdd.filter((user, index, self) =>
       user.email && self.findIndex(u => u.email === user.email) === index
     );
@@ -82,7 +104,7 @@ export class InviteUserComponent implements OnInit {
     reader.onload = () => {
       const text = reader.result;
       this.text = text;
-      this.csvJSON(text);
+      this.csvJSON(text as string);
     };
 
   }
@@ -106,6 +128,14 @@ export class InviteUserComponent implements OnInit {
     }
     password = password.split('').sort(() => 0.5 - Math.random()).join('');
     return password.substr(0, length);
+  }
+
+  private toCamelCase(text: string): string {
+    return text
+      .replace(/(?:^\w|[A-Z]|\b\w)/g, (leftTrim: string, index: number) =>
+        index === 0 ? leftTrim.toLowerCase() : leftTrim.toUpperCase(),
+      )
+      .replace(/\s+/g, '');
   }
 }
 
