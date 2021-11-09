@@ -10,6 +10,9 @@
   text-transform: capitalize;
   font-size: 32px;
 }
+.page-description {
+  text-align: justify;
+}
 .page-description > * {
   max-width: 100%;
 }
