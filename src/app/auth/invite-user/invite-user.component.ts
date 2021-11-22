@@ -36,13 +36,13 @@ export class InviteUserComponent implements OnInit {
   inviteUsers() {
     const creation = new Promise<void>(async (resolve) => {
       for (const user of this.usersToAdd) {
-        const u = await this.userService.checkIfExist([user.email]).toPromise();
+        const checkedUsers = await this.userService.checkIfExist([user.email]).toPromise();
         // si l'utlisateur n'existe pas
-        if (!u.length) {
+        if (!checkedUsers.length) {
           // creation de l'utilisateur
-          await this.userService.addItem(user);
+          await this.userService.addItem(user).toPromise();
           // envoie de l'email d'invitation
-          await this.mailService.createAccountMail(user.email, `${user.first_name} ${user.last_name}`);
+          await this.mailService.createAccountMail(user.email, `${user.first_name} ${user.last_name}`).toPromise();
         }
       }
       resolve();
