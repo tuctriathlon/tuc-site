@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {debounceTime, startWith, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../auth/user.service';
 import {DirectusFilter} from '../../../shared/directus.service';
 import {UserModel} from '../../auth/user.model';
@@ -13,7 +13,7 @@ import {MailService} from '../mail.service';
   styleUrls: ['./mail-page.component.css']
 })
 export class MailPageComponent implements OnInit {
-  mailForm: FormGroup;
+  mailForm: UntypedFormGroup;
   initTinyMCE = {
     height: '100%',
     base_url: '/tinymce',
@@ -26,13 +26,13 @@ export class MailPageComponent implements OnInit {
       'bullist numlist outdent indent | link | forecolor backcolor emoticons'
   };
   filteredOptions: Observable<UserModel[]>;
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private mailService: MailService,
               private userService: UserService) {
     this.mailForm = this.fb.group({
-      to: new FormControl('', Validators.required),
-      object: new FormControl('', Validators.required),
-      content: new FormControl('', Validators.required)
+      to: new UntypedFormControl('', Validators.required),
+      object: new UntypedFormControl('', Validators.required),
+      content: new UntypedFormControl('', Validators.required)
     });
   }
 

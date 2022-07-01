@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../auth.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatDialogRef} from '@angular/material/dialog';
 import {ModalService} from '../../services/modal.service';
@@ -14,16 +14,16 @@ import {of} from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   error: string;
   constructor(private authService: AuthService,
               private modalService: ModalService,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<LoginComponent>) {
     this.loginForm = this.fb.group({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('')
+      email: new UntypedFormControl('', [Validators.required, Validators.email]),
+      password: new UntypedFormControl('')
     });
   }
 

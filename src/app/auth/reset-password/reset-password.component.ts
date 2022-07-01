@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {ModalEnum} from '../../models/modal.enum';
 import {ModalService} from '../../services/modal.service';
 
@@ -11,16 +11,16 @@ import {ModalService} from '../../services/modal.service';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
-  pwdForm: FormGroup;
+  pwdForm: UntypedFormGroup;
   private token: string;
   constructor(private authService: AuthService,
               private modalService: ModalService,
               private router: Router,
               private route: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+              private formBuilder: UntypedFormBuilder) {
     this.pwdForm = formBuilder.group({
-      pwd: new FormControl('', [Validators.required]),
-      pwdConfirm: new FormControl('', [Validators.required])
+      pwd: new UntypedFormControl('', [Validators.required]),
+      pwdConfirm: new UntypedFormControl('', [Validators.required])
     }, {validators: this.differentValidator});
   }
 
@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
 
-  private differentValidator(control: FormGroup): ValidationErrors | null {
+  private differentValidator(control: UntypedFormGroup): ValidationErrors | null {
     const pwd = control.get('pwd');
     const pwdConfirm = control.get('pwdConfirm');
     return pwd && pwdConfirm && pwd.value !== pwdConfirm.value ? { different: true } : null;
