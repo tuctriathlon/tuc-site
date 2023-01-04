@@ -96,6 +96,7 @@ import { MailModule } from './mail/mail.module';
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
+    // @ts-ignore
     library.addIconPacks(fas);
     // @ts-ignore
     library.addIcons(new TucIcon());

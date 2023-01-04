@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {CalendarOptions, FullCalendarComponent} from '@fullcalendar/angular';
-import {TrainingModel} from '../training.model';
-import {TrainingService} from '../training.service';
-import {Moment, utc} from 'moment';
+import { Component, OnInit } from '@angular/core';
+import { TrainingModel } from '../training.model';
+import { TrainingService } from '../training.service';
+import { Moment, utc } from 'moment';
+import { CalendarOptions } from '@fullcalendar/core';
 
 @Component({
   selector: 'app-calendrier-dynamic',
@@ -10,14 +10,14 @@ import {Moment, utc} from 'moment';
   styleUrls: ['./calendrier-dynamic.component.css']
 })
 export class CalendrierDynamicComponent implements OnInit {
-  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+  // @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   selectedDate: Moment;
   trainingList: TrainingModel[] = [];
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridWeek',
     locale: 'fr',
     firstDay: 1,
-    dateClick: (event) => this.selectDate(event.dateStr),
+    // dateClick: (event) => this.selectDate(event.dateStr),
     height: 200,
     headerToolbar: {
       left: '',
@@ -44,9 +44,9 @@ export class CalendrierDynamicComponent implements OnInit {
     return this.selectedDate.format('YYYY-MM-DD');
   }
 
-  get calendarApi() {
+  /*get calendarApi() {
     return this.calendarComponent.getApi();
-  }
+  }*/
 
   ngOnInit(): void {
     this.updateEvents();
@@ -63,7 +63,7 @@ export class CalendrierDynamicComponent implements OnInit {
 
   selectDate(date: string | Moment) {
     this.selectedDate = utc(date);
-    this.calendarComponent.getApi().select(this.currentDateFormatted);
+    // this.calendarComponent.getApi().select(this.currentDateFormatted);
   }
 
   handleClickEvent(event) {
@@ -71,19 +71,19 @@ export class CalendrierDynamicComponent implements OnInit {
   }
 
   nextWeek() {
-    this.calendarApi.next();
+    // this.calendarApi.next();
     this.selectDate(this.selectedDate.add(1, 'week'));
     this.updateEvents();
   }
 
   today() {
-    this.calendarApi.today();
+    // this.calendarApi.today();
     this.selectDate(utc());
     this.updateEvents();
   }
 
   prevWeek() {
-    this.calendarApi.prev();
+    // this.calendarApi.prev();
     this.selectDate(this.selectedDate.subtract(1, 'week'));
     this.updateEvents();
   }
