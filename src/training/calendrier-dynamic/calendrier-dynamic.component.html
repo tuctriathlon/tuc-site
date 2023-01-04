@@ -4,10 +4,10 @@
     <button mat-button [disabled]="isToday" (click)="today()">Aujourd'hui</button>
     <button mat-button (click)="nextWeek()"><fa-icon icon="arrow-right"></fa-icon></button>
   </div>
-  <full-calendar
+  <!--<full-calendar
     #calendar
     [options]="calendarOptions"
-  ></full-calendar>
+  ></full-calendar>-->
 
   <div class="container-fluid pt-4 card-group justify-content-center">
     <app-card *ngFor="let training of todayTrainings | sortBy :['start']"

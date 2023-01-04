@@ -1,13 +1,12 @@
-
 // Custom Theming for Angular Material
+@use '@angular/material' as mat;
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat-core();
+@include mat.core();
 
 $jaune-tuc: #FFEA13;
 $gris-tuc: #7D847C;
@@ -27,20 +26,20 @@ $tuc-jaune-palette: (
   A400: #fcec42,
   A700: #febf00,
   contrast: (
-    50: $dark-primary-text,
-    100: $dark-primary-text,
-    200: $dark-primary-text,
-    300: $dark-primary-text,
-    400: $dark-primary-text,
-    500: $dark-primary-text,
-    600: $dark-primary-text,
-    700: $dark-primary-text,
-    800: $dark-primary-text,
-    900: $dark-primary-text,
-    A100: $dark-primary-text,
-    A200: $dark-primary-text,
-    A400: $dark-primary-text,
-    A700: $dark-primary-text,
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: rgba(black, 0.87),
+    600: rgba(black, 0.87),
+    700: rgba(black, 0.87),
+    800: rgba(black, 0.87),
+    900: rgba(black, 0.87),
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: rgba(black, 0.87),
+    A700: rgba(black, 0.87),
   )
 );
 
@@ -60,46 +59,46 @@ $tuc-dark-palette: (
   A400: #fcec42,
   A700: #febf00,
   contrast: (
-    50: $dark-primary-text,
-    100: $dark-primary-text,
-    200: $dark-primary-text,
-    300: $dark-primary-text,
-    400: $dark-primary-text,
-    500: $dark-primary-text,
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: rgba(black, 0.87),
     600: $jaune-tuc,
     700: $jaune-tuc,
     800: $jaune-tuc,
     900: $jaune-tuc,
-    A100: $dark-primary-text,
-    A200: $dark-primary-text,
-    A400: $dark-primary-text,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: rgba(black, 0.87),
     A700: $jaune-tuc,
   )
 );
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$site-primary: mat-palette($tuc-jaune-palette);
-$site-accent: mat-palette($tuc-dark-palette);
+$site-primary: mat.define-palette($tuc-jaune-palette);
+$site-accent: mat.define-palette($tuc-dark-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$site-theme: mat-light-theme($site-primary, $site-accent);
+$site-theme: mat.define-light-theme($site-primary, $site-accent);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($site-theme);
+@include mat.all-component-themes($site-theme);
 
 
 // Define an alternate dark theme.
-$dark-primary: mat-palette($tuc-dark-palette);
-$dark-accent:  mat-palette($tuc-jaune-palette);
-$dark-warn:    mat-palette($mat-deep-orange);
-$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$dark-primary: mat.define-palette($tuc-dark-palette);
+$dark-accent:  mat.define-palette($tuc-jaune-palette);
+$dark-warn:    mat.define-palette(mat.$deep-orange-palette);
+$dark-theme:   mat.define-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 // Include the alternative theme styles inside of a block with a CSS class. You can make this
 // CSS class whatever you want. In this example, any component inside of an element with
 // `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
 .tuc-dark-theme {
-  @include angular-material-theme($dark-theme);
+  @include mat.all-component-themes($dark-theme);
 }

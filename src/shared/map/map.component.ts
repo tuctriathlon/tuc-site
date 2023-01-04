@@ -26,7 +26,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   @ViewChild('map') mapContainer: ElementRef;
 
   private map: Map;
-  private gpxLayer: VectorLayer;
+  private gpxLayer;
   public gpxData = [];
   public mapId: string;
   constructor() {
@@ -37,8 +37,6 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-
-    console.log(this.mapContainer);
     const source = new VectorSource({
       url: environment.production ? `../../files/${this.gpx}`
         : `${environment.directusUrl}/uploads/${environment.directusProject}/originals/${this.gpx}`,

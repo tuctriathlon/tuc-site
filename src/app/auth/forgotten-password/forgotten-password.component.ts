@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../auth.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {ModalService} from '../../services/modal.service';
@@ -11,13 +11,13 @@ import {ModalEnum} from '../../models/modal.enum';
   styleUrls: ['./forgotten-password.component.css']
 })
 export class ForgottenPasswordComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   constructor(private authService: AuthService,
               private modalService: ModalService,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               public dialogRef: MatDialogRef<ForgottenPasswordComponent>) {
     this.form = this.fb.group({
-      email: new FormControl('', [Validators.required, Validators.email])
+      email: new UntypedFormControl('', [Validators.required, Validators.email])
     });
   }
 

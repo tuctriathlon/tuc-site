@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {UntypedFormBuilder, Validators} from '@angular/forms';
 import {UserService} from '../user.service';
 import {DirectusFileService} from '../../../shared/directusFiles/directus-file.service';
 import {map, switchMap, tap} from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class UserInfoComponent implements OnInit {
     company: '',
     avatar: [null]
   });
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private userService: UserService,
               private fileService: DirectusFileService) { }
 

@@ -3,8 +3,8 @@ import {login, logout} from './auth.actions';
 import {UserModel} from './user.model';
 
 interface AuthState {
-  token: null | string;
-  currentUser: UserModel | null;
+  token?: null | string;
+  currentUser?: UserModel | null;
 }
 
 export const initialState: AuthState = {
@@ -14,7 +14,7 @@ export const initialState: AuthState = {
 const reducer = createReducer(
   initialState,
   on(login, (state: AuthState, {token}) => ({token})),
-  on(logout, () => ({currentUser: null, token: null}))
+  on(logout, (_: AuthState) => ({currentUser: null, token: null}))
 );
 
 export function authReducer(state: AuthState | undefined, action: Action) {
